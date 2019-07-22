@@ -1,0 +1,1 @@
+sass --watch "scss/bootstrap.scss":"lib.css"
