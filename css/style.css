@@ -13,6 +13,7 @@
 				margin-bottom:1rem;
 			}
 			.control-box .btn{
+				box-shadow: none;
 				box-shadow:none;
 			}
 			.control-box .form-control{
@@ -31,6 +32,7 @@
 	padding-right:.8rem;
 	border:1px solid #d1d1d1;
 	text-align: left;
+	text-align:left;
 }
 .control-box .btn-light .fa{
 	width:1rem;
