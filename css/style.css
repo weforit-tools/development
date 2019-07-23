@@ -13,7 +13,11 @@
 				margin-bottom:1rem;
 			}
 			.control-box .btn{
+<<<<<<< HEAD
 				box-shadow: none;
+=======
+				box-shadow:none;
+>>>>>>> working
 			}
 			.control-box .form-control{
 				border-color:transparent;
