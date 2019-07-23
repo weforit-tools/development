@@ -2,7 +2,7 @@
 			body{
 				background:#f6f6f6;
 			}
-			.<?php css_class('form_primary');?>{
+			.weforit-tool{
 				background:#fff;
 				padding:.5rem;
 			}
