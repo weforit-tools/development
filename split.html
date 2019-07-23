@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Test</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="./css/lib.css">
+		<link rel="stylesheet" href="./css/font-awesome.min.css">
+		<link rel="stylesheet" href="./css/style.css">
+	</head>
+	<body>
+
+
+<style>
+input{
+	max-width:100%;
+}
+</style>
+<div class="container">
+	<form class="weforit-tool">
+		<div class="row">
+			<div class="col-12 col-md-12 col-lg-6">
+				<div class="control-box">
+					<div class="form-group mb-2">
+						<textarea id="input" class="form-control" placeholder="Input Text"></textarea>
+					</div>
+					<div class="d-flex align-items-center">
+						<label type="button" class="btn btn-light btn-sm mr-2">
+							<i class="fa fa-plus"></i>Load File
+							<input type="file" id="loadFile" name="loadfile" class="d-none"/>
+						</label>
+					</div>
+					<div class="d-block my-2 d-md-flex ">
+						<div class="mb-2 w-50 px-2">
+							<div class="form-check small mb-1">
+							  <label class="form-check-label">
+							    <input type="radio" class="form-check-input" value="0" checked="checked" name="regex">Input Seperator
+							  </label>
+							</div>
+							<input type="text" id="input_sep" class="form-control" value=" " placeholder="Enter Input Seperator">
+							<div class="form-check small mb-1 mt-2">
+							  <label class="form-check-label">
+							    <input type="radio" disabled="disabled" class="form-check-input" value="1" name="regex">Input RegEx (<small>Coming Soon</small>)
+							  </label>
+							</div>							
+							<input type="text" id="input_sep_regex" disabled="disabled" class="form-control" value="\s+" placeholder="Enter RegEx">
+						</div>
+						<div class="mb-2 w-50 px-2">
+							<small>Output Seperator:</small>
+							<input type="text" id="output_sep" class="form-control"  value="\n" placeholder="Enter Output Seperator">
+						</div>
+						
+					</div>
+				</div>
+			</div>
+			<div class="col-12 col-md-12 col-lg-6">
+				<div class="control-box">
+					<div class="form-group mb-2">
+						<textarea id="output" style="height: 225px;" class="form-control" placeholder="Output Text"></textarea>
+					</div>
+					<div class="d-flex align-items-center">
+						<button type="button" class="btn btn-light btn-sm mr-2"><i class="fa fa-clipboard"></i>Copy Text</button>
+						<button type="button" class="btn btn-light btn-sm mr-2"><i class="fa fa-floppy-o"></i>Save File</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<script>
+window.addEventListener('load',function(){
+	$('#loadFile').on('change',function(){
+		load_file('#loadFile','#input',split_text);
+
+	})
+	$('#input, #input_sep, #output_sep').on('keyup',function(){
+		split_text();
+	});
+	function split_text(){
+		$('#output').val(function(){
+			var input_sep = $('#input_sep').val();
+			var output_sep = $('#output_sep').val();
+			var output_sep = new RegExp(escapeRegExp(output_sep));
+			var text = $('#input').val().split(input_sep)
+			text = text.join(output_sep);
+			
+			//var text = $('#input').val().split(input_sep).join('\r\n');
+			return text;
+		});		
+	}
+})
+</script>
+
+		<script src="./js/jquery-3.3.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<script src="./js/bootstrap.min.js"></script>
+		<script src="./js/global.js"></script>
+	</body>
+</html>
