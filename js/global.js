@@ -1,3 +1,6 @@
+verbs = ['A', 'An', 'The', 'And', 'But', 'Or', 'For', 'Nor', 'As', 'At', 'By', 'For', 'From', 'In', 'Into', 'Near', 'Of', 'On', 'Onto', 'To', 'With','Is','Am','Are'];
+uppers = ['Id', 'Tv'];
+
 (function($){
 	var snackbar_timeout = 5000;
 	var copied_message = 'Copied';
@@ -93,6 +96,7 @@
 		});
 	}
 })(jQuery);
+$('[data-toggle="tooltip"]').tooltip();
 function copy_text(target){
 	$(target).select();
 	return document.execCommand("copy");
@@ -194,3 +198,20 @@ String.prototype.toTitleCase = function() {
         str = str.replace(new RegExp('\\b' + uppers[i] + '\\b', 'g'), uppers[i].toUpperCase());
     return str;
 };
+String.prototype.removeSlug = function() {
+  return this.replace(/[-_]+/g, ' ');
+}
+String.prototype.slugify = function(hyphen) {
+ var slug;
+ if(hyphen==true){
+  slug = this.replace(/[\s_]+/g, '-');
+ }else{
+  slug = this.replace(/[\s-]+/g, '_');
+ }
+ slug =  slug.toString().toLowerCase()
+    .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+       .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+       .replace(/^-+/, '')             // Trim - from start of text
+       .replace(/-+$/, '');            // Trim - from end of text
+ return slug.trim();
+}

@@ -38,63 +38,78 @@
 			<div class="col-12 col-md-12 col-lg-8 col-xl-9">
 				<div class="control-box">
 					<div class="form-group mb-2">
-						<textarea id="input" class="form-control" style="white-space:pre;height: 200px;" placeholder="Please Start typing, Paste or load from Local File"></textarea>
+						<textarea id="input" class="form-control" style="white-space:pre;height: 190px;" placeholder="Please Start typing, Paste or load from Local File"></textarea>
 					</div>
 					<div class="d-block d-md-flex align-items-center">
-						<label type="button" class="btn btn-light btn-sm mr-2 mb-1">
+						<label type="button" class="btn btn-light btn-sm mr-2 mb-1" data-toggle="tooltip" title="Load File From Your Device">
 							<i class="fa fa-plus-circle" data-toggle="tooltip" title="Load File"></i>Load File
 							<input type="file" id="loadFile" name="loadfile" class="d-none"/>
 						</label>
-						<label type="button" class="btn btn-light btn-sm mr-2 mb-1">
-							<i class="fa fa-times"></i>Clear
-							<button type="reset" class="d-none"></button>
-						</label>
-						<label type="button" id="copy_text" class="mb-1 btn btn-light btn-sm mr-2">
+						<label type="button" id="copy_text" class="mb-1 btn btn-light btn-sm mr-2" data-toggle="tooltip" title="Copy Text">
 							<i class="fa fa-clipboard"></i>Copy
 						</label>
-						<label type="button" id="save_file" class="mb-1 btn btn-light btn-sm mr-2">
+						<label type="button" id="save_file" class="mb-1 btn btn-light btn-sm mr-2" data-toggle="tooltip" title="Save Result in Your Device">
 							<i class="fa fa-floppy-o"></i>Save
+						</label>
+						<label type="button" class="btn btn-light btn-sm mr-2 mb-1" data-toggle="tooltip" title="Reset All Controls">
+							<i class="fa fa-times"></i>Clear
+							<button type="reset" class="d-none"></button>
 						</label>
 					</div>
 				</div>
 			</div>
-			<div class="col-12 col-md-12 col-lg-4 col-xl-3 pl-lg-1">
-				<div class="row align-items-center mx-0 control-box px-0">
+			<div class="col-12 col-md-12 col-lg-4 col-xl-3 pl-lg-0">
+				<div class="row align-items-center mx-0 control-box px-1">
 					<div class="col-12 small text-center">
-						<div class="mb-3"><strong>Case Converter Controls</strong></div>
+						<div class="mb-2"><strong>Case Converter Controls</strong></div>
 					</div>
 					<div class="px-1 col-6 col-sm-4 col-md-4 col-lg-6">
-						<label type="button" id="lower" class="w-100 mb-1 btn btn-light btn-sm">
+						<label type="button" id="lower" class="convert-case w-100 mb-1 btn btn-light btn-sm" data-toggle="tooltip" title="Convert All Letters into Lower Case">
 							<i class="fa fa-angle-right"></i>Lower
 						</label>
 					</div>
 					<div class="px-1 col-6 col-sm-4 col-md-4 col-lg-6">
-						<label type="button" id="upper" class="w-100 mb-1 btn btn-light btn-sm">
+						<label type="button" id="upper" class="convert-case w-100 mb-1 btn btn-light btn-sm" data-toggle="tooltip" title="Convert All Letters into Upper Case">
 							<i class="fa fa-angle-right"></i>Upper
 						</label>
 					</div>
 					<div class="px-1 col-6 col-sm-4 col-md-4 col-lg-6">
-						<label type="button" id="title" class="w-100 mb-1 btn btn-light btn-sm">
+						<label type="button" id="title" class="convert-case w-100 mb-1 btn btn-light btn-sm" data-toggle="tooltip" title="Convert All Letters into Title Case">
 							<i class="fa fa-angle-right"></i>Title
 						</label>
 					</div>
 					<div class="px-1 col-6 col-sm-4 col-md-4 col-lg-6">
-						<label type="button" id="capital" class="w-100 mb-1 btn btn-light btn-sm">
+						<label type="button" id="capital" class="convert-case w-100 mb-1 btn btn-light btn-sm" data-toggle="tooltip" title="Convert All Letters into Capitalize Case">
 							<i class="fa fa-angle-right"></i>Capital
 						</label>
 					</div>
-					<div class="px-1 col-6 col-sm-4 col-md-4 col-lg-6">
-						<label type="button" id="sentence" class="w-100 mb-1 btn btn-light btn-sm">
+					<div class="px-1 col-6 col-sm-4 col-md-4 col-lg-6" data-toggle="tooltip" title="Convert All Letters into Sentence Case">
+						<label type="button" id="sentence" class="convert-case w-100 mb-1 btn btn-light btn-sm">
 							<i class="fa fa-angle-right"></i>Sentence
 						</label>
 					</div>
-					<div class="px-1 col-6 col-sm-4 col-md-4 col-lg-6">
-						<label type="button" id="alternative" class="w-100 mb-1 btn btn-light btn-sm">
+					<div class="px-1 col-6 col-sm-4 col-md-4 col-lg-6" data-toggle="tooltip" title="Convert All Letters into Alternative Case">
+						<label type="button" id="alternative" class="convert-case w-100 mb-1 btn btn-light btn-sm">
 							<i class="fa fa-angle-right"></i>Alternative
 						</label>
 					</div>
-					<div class="col-12 small">
-						<strong>Lower:</strong> Convert All Characters into Lowercase
+					<div class="col-12 small text-center">
+						<div class="mt-2 mb-1"><strong>Other Controls</strong></div>
+					</div>
+					<div class="px-1 col-6 col-sm-4 col-md-4 col-lg-6" data-toggle="tooltip" title="Create a SEO Friendly Slug or URL">
+						<label type="button" id="slugify" class="convert-case w-100 mb-1 btn btn-light btn-sm">
+							<i class="fa fa-angle-right"></i>Slugify (-)
+						</label>
+					</div>
+					<div class="px-1 col-6 col-sm-4 col-md-4 col-lg-6" data-toggle="tooltip" title="Create a SEO Friendly Slug or URL">
+						<label type="button" id="slugify-underscore" class="convert-case w-100 mb-1 btn btn-light btn-sm">
+							<i class="fa fa-angle-right"></i>Slugify (_)
+						</label>
+					</div>
+					<div class="px-1 col-12 col-sm-4 col-md-4 col-lg-12 text-center" data-toggle="tooltip" title="Remove Slug">
+						<label type="button" id="remove-slug" class="convert-case mb-1 btn btn-light btn-sm">
+							<i class="fa fa-angle-right"></i>Remove Slug
+						</label>
 					</div>
 				</div>
 			</div>
@@ -108,13 +123,45 @@
 <script>
 window.addEventListener('load',function(){
 	$('#loadFile').click2loadFile('#input');
-	$('#save_file').click2download('#output');
-	$('#copy_text').click2copy('#output');
+	$('#save_file').click2download('#input');
+	$('#copy_text').click2copy('#input');
+	$('.convert-case ').on('click',function(){
+		var type = $(this).attr('id');
+		var input = $('#input').val();
+		var output = '';
+		switch(type){
+			case 'lower':
+				output = input.toLowerCase();
+			break;
+			case 'upper':
+				output = input.toUpperCase();
+			break;
+			case 'title':
+				output = input.toTitleCase();
+			break;
+			case 'capital':
 
+			break;
+			case 'sentence':
+
+			break;
+			case 'alternative':
+
+			break;
+			case 'slugify':
+
+			break;
+			case 'slugify-underscore':
+
+			break;
+		}
+		$('#input').val(output).focus();
+	});
 })
 </script>
 
 		<script src="./js/jquery-3.3.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 		<script src="./js/bootstrap.min.js"></script>
 		<script src="./js/global.js"></script>
 	</body>
