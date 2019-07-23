@@ -12,16 +12,29 @@
 
 
 <style>
+
 	.tool-box{
 		display:block;
 		margin:0 auto 3rem auto;
 		text-align:center;
+		position:relative;
+		color:inherit;
 	}
-	.tool-box,
+
+	.tool-box:after{
+		position:absolute;
+		content:" ";
+		right:0;
+		top:50%;
+		height:80px;
+		margin-top:-40px;
+		width:1px;
+		background-color:var(--light);
+	}
 	.tool-box:hover,
 	.tool-box:focus,
 	.tool-box:active{
-		color:inherit;
+		color:var(--primary);
 		text-decoration: none;
 	}
 	.tool-box .icon{
@@ -66,13 +79,79 @@
 </style>
 <section class="bg-white py-5">
 	<div class="container">
-		<div class="row">
+		<h1 class="h4 text-center">Text Tools</h1>
+		<hr/>
+		<div class="row mt-5">
 			<div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-				<a class="tool-box" href="#">
+				<a class="tool-box" href="./reverse-text.html">
 					<div class="icon">
 						<img src="https://image.flaticon.com/icons/svg/60/60473.svg"/>
 					</div>
-					<div class="text">Large Tool Name</div>
+					<div class="text">Reverse Text</div>
+				</a>
+			</div>
+			<div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+				<a class="tool-box" href="./split.html">
+					<div class="icon">
+						<img src="https://image.flaticon.com/icons/svg/60/60473.svg"/>
+					</div>
+					<div class="text">Split Text</div>
+				</a>
+			</div>
+			<div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+				<a class="tool-box" href="./add-suffix-add-prefix.html">
+					<div class="icon">
+						<img src="https://image.flaticon.com/icons/svg/60/60473.svg"/>
+					</div>
+					<div class="text">Suffix / Prefix</div>
+				</a>
+			</div>
+			<div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+				<a class="tool-box" href="./convert-new-lines-into-spaces.html">
+					<div class="icon">
+						<img src="https://image.flaticon.com/icons/svg/60/60473.svg"/>
+					</div>
+					<div class="text">Line to Space</div>
+				</a>
+			</div>
+			<div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+				<a class="tool-box" href="./convert-space-into-new-lines.html">
+					<div class="icon">
+						<img src="https://image.flaticon.com/icons/svg/60/60473.svg"/>
+					</div>
+					<div class="text">Space to Line</div>
+				</a>
+			</div>
+			<div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+				<a class="tool-box" href="./convert-space-into-new-lines.html">
+					<div class="icon">
+						<img src="https://image.flaticon.com/icons/svg/60/60473.svg"/>
+					</div>
+					<div class="text">Encode/Decode URL</div>
+				</a>
+			</div>
+			<div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+				<a class="tool-box" href="./remove-blank-lines.html">
+					<div class="icon">
+						<img src="https://image.flaticon.com/icons/svg/60/60473.svg"/>
+					</div>
+					<div class="text">Remove Blank Lines</div>
+				</a>
+			</div>
+			<div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+				<a class="tool-box" href="./reverse-text.html">
+					<div class="icon">
+						<img src="https://image.flaticon.com/icons/svg/60/60473.svg"/>
+					</div>
+					<div class="text">Reverse Text</div>
+				</a>
+			</div>
+			<div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+				<a class="tool-box" href="./text-case-convert.html">
+					<div class="icon">
+						<img src="https://image.flaticon.com/icons/svg/60/60473.svg"/>
+					</div>
+					<div class="text">Case Convert</div>
 				</a>
 			</div>
 		</div>
