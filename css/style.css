@@ -12,6 +12,9 @@
 				border:.1rem dashed #ccc;
 				margin-bottom:1rem;
 			}
+			.control-box .btn{
+				box-shadow: none;
+			}
 			.control-box .form-control{
 				border-color:transparent;
 				font-size:.8rem;
@@ -27,6 +30,7 @@
 	padding-left:2.3rem;
 	padding-right:.8rem;
 	border:1px solid #d1d1d1;
+	text-align:left;
 }
 .control-box .btn-light .fa{
 	width:1rem;
@@ -38,6 +42,7 @@
 	display:block;
 	border-right:1px solid #d1d1d1;
 	line-height: 1.6rem;
+	text-align:center;
 }
 .control-box .output-file{
 	padding:.2rem .5rem;
