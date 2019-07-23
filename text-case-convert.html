@@ -51,9 +51,6 @@
 						<label type="button" id="save_file" class="mb-1 btn btn-light btn-sm mr-2" data-toggle="tooltip" title="Save Result in Your Device">
 							<i class="fa fa-floppy-o"></i>Save
 						</label>
-						<label type="button" data-toggle="modal" data-target="#options" class="mb-1 btn btn-light btn-sm mr-2" data-toggle="tooltip" title="Options">
-							<i class="fa fa-gear"></i>Options
-						</label>
 						<label type="button" class="btn btn-light btn-sm mr-2 mb-1" data-toggle="tooltip" title="Reset All Controls">
 							<i class="fa fa-times"></i>Clear
 							<button type="reset" class="d-none"></button>
@@ -72,31 +69,31 @@
 						<div class="mb-2"><strong>Case Converter Controls</strong></div>
 					</div>
 					<div class="px-1 col-6 col-sm-4 col-md-4 col-lg-6">
-						<label type="button" id="lower" class="convert-case w-100 mb-1 btn btn-light btn-sm" data-toggle="tooltip" title="Convert All Letters into Lower Case">
+						<label type="button" id="lower" class="convert-case w-100 mb-1 btn btn-light btn-sm" data-toggle="tooltip" title="lower Case" >
 							<i class="fa fa-angle-right"></i>Lower
 						</label>
 					</div>
 					<div class="px-1 col-6 col-sm-4 col-md-4 col-lg-6">
-						<label type="button" id="upper" class="convert-case w-100 mb-1 btn btn-light btn-sm" data-toggle="tooltip" title="Convert All Letters into Upper Case">
+						<label type="button" id="upper" class="convert-case w-100 mb-1 btn btn-light btn-sm" data-toggle="tooltip" title="UPPER Case">
 							<i class="fa fa-angle-right"></i>Upper
 						</label>
 					</div>
 					<div class="px-1 col-6 col-sm-4 col-md-4 col-lg-6">
-						<label type="button" id="title" class="convert-case w-100 mb-1 btn btn-light btn-sm" data-toggle="tooltip" title="Convert All Letters into Title Case">
+						<label type="button" id="title" class="convert-case w-100 mb-1 btn btn-light btn-sm" data-toggle="tooltip" title="Title Case">
 							<i class="fa fa-angle-right"></i>Title
 						</label>
 					</div>
 					<div class="px-1 col-6 col-sm-4 col-md-4 col-lg-6">
-						<label type="button" id="capital" class="convert-case w-100 mb-1 btn btn-light btn-sm" data-toggle="tooltip" title="Convert All Letters into Capitalize Case">
+						<label type="button" id="capital" class="convert-case w-100 mb-1 btn btn-light btn-sm" data-toggle="tooltip" title="Capitalize Case">
 							<i class="fa fa-angle-right"></i>Capital
 						</label>
 					</div>
-					<div class="px-1 col-6 col-sm-4 col-md-4 col-lg-6" data-toggle="tooltip" title="Convert All Letters into Sentence Case">
+					<div class="px-1 col-6 col-sm-4 col-md-4 col-lg-6" data-toggle="tooltip" title="Sentence case">
 						<label type="button" id="sentence" class="convert-case w-100 mb-1 btn btn-light btn-sm">
 							<i class="fa fa-angle-right"></i>Sentence
 						</label>
 					</div>
-					<div class="px-1 col-6 col-sm-4 col-md-4 col-lg-6" data-toggle="tooltip" title="Convert All Letters into Alternative Case">
+					<div class="px-1 col-6 col-sm-4 col-md-4 col-lg-6" data-toggle="tooltip" title="ALtErNaTiVe cAsE">
 						<label type="button" id="alternative" class="convert-case w-100 mb-1 btn btn-light btn-sm">
 							<i class="fa fa-angle-right"></i>Alternative
 						</label>
@@ -128,20 +125,7 @@
 		
 	</div>
 </div>
-<div class="modal" id="options">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5><i class="fa fa-gear mr-2"></i> Options</h5>
-			</div>
-			<div class="modal-body">
-				<div class="form-group">
-					<label></label>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+
 <script>
 window.addEventListener('load',function(){
 	$('#loadFile').click2loadFile('#input',update_counts);
