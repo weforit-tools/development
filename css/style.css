@@ -12,6 +12,9 @@
 				border:.1rem dashed #ccc;
 				margin-bottom:1rem;
 			}
+			.control-box .btn{
+				box-shadow:none;
+			}
 			.control-box .form-control{
 				border-color:transparent;
 				font-size:.8rem;
