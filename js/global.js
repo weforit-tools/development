@@ -1,3 +1,6 @@
+verbs = ['A', 'An', 'The', 'And', 'But', 'Or', 'For', 'Nor', 'As', 'At', 'By', 'For', 'From', 'In', 'Into', 'Near', 'Of', 'On', 'Onto', 'To', 'With','Is','Am','Are'];
+uppers = ['Id', 'Tv'];
+
 (function($){
 	var snackbar_timeout = 5000;
 	var copied_message = 'Copied';
@@ -93,6 +96,7 @@
 		});
 	}
 })(jQuery);
+$('[data-toggle="tooltip"]').tooltip();
 function copy_text(target){
 	$(target).select();
 	return document.execCommand("copy");
@@ -132,6 +136,44 @@ function save_file(string, filename){
 }
 function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
+
+function text_counter(str){ 
+	if(!str){
+		return {
+		    'chars':0,
+		    'lines':0,
+		    'words':0
+		}
+	}
+  var v = str.trim();
+  v = v.replace(/[ ]{2,}/gi," "); //2 or space into 1 space
+  var chars = v.length;
+  var total_lines=0,lines = v.split(/\r?\n/g); // lines
+  var total_words=0, words = v.split(/[\s,]+/); // words
+  //total_lines = lines.length;
+  
+  $.each(lines,function(key,value){
+    value = value.trim();
+    if(!value){
+      return true;
+    }
+    total_lines++;
+  });
+  
+  String.prototype.toTitleCase
+  $.each(words,function(key,value){
+    value = value.trim();
+    if(!value){
+      return false;
+    }
+    total_words++;
+  });
+  return {
+    'chars':chars,
+    'lines':total_lines,
+    'words':total_words
+  }
 }
 String.prototype.ltrim = function() {
     return this.replace(/^\s+/,"");
@@ -194,3 +236,20 @@ String.prototype.toTitleCase = function() {
         str = str.replace(new RegExp('\\b' + uppers[i] + '\\b', 'g'), uppers[i].toUpperCase());
     return str;
 };
+String.prototype.removeSlug = function() {
+  return this.replace(/[-_]+/g, ' ');
+}
+String.prototype.slugify = function(hyphen) {
+ var slug;
+ if(hyphen==true){
+  slug = this.replace(/[\s_]+/g, '-');
+ }else{
+  slug = this.replace(/[\s-]+/g, '_');
+ }
+ slug =  slug.toString().toLowerCase()
+    .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+       .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+       .replace(/^-+/, '')             // Trim - from start of text
+       .replace(/-+$/, '');            // Trim - from end of text
+ return slug.trim();
+}
