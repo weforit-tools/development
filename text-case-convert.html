@@ -38,7 +38,7 @@
 			<div class="col-12 col-md-12 col-lg-8 col-xl-9">
 				<div class="control-box">
 					<div class="form-group mb-2">
-						<textarea id="input" class="form-control" style="white-space:pre;height: 190px;" placeholder="Please Start typing, Paste or load from Local File"></textarea>
+						<textarea id="input" class="form-control" style="white-space:pre;height: 160px;" placeholder="Please Start typing, Paste or load from Local File"></textarea>
 					</div>
 					<div class="d-block d-md-flex align-items-center">
 						<label type="button" class="btn btn-light btn-sm mr-2 mb-1" data-toggle="tooltip" title="Load File From Your Device">
@@ -51,11 +51,19 @@
 						<label type="button" id="save_file" class="mb-1 btn btn-light btn-sm mr-2" data-toggle="tooltip" title="Save Result in Your Device">
 							<i class="fa fa-floppy-o"></i>Save
 						</label>
+						<label type="button" data-toggle="modal" data-target="#options" class="mb-1 btn btn-light btn-sm mr-2" data-toggle="tooltip" title="Options">
+							<i class="fa fa-gear"></i>Options
+						</label>
 						<label type="button" class="btn btn-light btn-sm mr-2 mb-1" data-toggle="tooltip" title="Reset All Controls">
 							<i class="fa fa-times"></i>Clear
 							<button type="reset" class="d-none"></button>
 						</label>
 					</div>
+					<ul class="list-inline small mb-0">
+						<li class="list-inline-item m-0 pr-3 border-right">Characters: <span class="lead font-weight-bold" id="length">0</span></li>
+						<li class="list-inline-item m-0 px-3 border-right">Words: <span class="lead font-weight-bold" id="words">0</span></li>
+						<li class="list-inline-item m-0 px-3">Lines: <span class="lead font-weight-bold" id="lines">0</span></li>
+					</ul>
 				</div>
 			</div>
 			<div class="col-12 col-md-12 col-lg-4 col-xl-3 pl-lg-0">
@@ -120,12 +128,29 @@
 		
 	</div>
 </div>
+<div class="modal" id="options">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5><i class="fa fa-gear mr-2"></i> Options</h5>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label></label>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 <script>
 window.addEventListener('load',function(){
-	$('#loadFile').click2loadFile('#input');
+	$('#loadFile').click2loadFile('#input',update_counts);
 	$('#save_file').click2download('#input');
 	$('#copy_text').click2copy('#input');
-	$('.convert-case ').on('click',function(){
+	$('#input').on('change keyup paste',function(){
+		update_counts();
+	});
+	$('.convert-case').on('click',function(){
 		var type = $(this).attr('id');
 		var input = $('#input').val();
 		var output = '';
@@ -140,23 +165,33 @@ window.addEventListener('load',function(){
 				output = input.toTitleCase();
 			break;
 			case 'capital':
-
+				output = input.toCapitalizeCase();
 			break;
 			case 'sentence':
-
+				output = input.toSentenceCase();
 			break;
 			case 'alternative':
-
+				output = input.toAlternatingCase();
 			break;
 			case 'slugify':
-
+				output = input.slugify(true);
 			break;
 			case 'slugify-underscore':
-
+				output = input.slugify();
+			break;
+			case 'remove-slug':
+				output = input.removeSlug();
 			break;
 		}
 		$('#input').val(output).focus();
+		update_counts();
 	});
+	function update_counts(){
+		var counter = text_counter($('#input').val());
+		$('#length').html(counter.chars);
+		$('#words').html(counter.words);
+		$('#lines').html(counter.lines);		
+	}
 })
 </script>
 

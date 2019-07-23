@@ -137,6 +137,44 @@ function save_file(string, filename){
 function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }
+
+function text_counter(str){ 
+	if(!str){
+		return {
+		    'chars':0,
+		    'lines':0,
+		    'words':0
+		}
+	}
+  var v = str.trim();
+  v = v.replace(/[ ]{2,}/gi," "); //2 or space into 1 space
+  var chars = v.length;
+  var total_lines=0,lines = v.split(/\r?\n/g); // lines
+  var total_words=0, words = v.split(/[\s,]+/); // words
+  //total_lines = lines.length;
+  
+  $.each(lines,function(key,value){
+    value = value.trim();
+    if(!value){
+      return true;
+    }
+    total_lines++;
+  });
+  
+  String.prototype.toTitleCase
+  $.each(words,function(key,value){
+    value = value.trim();
+    if(!value){
+      return false;
+    }
+    total_words++;
+  });
+  return {
+    'chars':chars,
+    'lines':total_lines,
+    'words':total_words
+  }
+}
 String.prototype.ltrim = function() {
     return this.replace(/^\s+/,"");
 }
