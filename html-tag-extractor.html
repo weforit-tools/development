@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>WeForIT Tools</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="./css/lib.css">
+		<link rel="stylesheet" href="./css/font-awesome.min.css">
+		<link rel="stylesheet" href="./css/style.css">
+		<link rel="manifest" href="./manifest.json">
+		<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+		<link rel="icon" href="./favicon.ico" type="image/x-icon">
+	</head>
+	<body>
+		<nav class="sticky-top navbar navbar-expand-lg navbar-light bg-white shadow-sm navbar-primary">
+			<div class="container">
+				<a class="navbar-brand" href="/"><img src="./images/icons/favicon-32x32.png" class="mr-2"/></a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#weforit-primary-navbar" aria-controls="weforit-primary-navbar" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="weforit-primary-navbar">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item">
+							<a class="nav-link" href="/">Home</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/about">About</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/explore">Explore</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/contact">Contact</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+
+
+
+<section class="bg-white py-4">
+	<div class="container">
+		<h1 class="text-center h4 mb-3">HTML Tag Extractor</h1>
+		<form class="weforit-tool">
+			<div class="row">
+				<div class="col-12 col-md-12 col-lg-8 col-xl-9">
+					<div class="control-box mb-0">
+						<div class="form-group mb-2">
+							<textarea id="input" class="form-control" style="white-space:pre;height: 200px;" placeholder="Enter the List of URLs (Everyline)"></textarea>
+						</div>
+						<div class="d-block d-md-flex align-items-center">
+							<label type="button" class="btn btn-light btn-sm mr-2 mb-1" data-toggle="tooltip" title="Load File From Your Device">
+								<i class="fa fa-plus-circle" data-toggle="tooltip" title="Load File"></i>Load File
+								<input type="file" id="loadFile" name="loadfile" class="d-none"/>
+							</label>
+							<label type="button" class="btn btn-light btn-sm mr-2 mb-1" data-toggle="tooltip" title="Reset All Controls">
+								<i class="fa fa-times"></i>Clear
+								<button type="reset" class="d-none"></button>
+							</label>
+						</div>
+						<div class="small">
+							<select class="form-control">
+                                <option value="" disabled="" selected="" hidden="">Select HTML Tag</option>
+								<option value="title">Title (&lt;title&gt;&lt;/title&gt;)</option>
+								<option value="meta_desc">Meta Description (&lt;meta name="description" content=""/&gt;)</option>
+								<option value="canonical">Canonical  (&lt;link rel="canonical" href=""/&gt;)</option>
+								<option value="h1">H1 Tag (&lt;h1&gt;&lt;/h1&gt;)</option>
+								<option value="h2">H2 Tag (&lt;h2&gt;&lt;/h2&gt;)</option>
+								<option value="h3">H3 Tag (&lt;h3&gt;&lt;/h3&gt;)</option>
+								<option value="h4">H4 Tag (&lt;h4&gt;&lt;/h4&gt;)</option>
+								<option value="h5">H5 Tag (&lt;h5&gt;&lt;/h5&gt;)</option>
+								<option value="h6">H6 Tag (&lt;h6&gt;&lt;/h6&gt;)</option>
+								<option value="a">Anchor Tag (&lt;a href=""&gt;Anchor&lt;/a&gt;)</option>
+								<option value="img">IMG Tag (&lt;img src=""/&gt;)</option>
+							</select>
+							<div class="small mt-2">
+								<strong class="text-danger">Please Note:</strong> This Tool extract only tags from HTML. It can be take some seconds to hour depending on the Total number of URLs and response time every URLs.<br/>
+								This Process will use our server maximum resource so You must disable ad blocker into your browser or system and help us to pay server charges.</div>
+						</div>
+						<div class="custom-control custom-checkbox custom-checkbox mr-sm-2">
+							<input type="checkbox" class="custom-control-input" id="accept">
+							<label class="custom-control-label" for="accept">I accept and run the extractor</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-12 col-md-12 col-lg-4 col-xl-3 pl-lg-0">
+					<div class="ads d-flex h-100 align-items-center justify-content-center bg-light">
+						Ads 
+					</div>
+				</div>
+			</div>
+			<div class="text-center  my-4">
+				<button type="submit" id="submit" disabled="disabled" class="btn btn-primary"><i class="fa fa-code"></i> Extract Tags</button>
+			</div>
+		</form>
+
+	</div>
+</section>
+<script>
+window.addEventListener('load',function(){
+	$('#accept').on('change',function(){
+		if($(this).is(':checked') == true){
+			$('#submit').removeAttr('disabled');
+		}else{
+			$('#submit').attr('disabled','disabled');			
+		}
+	});
+	setInterval(function(){
+		var $ads = $('.ads');
+		if(!$ads || $ads.css('display') == 'none' || $ads.height == 0){
+			window.location = './something-wrong';
+		}
+	}, 5000);
+});
+</script>
+
+		<footer class="bg-dark text-muted py-4">
+			<div class="container">
+				Copyright &copy; 2019
+			</div>
+		</footer>
+		<script src="./js/jquery-3.3.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<script src="./js/bootstrap.min.js"></script>
+		<script src="./js/global.js"></script>
+	</body>
+</html>
