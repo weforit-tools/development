@@ -10,7 +10,7 @@ body{
 }
 .navbar-primary .nav-item .nav-link{
 	font-size:.7rem;
-	padding:.8rem;
+	padding:1rem .8rem;
 	padding-left:.8rem;
 	padding-right:.8rem;
 	color:var(--dark);
