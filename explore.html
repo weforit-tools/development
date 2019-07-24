@@ -7,9 +7,43 @@
 		<link rel="stylesheet" href="./css/lib.css">
 		<link rel="stylesheet" href="./css/font-awesome.min.css">
 		<link rel="stylesheet" href="./css/style.css">
+		<link rel="manifest" href="./manifest.json">
+		<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+		<link rel="icon" href="./favicon.ico" type="image/x-icon">
 	</head>
 	<body>
-
+		<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm navbar-primary">
+			<div class="container">
+				<a class="navbar-brand" href="#">Navbar</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#weforit-primary-navbar" aria-controls="weforit-primary-navbar" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="weforit-primary-navbar">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item">
+							<a class="nav-link" href="#">Home</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">Link</a>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Dropdown
+							</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<a class="dropdown-item" href="#">Action</a>
+								<a class="dropdown-item" href="#">Another action</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="#">Something else here</a>
+							</div>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
 
 <style>
 
@@ -21,16 +55,6 @@
 		color:inherit;
 	}
 
-	.tool-box:after{
-		position:absolute;
-		content:" ";
-		right:0;
-		top:50%;
-		height:80px;
-		margin-top:-40px;
-		width:1px;
-		background-color:var(--light);
-	}
 	.tool-box:hover,
 	.tool-box:focus,
 	.tool-box:active{
@@ -82,79 +106,106 @@
 		<h1 class="h4 text-center">Text Tools</h1>
 		<hr/>
 		<div class="row mt-5">
+		
+			<!-- Tool -->
 			<div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-				<a class="tool-box" href="./reverse-text.html">
+				<a class="tool-box" href="./reverse-text">
 					<div class="icon">
 						<img src="https://image.flaticon.com/icons/svg/60/60473.svg"/>
 					</div>
 					<div class="text">Reverse Text</div>
 				</a>
 			</div>
+			<!-- /Tool -->
+					
+			<!-- Tool -->
 			<div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-				<a class="tool-box" href="./split.html">
+				<a class="tool-box" href="./split-text">
 					<div class="icon">
 						<img src="https://image.flaticon.com/icons/svg/60/60473.svg"/>
 					</div>
 					<div class="text">Split Text</div>
 				</a>
 			</div>
+			<!-- /Tool -->
+					
+			<!-- Tool -->
 			<div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-				<a class="tool-box" href="./add-suffix-add-prefix.html">
+				<a class="tool-box" href="./add-suffix-add-prefix">
 					<div class="icon">
 						<img src="https://image.flaticon.com/icons/svg/60/60473.svg"/>
 					</div>
 					<div class="text">Suffix / Prefix</div>
 				</a>
 			</div>
+			<!-- /Tool -->
+					
+			<!-- Tool -->
 			<div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-				<a class="tool-box" href="./convert-new-lines-into-spaces.html">
+				<a class="tool-box" href="./convert-new-lines-into-spaces">
 					<div class="icon">
 						<img src="https://image.flaticon.com/icons/svg/60/60473.svg"/>
 					</div>
-					<div class="text">Line to Space</div>
+					<div class="text">Convert Line to Space</div>
 				</a>
 			</div>
+			<!-- /Tool -->
+					
+			<!-- Tool -->
 			<div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-				<a class="tool-box" href="./convert-space-into-new-lines.html">
+				<a class="tool-box" href="./convert-space-into-new-lines">
 					<div class="icon">
 						<img src="https://image.flaticon.com/icons/svg/60/60473.svg"/>
 					</div>
-					<div class="text">Space to Line</div>
+					<div class="text">Convert Space to Line</div>
 				</a>
 			</div>
+			<!-- /Tool -->
+					
+			<!-- Tool -->
 			<div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-				<a class="tool-box" href="./encode-url-decode-url.html">
+				<a class="tool-box" href="./encode-url-decode-url">
 					<div class="icon">
 						<img src="https://image.flaticon.com/icons/svg/60/60473.svg"/>
 					</div>
 					<div class="text">Encode/Decode URL</div>
 				</a>
 			</div>
+			<!-- /Tool -->
+					
+			<!-- Tool -->
 			<div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-				<a class="tool-box" href="./remove-blank-lines.html">
+				<a class="tool-box" href="./remove-blank-lines">
 					<div class="icon">
 						<img src="https://image.flaticon.com/icons/svg/60/60473.svg"/>
 					</div>
 					<div class="text">Remove Blank Lines</div>
 				</a>
 			</div>
+			<!-- /Tool -->
+					
+			<!-- Tool -->
 			<div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-				<a class="tool-box" href="./reverse-text.html">
+				<a class="tool-box" href="./reverse-text">
 					<div class="icon">
 						<img src="https://image.flaticon.com/icons/svg/60/60473.svg"/>
 					</div>
 					<div class="text">Reverse Text</div>
 				</a>
 			</div>
+			<!-- /Tool -->
+					
+			<!-- Tool -->
 			<div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-				<a class="tool-box" href="./text-case-convert.html">
+				<a class="tool-box" href="./text-case-convert">
 					<div class="icon">
 						<img src="https://image.flaticon.com/icons/svg/60/60473.svg"/>
 					</div>
 					<div class="text">Case Convert</div>
 				</a>
 			</div>
-		</div>
+			<!-- /Tool -->
+							</div>
 	</div>
 </section>
 
