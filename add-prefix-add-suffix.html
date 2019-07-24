@@ -37,58 +37,108 @@
 			</div>
 		</nav>
 
+<style>
+input{
+	max-width:100%;
+}
+</style>
 <section class="bg-white py-4">
 	<div class="container">
+		<h1 class="h3 text-center mb-3">Add Prefix and Suffix</h1>
 		<form class="weforit-tool">
 			<div class="row">
 				<div class="col-12 col-md-12 col-lg-6">
 					<div class="control-box">
 						<div class="form-group mb-2">
-							<textarea id="input" class="form-control" style="height: 200px;" placeholder="Input Text"></textarea>
+							<textarea id="input" class="form-control" style="white-space:pre;height: 164px;" placeholder="Please Start typing, Paste, or Load File"></textarea>
 						</div>
 						<div class="d-flex align-items-center">
 							<label type="button" class="btn btn-light btn-sm mr-2 mb-0">
 								<i class="fa fa-plus"></i>Load File
 								<input type="file" id="loadFile" name="loadfile" class="d-none"/>
 							</label>
+							<label type="button" class="btn btn-light btn-sm mr-2 mb-0">
+								<i class="fa fa-times"></i>Clear
+								<button type="reset" class="d-none"></button>
+							</label>
 						</div>
-						
+						<div class="row small mt-2">
+							<div class="col-6">
+								<div class="form-group mb-1">
+									<label class="m-0 pl-1">Prefix:</label>
+									<input type="text" placeholder="Mr." class="form-control form-control-sm" name="prefix"/>
+								</div>
+							</div>
+							<div class="col-6">
+								<div class="form-group mb-1">
+									<label class="m-0 pl-1">Suffix:</label>
+									<input type="text" placeholder="(Auditor)" class="form-control form-control-sm" name="suffix"/>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="col-12 col-md-12 col-lg-6">
 					<div class="control-box">
 						<div class="form-group mb-2">
-							<textarea id="output" style="height: 200px;" class="form-control" placeholder="Output Text"></textarea>
+							<textarea readonly="readonly" id="output" style="white-space:pre;height: 219px;" class="bg-white form-control" placeholder="Output"></textarea>
 						</div>
-						<div class="d-flex align-items-center">
+						<div class="d-flex align-items-center mt-2 mb-1">
 							<button type="button" id="copy_text" class="btn btn-light btn-sm mr-2"><i class="fa fa-clipboard"></i>Copy Text</button>
-							<button type="button" id="save_file" class="btn btn-light btn-sm mr-2"><i class="fa fa-floppy-o"></i>Save File</button>
+							<button type="button" id="save_file" class="btn btn-light btn-sm mr-2"><i class="fa fa-floppy-o"></i>Save</button>
 						</div>
 					</div>
 				</div>
 			</div>
+			<div class="text-center">
+				<button type="submit" id="submit" class="btn btn-primary mr-2"><i class="fa fa-plus"></i> Add Prefix/Suffix</button>
+			</div>
 		</form>
+		<div class="bg-white py-3 px-2 my-4 shadow-sm">
+			<p class="text-center text-uppercase"><strong>How it Works?</strong></p>
+			
+		</div>
 	</div>
 </section>
 <script>
 window.addEventListener('load',function(){
-
-	$('#loadFile').click2loadFile('#input',split_text);
+	$('#loadFile').click2loadFile('#input');
 	$('#save_file').click2download('#output');
 	$('#copy_text').click2copy('#output');	
-	$('#input, #input_sep, #output_sep').on('keyup',function(){
-		split_text();
-	});
-	function split_text(){
+	$('form.weforit-tool').submit(function(e){
+		e.preventDefault();
+		var input = $('#input').val();
+		var prefix = $('[name="prefix"]').val();
+		var suffix = $('[name="suffix"]').val();
 		$('#output').val(function(){
-			var text = $('#input').val().split(/\r?\n/g);
-			text = text.join(' ').replace(/\s\s+/g, ' ');
-			
-			//var text = $('#input').val().split(input_sep).join('\r\n');
-			return text;
-		});		
-	}
-})
+			var lines = input.split(/\r|\n/);
+			var output = [],add_prefix='',add_suffix='';
+			var total = 0;
+			$.each(lines,function(i,v){
+				if(!v || !v.trim()){
+					return true;
+				}
+				if(prefix == '{count}'){
+					add_prefix = total+1;
+				}
+				if(suffix == '{count}'){
+					add_suffix = total+1;	
+				}
+				if(!add_prefix){
+					add_prefix = prefix;
+				}
+				if(!add_suffix){
+					add_suffix = suffix;
+				}
+				v = add_prefix + v + add_suffix;
+				output.push(v);
+				total++;
+			});
+			return output.join('\r\n');
+		});
+
+	});
+});
 </script>
 
 		<footer class="bg-dark text-muted py-4">
