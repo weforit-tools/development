@@ -50,6 +50,9 @@
 					<div class="card card-primary border-0">
 						<div class="card-header rounded-0 bg-primary text-white font-weight-bold">
 							Visutal Editor
+							<label href="javascript:void(0)" style="cursor:pointer;" class="mb-0 small text-white float-right"><i class="fa fa-plus-circle mr-1"></i>Import File
+								<input type="file" id="loadFile" name="loadfile" class="d-none"/>
+							</label>
 						</div>
 						<div class="card-body p-0">
 							<textarea id="html-editor" class="form-control" style="white-space:pre;height: 219px;" placeholder="Please Start typing, Paste, or Load File"></textarea>
@@ -72,6 +75,10 @@
 </section>
 <script>
 window.addEventListener('load',function(){
+	$('#loadFile').click2loadFile('#html-editor',function(e){
+		CKEDITOR.instances['html-editor'].setData(e.target.result);
+    	$('#output').val(CKEDITOR.instances['html-editor'].getData());
+	});
 	$('#save_file').click2download('#output');
 	$('#copy_text').click2copy('#output');		
 	CKEDITOR.replace( 'html-editor',{
@@ -79,6 +86,9 @@ window.addEventListener('load',function(){
 		height:'250px'
 	});
 	CKEDITOR.instances['html-editor'].on('key', function() { 
+    	$('#output').val(CKEDITOR.instances['html-editor'].getData());
+	});
+	CKEDITOR.instances['html-editor'].on('paste', function() { 
     	$('#output').val(CKEDITOR.instances['html-editor'].getData());
 	});
 

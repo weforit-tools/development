@@ -85,7 +85,7 @@ uppers = ['Id', 'Tv'];
 				$(output).val(e.target.result);
 				if (typeof callback === "function") {
 				    // do something
-					callback();
+					callback(e);
 				}
 			}
 			input = $(this).prop('files')[0];
@@ -107,7 +107,7 @@ function load_file(input,output,callback){
 		$(output).val(e.target.result);
 		if (typeof callback === "function") {
 		    // do something
-			callback();
+			callback(e);
 		}
 	}
 	input = $(input).prop('files')[0];
