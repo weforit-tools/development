@@ -34,8 +34,8 @@
 						<textarea id="output" style="height: 200px;" class="form-control" placeholder="Output Text"></textarea>
 					</div>
 					<div class="d-flex align-items-center">
-						<button type="button" class="btn btn-light btn-sm mr-2"><i class="fa fa-clipboard"></i>Copy Text</button>
-						<button type="button" class="btn btn-light btn-sm mr-2"><i class="fa fa-floppy-o"></i>Save File</button>
+						<button type="button" id="copy_text" class="btn btn-light btn-sm mr-2"><i class="fa fa-clipboard"></i>Copy Text</button>
+						<button type="button" id="save_file" class="btn btn-light btn-sm mr-2"><i class="fa fa-floppy-o"></i>Save File</button>
 					</div>
 				</div>
 			</div>
@@ -44,10 +44,10 @@
 </div>
 <script>
 window.addEventListener('load',function(){
-	$('#loadFile').on('change',function(){
-		load_file('#loadFile','#input',split_text);
 
-	})
+	$('#loadFile').click2loadFile('#input',split_text);
+	$('#save_file').click2download('#output');
+	$('#copy_text').click2copy('#output');	
 	$('#input, #input_sep, #output_sep').on('keyup',function(){
 		split_text();
 	});
