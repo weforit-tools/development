@@ -1,28 +1,76 @@
 
-			body{
-				background:#f6f6f6;
-			}
-			.weforit-tool{
-				background:#fff;
-				padding:.5rem;
-			}
-			.control-box{
-				background:#f6f6f6;
-				padding:.5rem;
-				border:.1rem dashed #ccc;
-				margin-bottom:1rem;
-			}
-			.control-box .btn{
-				box-shadow: none;
-				box-shadow:none;
-			}
-			.control-box .form-control{
-				border-color:transparent;
-				font-size:.8rem;
-			}
-			.control-box textarea.form-control{
-				min-height:80px;
-			}
+body{
+	background:#f6f6f6;
+}
+.navbar-primary{
+	padding:0;
+}
+.navbar-primary .navbar-brand{
+	padding:0 .3rem;
+}
+.navbar-primary .nav-item .nav-link{
+	font-size:.7rem;
+	padding:.8rem;
+	padding-left:.8rem;
+	padding-right:.8rem;
+	color:var(--dark);
+	letter-spacing: .5px;
+	text-transform: uppercase;
+	font-weight:500;
+	position:relative;
+}
+
+.navbar-primary .navbar-toggler{
+	border-color:transparent;
+}
+.navbar-primary .navbar-toggler:focus{
+	outline:0;
+}
+.navbar-primary .nav-item .nav-link:after{
+	content:" ";
+	transition:.2s;
+	position:absolute;
+	bottom:-1px;
+	height:3px;
+	background-color:var(--primary);
+	left:0;
+	width:0;
+}
+.navbar-primary .nav-item{
+	padding-left:.3rem;
+	padding-right:.3rem;
+}
+.navbar-primary .nav-item .nav-link:hover,
+.navbar-primary .nav-item .nav-link:focus,
+.navbar-primary .nav-item .nav-link:active{
+	color:var(--primary);
+}
+.navbar-primary .nav-item .nav-link:hover:after,
+.navbar-primary .nav-item .nav-link:focus:after,
+.navbar-primary .nav-item .nav-link:active:after{
+	width:100%;
+}
+.weforit-tool{
+	background:#fff;
+	padding:.5rem;
+}
+.control-box{
+	background:#f6f6f6;
+	padding:.5rem;
+	border:.1rem dashed #ccc;
+	margin-bottom:1rem;
+}
+.control-box .btn{
+	box-shadow: none;
+	box-shadow:none;
+}
+.control-box .form-control{
+	border-color:transparent;
+	font-size:.8rem;
+}
+.control-box textarea.form-control{
+	min-height:80px;
+}
 
 .control-box .btn-light{
 	background:#fff;
