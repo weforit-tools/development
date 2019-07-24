@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Test</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="./css/lib.css">
+		<link rel="stylesheet" href="./css/font-awesome.min.css">
+		<link rel="stylesheet" href="./css/style.css">
+	</head>
+	<body>
+		<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm navbar-primary">
+			<div class="container">
+				<a class="navbar-brand" href="#">Navbar</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#weforit-primary-navbar" aria-controls="weforit-primary-navbar" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="weforit-primary-navbar">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item">
+							<a class="nav-link" href="#">Home</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">Link</a>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Dropdown
+							</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<a class="dropdown-item" href="#">Action</a>
+								<a class="dropdown-item" href="#">Another action</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="#">Something else here</a>
+							</div>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+<style>
+
+	.tool-box{
+		display:block;
+		margin:0 auto 3rem auto;
+		text-align:center;
+		position:relative;
+		color:inherit;
+	}
+
+	.tool-box:hover,
+	.tool-box:focus,
+	.tool-box:active{
+		color:var(--primary);
+		text-decoration: none;
+	}
+	.tool-box .icon{
+		display:block;
+		width:5rem;
+		height:5rem;
+		text-align:center;
+		border:1px solid rgba(0,0,0,.1);
+		display: flex;
+		align-items:center;
+		justify-content: center;
+		border-radius: 100%;
+		margin:0 auto .5rem auto;
+		transition: .3s;
+	}
+	.tool-box .icon img{
+		width:2rem;
+	}
+	.tool-box .text{
+		position:relative;
+		font-weight: 500;
+	}
+	.tool-box .text:before{
+		content:" ";
+		position:absolute;
+		left:50%;
+		bottom:-0.3rem;
+		height:2px;
+		width:0;
+		background:var(--primary);
+		transition:.3s;
+	}
+	.tool-box:hover .icon,
+	.tool-box:focus .icon,
+	.tool-box:active .icon{
+		border-color:var(--primary);
+	}
+	.tool-box:hover .text:before{
+		width:100%;
+		left:0;
+	}
+</style>
+<section class="bg-white py-5">
+	<div class="container">
+		<h1 class="h4 text-center">Text Tools</h1>
+		<hr/>
+		<div class="row mt-5">
+		
+			<!-- Tool -->
+			<div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+				<a class="tool-box" href="./reverse-text">
+					<div class="icon">
+						<img src="https://image.flaticon.com/icons/svg/60/60473.svg"/>
+					</div>
+					<div class="text">Reverse Text</div>
+				</a>
+			</div>
+			<!-- /Tool -->
+					
+			<!-- Tool -->
+			<div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+				<a class="tool-box" href="./split-text">
+					<div class="icon">
+						<img src="https://image.flaticon.com/icons/svg/60/60473.svg"/>
+					</div>
+					<div class="text">Split Text</div>
+				</a>
+			</div>
+			<!-- /Tool -->
+					
+			<!-- Tool -->
+			<div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+				<a class="tool-box" href="./add-suffix-add-prefix">
+					<div class="icon">
+						<img src="https://image.flaticon.com/icons/svg/60/60473.svg"/>
+					</div>
+					<div class="text">Suffix / Prefix</div>
+				</a>
+			</div>
+			<!-- /Tool -->
+					
+			<!-- Tool -->
+			<div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+				<a class="tool-box" href="./convert-new-lines-into-spaces">
+					<div class="icon">
+						<img src="https://image.flaticon.com/icons/svg/60/60473.svg"/>
+					</div>
+					<div class="text">Convert Line to Space</div>
+				</a>
+			</div>
+			<!-- /Tool -->
+					
+			<!-- Tool -->
+			<div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+				<a class="tool-box" href="./convert-space-into-new-lines">
+					<div class="icon">
+						<img src="https://image.flaticon.com/icons/svg/60/60473.svg"/>
+					</div>
+					<div class="text">Convert Space to Line</div>
+				</a>
+			</div>
+			<!-- /Tool -->
+					
+			<!-- Tool -->
+			<div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+				<a class="tool-box" href="./encode-url-decode-url">
+					<div class="icon">
+						<img src="https://image.flaticon.com/icons/svg/60/60473.svg"/>
+					</div>
+					<div class="text">Encode/Decode URL</div>
+				</a>
+			</div>
+			<!-- /Tool -->
+					
+			<!-- Tool -->
+			<div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+				<a class="tool-box" href="./remove-blank-lines">
+					<div class="icon">
+						<img src="https://image.flaticon.com/icons/svg/60/60473.svg"/>
+					</div>
+					<div class="text">Remove Blank Lines</div>
+				</a>
+			</div>
+			<!-- /Tool -->
+					
+			<!-- Tool -->
+			<div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+				<a class="tool-box" href="./reverse-text">
+					<div class="icon">
+						<img src="https://image.flaticon.com/icons/svg/60/60473.svg"/>
+					</div>
+					<div class="text">Reverse Text</div>
+				</a>
+			</div>
+			<!-- /Tool -->
+					
+			<!-- Tool -->
+			<div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+				<a class="tool-box" href="./text-case-convert">
+					<div class="icon">
+						<img src="https://image.flaticon.com/icons/svg/60/60473.svg"/>
+					</div>
+					<div class="text">Case Convert</div>
+				</a>
+			</div>
+			<!-- /Tool -->
+							</div>
+	</div>
+</section>
+
+
+		<script src="./js/jquery-3.3.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<script src="./js/bootstrap.min.js"></script>
+		<script src="./js/global.js"></script>
+	</body>
+</html>
