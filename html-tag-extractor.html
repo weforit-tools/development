@@ -73,6 +73,7 @@
 				<div class="col-12 col-md-12 col-lg-4 col-xl-3 pl-lg-0">
 					<div class="control-box mb-0">
 						<div class="form-group">
+							<label class="small mb-0">Please Select HTML Tag:</label>
 							<select class="form-control" id="html-tag">
                                 <option value="" disabled="" selected="" hidden="">Select HTML Tag</option>
 								<option value="title">Title (&lt;title&gt;&lt;/title&gt;)</option>
@@ -113,11 +114,10 @@
 			</div>
 		</form>
 		<div class="collapse my-4" id="results">
-			<div class="small">
-				<strong>Status:</strong> <span id="status"></span>
-			</div>
-			<div class="small">
-				<strong>Current URL:</strong> <span id="current_url"></span>
+			<div class="d-block d-md-flex">
+				<div class="small mr-4">
+					<strong>Status:</strong> <span id="status"></span><span id="current_url"></span>
+				</div>
 			</div>
 			<table class="small table table-hover table-sm">
 				<thead>
@@ -171,6 +171,7 @@ window.addEventListener('load',function(){
 		if(reverse == true){
 			loop.reverse();
 		}
+		$('button[type="submit"]').attr('disabled','disabled');
 		process_loop();
 		$('#results').collapse('show');
 
@@ -181,7 +182,7 @@ window.addEventListener('load',function(){
 			$('#current_url').html('');
 			return;
 		}else{
-			$('#status').html('Scanning');
+			$('#status').html('Scanning ');
 			$('#current_url').html(loop[current]);			
 		}
 		//If url is blank, increase the loop count and process next url
@@ -200,7 +201,6 @@ window.addEventListener('load',function(){
 					}
 				}
 				tag_value = tag_value.join('<br/>');
-				console.log(server_response);
 				//var tag_value = (server_response.data?(server_response.data).join('\r\n'):'');				
 				$('#tag_list').append('<tr><td>'+(current+1)+'</td><td>'+server_response.httpcode+'</td><td>'+loop[current]+'</td><td>'+tag_value+'</td></tr>')
 			}else{
