@@ -10,6 +10,11 @@
 		<link rel="manifest" href="./manifest.json">
 		<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
 		<link rel="icon" href="./favicon.ico" type="image/x-icon">
+		<script type="text/javascript">
+			var app = {
+				api:'http://localhost/api/'
+			}
+		</script>
 	</head>
 	<body>
 		<nav class="sticky-top navbar navbar-expand-lg navbar-light bg-white shadow-sm navbar-primary">
@@ -37,16 +42,19 @@
 			</div>
 		</nav>
 
-
-
-
+<style>
+	.custom-control label,
+	.custom-control input{
+		cursor:pointer;
+	}
+</style>
 <section class="bg-white py-4">
 	<div class="container">
 		<h1 class="text-center h4 mb-3">HTML Tag Extractor</h1>
 		<form class="weforit-tool">
 			<div class="row">
 				<div class="col-12 col-md-12 col-lg-8 col-xl-9">
-					<div class="control-box mb-0">
+					<div class="control-box mb-2">
 						<div class="form-group mb-2">
 							<textarea id="input" class="form-control" style="white-space:pre;height: 200px;" placeholder="Enter the List of URLs (Everyline)"></textarea>
 						</div>
@@ -60,8 +68,12 @@
 								<button type="reset" class="d-none"></button>
 							</label>
 						</div>
-						<div class="small">
-							<select class="form-control">
+					</div>
+				</div>
+				<div class="col-12 col-md-12 col-lg-4 col-xl-3 pl-lg-0">
+					<div class="control-box mb-0">
+						<div class="form-group">
+							<select class="form-control" id="html-tag">
                                 <option value="" disabled="" selected="" hidden="">Select HTML Tag</option>
 								<option value="title">Title (&lt;title&gt;&lt;/title&gt;)</option>
 								<option value="meta_desc">Meta Description (&lt;meta name="description" content=""/&gt;)</option>
@@ -75,31 +87,58 @@
 								<option value="a">Anchor Tag (&lt;a href=""&gt;Anchor&lt;/a&gt;)</option>
 								<option value="img">IMG Tag (&lt;img src=""/&gt;)</option>
 							</select>
-							<div class="small mt-2">
-								<strong class="text-danger">Please Note:</strong> This Tool extract only tags from HTML. It can be take some seconds to hour depending on the Total number of URLs and response time every URLs.<br/>
-								This Process will use maximum resource of our server  so You must disable ad blocker into your browser or system and help us to pay server charges.</div>
 						</div>
-						<div class="custom-control custom-checkbox custom-checkbox mr-sm-2">
-							<input type="checkbox" class="custom-control-input" id="accept">
-							<label class="custom-control-label" for="accept">I accept and run the extractor</label>
+						<div class="custom-control custom-switch small">
+							<input type="checkbox" class="custom-control-input" id="plaintext" checked="checked">
+							<label class="custom-control-label" style="padding-top:.15rem" for="plaintext">Extract Plain Text Only</label>
 						</div>
-					</div>
-				</div>
-				<div class="col-12 col-md-12 col-lg-4 col-xl-3 pl-lg-0">
-					<div class="ads d-flex h-100 align-items-center justify-content-center bg-light">
-						Ads 
+						<div class="custom-control custom-switch small">
+							<input type="checkbox" class="custom-control-input" id="reverse" checked="checked">
+							<label class="custom-control-label" style="padding-top:.15rem" for="reverse">Start Reverse</label>
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="text-center  my-4">
+				<div class="small text-center my-2">
+					<strong class="text-danger">Please Note:</strong> This Tool extract only tags from HTML. It can be take some seconds to hour depending on the Total number of URLs and response time every URLs.<br/>
+					This Process will use maximum resource of our server  so You must disable ad blocker into your browser and help us to paying server charges.
+				</div>
+				<div class="text-center custom-control custom-checkbox custom-checkbox mb-2">
+					<input type="checkbox" class="custom-control-input" id="accept">
+					<label class="custom-control-label" for="accept">I accept and run the extractor</label>
+				</div>
 				<button type="submit" id="submit" disabled="disabled" class="btn btn-primary"><i class="fa fa-code"></i> Extract Tags</button>
+				<span class="response"></span>
 			</div>
 		</form>
+		<div class="collapse my-4" id="results">
+			<div class="small">
+				<strong>Status:</strong> <span id="status"></span>
+			</div>
+			<div class="small">
+				<strong>Current URL:</strong> <span id="current_url"></span>
+			</div>
+			<table class="small table table-hover table-sm">
+				<thead>
+					<tr>
+						<th>S.No.</th>
+						<th>HTTP Code</th>
+						<th>URL</th>
+						<th><span id="tag"></span></th>
+					</tr>
+				</thead>
+				<tbody id="tag_list">
+
+				</tbody>
+			</table>
+		</div>
 
 	</div>
 </section>
 <script>
 window.addEventListener('load',function(){
+	var current = 0, loop = [], tag = '', plaintext = 0;
 	$('#accept').on('change',function(){
 		if($(this).is(':checked') == true){
 			$('#submit').removeAttr('disabled');
@@ -107,12 +146,96 @@ window.addEventListener('load',function(){
 			$('#submit').attr('disabled','disabled');			
 		}
 	});
-	setInterval(function(){
-		var $ads = $('.ads');
-		if(!$ads || $ads.css('display') == 'none' || $ads.height == 0){
-			window.location = './something-wrong';
+	$('form.weforit-tool').submit(function(e){
+		e.preventDefault();
+		var input = $('#input').val();
+		tag = $('#html-tag').val();
+		var tag_val = $('#html-tag option:selected').text();
+		if($('#plaintext').is(':checked') == true){
+			plaintext = 1;
+		}else{
+			plaintext = 0
 		}
-	}, 5000);
+		if(!input){
+			return;
+		}
+		if(!tag){
+			$('.response',this).html('<div class="text-danger text-center">OOPS!! You forgot to select Tag that you want to extract</div>');
+			return;
+		}else{
+			$('.response',this).html('');
+		}
+		$('#tag').text(tag_val+' ');
+		loop = input.split(/\r?\n/g);
+		process_loop();
+		$('#results').collapse('show');
+
+	});
+	function process_loop(){
+		if(current >= loop.length){
+			$('#status').html('Completed');
+			$('#current_url').html('');
+			return;
+		}else{
+			$('#status').html('Scanning');
+			$('#current_url').html(loop[current]);			
+		}
+		//If url is blank, increase the loop count and process next url
+		if(!loop[current] || !loop[current].trim()){
+			current++;
+			process_loop();
+		}
+		extract_tag(loop[current],tag,plaintext,function(data){
+			var server_response = '';
+			if(data.status && data.status == 'success'){
+				var tag_value = [];
+				server_response = JSON.parse(data.response);
+				if(server_response.data){
+					for(i=0;i<server_response.data.length;i++){
+						tag_value.push('<input readonly="readonly" type="text" class="w-100 border-0 bg-transparent form-control form-control-sm shadow-none" value="'+(server_response.data[i].str_replace('"','&quot;'))+'"/');
+					}
+				}
+				tag_value = tag_value.join('<br/>');
+				//var tag_value = (server_response.data?(server_response.data).join('\r\n'):'');				
+				$('#tag_list').append('<tr><td>'+loop[current]+'</td><td>'+tag_value+'</td></tr>')
+			}else{
+				$('#tag_list').append('<tr><td>'+loop[current]+'</td><td>Error</td></tr>')
+			}
+			current++;
+			process_loop();
+		});
+
+	}
+	function extract_tag(url,tag,plaintext,callback){
+		if(!url || !tag){
+			return;
+		}
+		var formData = new FormData();
+		formData.append('url', url);
+		formData.append('tag', tag);
+		formData.append('plaintext', plaintext);
+		$.ajax({
+			url:app.api+'html/extract-tag/',
+			type:'post',
+			data:formData,
+			dataType:'json',
+		    processData: false,
+		    contentType: false,
+			success:function(data){
+				if (typeof callback === "function") {
+				    // do something
+					callback(data);
+				}
+			},
+			error:function(){
+				var data ='error'
+				if (typeof callback === "function") {
+				    // do something
+					callback(data);
+				}
+			}
+		});
+	}
 });
 </script>
 

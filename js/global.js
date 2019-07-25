@@ -253,3 +253,18 @@ String.prototype.slugify = function(hyphen) {
        .replace(/-+$/, '');            // Trim - from end of text
  return slug.trim();
 }
+String.prototype.escape = function() {
+    var tagsToReplace = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;'
+    };
+    return this.replace(/[&<>]/g, function(tag) {
+        return tagsToReplace[tag] || tag;
+    });
+};
+
+String.prototype.str_replace = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
