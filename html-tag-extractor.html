@@ -12,7 +12,7 @@
 		<link rel="icon" href="./favicon.ico" type="image/x-icon">
 		<script type="text/javascript">
 			var app = {
-				api:'http://localhost/api/'
+				api:'https://weforit.com/api/'
 			}
 		</script>
 	</head>
@@ -138,7 +138,7 @@
 </section>
 <script>
 window.addEventListener('load',function(){
-	var current = 0, loop = [], tag = '', plaintext = 0;
+	var current = 0, loop = [], tag = '', plaintext = 0, reverse = 1;
 	$('#accept').on('change',function(){
 		if($(this).is(':checked') == true){
 			$('#submit').removeAttr('disabled');
@@ -151,6 +151,7 @@ window.addEventListener('load',function(){
 		var input = $('#input').val();
 		tag = $('#html-tag').val();
 		var tag_val = $('#html-tag option:selected').text();
+		var reverse = $('#reverse').is(':checked');
 		if($('#plaintext').is(':checked') == true){
 			plaintext = 1;
 		}else{
@@ -167,6 +168,9 @@ window.addEventListener('load',function(){
 		}
 		$('#tag').text(tag_val+' ');
 		loop = input.split(/\r?\n/g);
+		if(reverse == true){
+			loop.reverse();
+		}
 		process_loop();
 		$('#results').collapse('show');
 
@@ -196,10 +200,11 @@ window.addEventListener('load',function(){
 					}
 				}
 				tag_value = tag_value.join('<br/>');
+				console.log(server_response);
 				//var tag_value = (server_response.data?(server_response.data).join('\r\n'):'');				
-				$('#tag_list').append('<tr><td>'+loop[current]+'</td><td>'+tag_value+'</td></tr>')
+				$('#tag_list').append('<tr><td>'+(current+1)+'</td><td>'+server_response.httpcode+'</td><td>'+loop[current]+'</td><td>'+tag_value+'</td></tr>')
 			}else{
-				$('#tag_list').append('<tr><td>'+loop[current]+'</td><td>Error</td></tr>')
+				$('#tag_list').append('<tr><td>'+(current+1)+'</td><td>'+server_response.httpcode+'</td><td>'+loop[current]+'</td><td>Error</td></tr>')
 			}
 			current++;
 			process_loop();
