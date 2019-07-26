@@ -47,6 +47,26 @@
 	.custom-control input{
 		cursor:pointer;
 	}
+	#results input{
+		font-size:inherit;
+		height:auto;
+		padding:0;
+	}
+	#results .table-responsive{
+		overflow: auto;
+    	max-height: 300px;
+	}
+	#results .table-responsive th{
+	    position: -webkit-sticky;
+	    position: sticky;
+	    top: -1px;
+	    z-index: 5;
+	    background: #fff;
+	}
+	#results .table-responsive td{
+		padding-top:0;
+		padding-bottom:0;
+	}
 </style>
 <section class="bg-white py-4">
 	<div class="container">
@@ -119,19 +139,21 @@
 					<strong>Status:</strong> <span id="status"></span><span id="current_url"></span>
 				</div>
 			</div>
-			<table class="small table table-hover table-sm">
-				<thead>
-					<tr>
-						<th>S.No.</th>
-						<th>HTTP Code</th>
-						<th>URL</th>
-						<th><span id="tag"></span></th>
-					</tr>
-				</thead>
-				<tbody id="tag_list">
+			<div class="table-responsive">
+				<table class="small table table-hover table-sm">
+					<thead>
+						<tr>
+							<th>S.No.</th>
+							<th>HTTP Code</th>
+							<th>URL</th>
+							<th><span id="tag"></span></th>
+						</tr>
+					</thead>
+					<tbody id="tag_list">
 
-				</tbody>
-			</table>
+					</tbody>
+				</table>
+			</div>
 		</div>
 
 	</div>
@@ -139,6 +161,8 @@
 <script>
 window.addEventListener('load',function(){
 	var current = 0, loop = [], tag = '', plaintext = 0, reverse = 1;
+	var display_format = '<input readonly="readonly" type="text" class="w-100 border-0 bg-transparent form-control form-control-sm shadow-none" value="{value}"/>';
+	$('#loadFile').click2loadFile('#input');
 	$('#accept').on('change',function(){
 		if($(this).is(':checked') == true){
 			$('#submit').removeAttr('disabled');
@@ -180,9 +204,10 @@ window.addEventListener('load',function(){
 		if(current >= loop.length){
 			$('#status').html('Completed');
 			$('#current_url').html('');
+  			$("#results").tableExport();
 			return;
 		}else{
-			$('#status').html('Scanning ');
+			$('#status').html('Scanning... ');
 			$('#current_url').html(loop[current]);			
 		}
 		//If url is blank, increase the loop count and process next url
@@ -190,8 +215,16 @@ window.addEventListener('load',function(){
 			current++;
 			process_loop();
 		}
+		//if url is invalid
+		if(!is_url(loop[current])){
+			$('#tag_list').append('<tr><td>'+(current+1)+'</td><td>0</td><td>'+loop[current]+'</td><td></td>');
+			current++;
+			process_loop();
+			return;
+		}
 		extract_tag(loop[current],tag,plaintext,function(data){
 			var server_response = '';
+			var url_value = display_format.replace('{value}',loop[current]);
 			if(data.status && data.status == 'success'){
 				var tag_value = [];
 				server_response = JSON.parse(data.response);
@@ -202,9 +235,13 @@ window.addEventListener('load',function(){
 				}
 				tag_value = tag_value.join('<br/>');
 				//var tag_value = (server_response.data?(server_response.data).join('\r\n'):'');				
-				$('#tag_list').append('<tr><td>'+(current+1)+'</td><td>'+server_response.httpcode+'</td><td>'+loop[current]+'</td><td>'+tag_value+'</td></tr>')
+				$('#tag_list').append('<tr><td>'+(current+1)+'</td><td>'+server_response.httpcode+'</td><td>'+url_value+'</td><td>'+tag_value+'</td></tr>')
 			}else{
-				$('#tag_list').append('<tr><td>'+(current+1)+'</td><td>'+server_response.httpcode+'</td><td>'+loop[current]+'</td><td>Error</td></tr>')
+				if(data.status == 'error'){
+					$('#tag_list').append('<tr><td>'+(current+1)+'</td><td>-</td><td>'+url_value+'</td><td>'+data.response+'</td></tr>')
+				}else{
+					$('#tag_list').append('<tr><td>'+(current+1)+'</td><td>-</td><td>'+url_value+'</td><td>Unknown Error</td></tr>')
+				}
 			}
 			current++;
 			process_loop();
