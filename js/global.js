@@ -96,6 +96,19 @@ uppers = ['Id', 'Tv'];
 		});
 	}
 })(jQuery);
+function load_css(url){
+    var node = document.createElement("link");
+    node.setAttribute("href",url);
+   node.setAttribute("type","text/css"); node.setAttribute("rel","stylesheet");
+    document.getElementsByTagName("head")[0].appendChild(node);
+}
+
+function load_js(url){
+    var node = document.createElement("script");
+    node.setAttribute("src",url);
+    node.setAttribute("type","text/javascript");
+    document.getElementsByTagName("head")[0].appendChild(node);
+}
 $('[data-toggle="tooltip"]').tooltip();
 /*
 setInterval(function(){

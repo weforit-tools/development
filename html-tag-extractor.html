@@ -13,7 +13,7 @@
 		<script type="text/javascript">
 			var app = {
 				'api'			: 'https://weforit.com/api/',
-				'current_url'	: 'http://localhost/test/./html-tag-extractor?skip=1',
+				'current_url'	: 'http://localhost/test/html-tag-extractor?skip=1',
 			}
 		</script>
 	</head>
@@ -44,6 +44,17 @@
 		</nav>
 
 <style>
+	.input{
+	    -moz-appearance: textfield;
+	    -webkit-appearance: textfield;
+	    background-color: transparent;
+	    background-color: -moz-field;
+		font-size:inherit;
+		height:auto;
+		padding:0;
+		height:1rem;
+		white-space: nowrap;
+	}
 	.custom-control label,
 	.custom-control input{
 		cursor:pointer;
@@ -142,11 +153,11 @@
 				</div>
 			</div>
 			<div class="table-responsive">
-				<table class="small table table-hover table-sm">
+				<table class="small table table-hover table-sm" id="results_table">
 					<thead>
 						<tr>
-							<th>S.No.</th>
-							<th>HTTP Code</th>
+							<th width="90">S.No.</th>
+							<th width="90">HTTP Code</th>
 							<th>URL</th>
 							<th><span id="tag"></span></th>
 						</tr>
@@ -163,7 +174,7 @@
 <script>
 window.addEventListener('load',function(){
 	var current = 0, loop = [], tag = '', plaintext = 0, reverse = 1;
-	var display_format = '<input readonly="readonly" type="text" class="w-100 border-0 bg-transparent form-control form-control-sm shadow-none" value="{value}"/>';
+	var display_format = '<div class="input">{value}</div>';
 	$('#loadFile').click2loadFile('#input');
 	$('#accept').on('change',function(){
 		if($(this).is(':checked') == true){
@@ -207,7 +218,10 @@ window.addEventListener('load',function(){
 		if(current >= loop.length){
 			$('#status').html('Completed');
 			$('#current_url').html('');
-  			$("#results").tableExport();
+  			$("#results_table").DataTable({
+  				pageLength: 50,
+    			retrieve: true,
+  			});
 			return;
 		}else{
 			$('#status').html('Scanning... ');
@@ -233,10 +247,10 @@ window.addEventListener('load',function(){
 				server_response = JSON.parse(data.response);
 				if(server_response.data){
 					for(i=0;i<server_response.data.length;i++){
-						tag_value.push('<input readonly="readonly" type="text" class="w-100 border-0 bg-transparent form-control form-control-sm shadow-none" value="'+(server_response.data[i].str_replace('"','&quot;'))+'"/');
+						tag_value.push(display_format.replace('{value}',(server_response.data[i].str_replace('"','&quot;'))));
 					}
 				}
-				tag_value = tag_value.join('<br/>');
+				tag_value = tag_value.join('');
 				//var tag_value = (server_response.data?(server_response.data).join('\r\n'):'');				
 				$('#tag_list').append('<tr><td>'+(current+1)+'</td><td>'+server_response.httpcode+'</td><td>'+url_value+'</td><td>'+tag_value+'</td></tr>')
 			}else{
@@ -281,8 +295,14 @@ window.addEventListener('load',function(){
 			}
 		});
 	}
+	load_css('https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css');
+	load_js('https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.min.js');
 });
 </script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js" type="text/javascript"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.2.0/js/tableexport.min.js" type="text/javascript"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.min.js" type="text/javascript"></script> -->
+<!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/> -->
 
 		<footer class="bg-dark text-muted py-4">
 			<div class="container">
