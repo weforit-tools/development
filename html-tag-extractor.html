@@ -133,6 +133,7 @@
 				<span class="response"></span>
 			</div>
 		</form>
+		<div class="ads"><script type="text/javascript" src="https://adhitzads.com/1057369"></script></div>
 		<div class="collapse my-4" id="results">
 			<div class="d-block d-md-flex">
 				<div class="small mr-4">
@@ -170,6 +171,10 @@ window.addEventListener('load',function(){
 			$('#submit').attr('disabled','disabled');			
 		}
 	});
+	//detect adblock
+	if(!$('.ads').height()){
+		console.log('adblock');
+	}
 	$('form.weforit-tool').submit(function(e){
 		e.preventDefault();
 		var input = $('#input').val();
