@@ -10,6 +10,12 @@
 		<link rel="manifest" href="./manifest.json">
 		<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
 		<link rel="icon" href="./favicon.ico" type="image/x-icon">
+		<script type="text/javascript">
+			var app = {
+				'api'			: 'https://weforit.com/api/',
+				'current_url'	: 'http://localhost/test/404?skip=1',
+			}
+		</script>
 	</head>
 	<body>
 		<nav class="sticky-top navbar navbar-expand-lg navbar-light bg-white shadow-sm navbar-primary">
@@ -24,7 +30,13 @@
 							<a class="nav-link" href="/">Home</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="./explore">Explore</a>
+							<a class="nav-link" href="/about">About</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/explore">Explore</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/contact">Contact</a>
 						</li>
 					</ul>
 				</div>

@@ -97,14 +97,15 @@ uppers = ['Id', 'Tv'];
 	}
 })(jQuery);
 $('[data-toggle="tooltip"]').tooltip();
+/*
 setInterval(function(){
 	if(adblock() == true && app.current_url.indexOf('/something-wrong') == '-1'){
 		var target = (window.protocol?window.protocol:'https')+'://'+window.location.hostname+'/something-wrong';
 		window.location = target;
 	}
 },1000);
-/*
 */
+
 function adblock(){
 	if(!$('.ads').height() || 
 		!$('.ads').width() ||
