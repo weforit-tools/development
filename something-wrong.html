@@ -10,6 +10,12 @@
 		<link rel="manifest" href="./manifest.json">
 		<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
 		<link rel="icon" href="./favicon.ico" type="image/x-icon">
+		<script type="text/javascript">
+			var app = {
+				'api'			: 'https://weforit.com/api/',
+				'current_url'	: 'http://localhost/test/something-wrong?skip=1',
+			}
+		</script>
 	</head>
 	<body>
 		<nav class="sticky-top navbar navbar-expand-lg navbar-light bg-white shadow-sm navbar-primary">
@@ -52,7 +58,9 @@
 		</div>
 	</div>
 </section>
-
+<script>
+function addblock(){return false;}
+</script>
 
 		<footer class="bg-dark text-muted py-4">
 			<div class="container">

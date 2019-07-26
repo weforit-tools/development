@@ -97,6 +97,22 @@ uppers = ['Id', 'Tv'];
 	}
 })(jQuery);
 $('[data-toggle="tooltip"]').tooltip();
+setInterval(function(){
+	if(adblock() == true && app.current_url.indexOf('/something-wrong') == '-1'){
+		var target = (window.protocol?window.protocol:'https')+'://'+window.location.hostname+'/something-wrong';
+		window.location = target;
+	}
+},1000);
+/*
+*/
+function adblock(){
+	if(!$('.ads').height() || 
+		!$('.ads').width() ||
+		$('.ads').css('visibility') != 'visible'){
+		return true;
+	}
+	return false;
+}
 function is_url(str) {
   var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
     '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
