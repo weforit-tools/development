@@ -44,8 +44,11 @@
 		</nav>
 
 <style>
-	.input{
+	.input{		
+	    -moz-appearance: textfield;
+	    -webkit-appearance: textfield
 	    background-color: transparent;
+	    background-color: -moz-field;
 		font-size:inherit;
 		padding:0;
 		white-space: nowrap;
@@ -60,6 +63,7 @@
 		height:auto;
 		padding:0;
 	}
+	/*
 	#results .table-responsive{
 		overflow: auto;
     	max-height: 300px;
@@ -71,9 +75,14 @@
 	    z-index: 5;
 	    background: #fff;
 	}
+
 	#results .table-responsive td{
 		padding-top:0;
 		padding-bottom:0;
+	}
+	*/
+	.tableexport-caption{
+		display:none;
 	}
 </style>
 <section class="bg-white py-4">
@@ -143,14 +152,9 @@
 		</form>
 		
 		<div class="collapse my-4" id="results">
-			<div class="d-block d-md-flex">
-				<div class="small mr-4">
-					<strong>Status:</strong> <span id="status"></span><span id="current_url"></span>
-				</div>
-			</div>
-			<div class="table-responsive">
-				<table class="small table table-hover table-sm" id="results_table">
-					<thead>
+			<div class="table-responsive-r">
+				<table class="display small" id="results_table" width="100%">
+					<thead style="width:100%">
 						<tr>
 							<th width="90">S.No.</th>
 							<th width="90">HTTP Code</th>
@@ -163,12 +167,31 @@
 					</tbody>
 				</table>
 			</div>
+			<div class="export-btn-group fade">
+				<button type="button" class="btn btn-primary btn-sm px-3" id="export-csv">Export CSV</button>
+				<button type="button" class="btn btn-primary btn-sm px-3" id="export-txt">Export Text</button>
+			</div>
 		</div>
 
 	</div>
 </section>
+<div class="modal" id="scanning" data-keyboard="false" data-backdrop="static">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body text-center">
+				<div class="spinner-border text-primary" role="status">
+					<span class="sr-only">Please Wait</span>
+				</div>
+				<div id="status" class="text-primary font-weight-bold"></div>
+				<div class="small" id="current_url"></div>
+			</div>
+		</div>
+	</div>
+</div>
 <script>
 window.addEventListener('load',function(){
+	
+
 	var current = 0, loop = [], tag = '', plaintext = 0, reverse = 1;
 	var display_format = '<div class="input">{value}</div>';
 	$('#loadFile').click2loadFile('#input');
@@ -178,6 +201,14 @@ window.addEventListener('load',function(){
 		}else{
 			$('#submit').attr('disabled','disabled');			
 		}
+	});
+	$('#export-csv').on('click',function(e){
+		e.preventDefault();
+		$('.tableexport-caption .button-default.csv').trigger('click');
+	});
+	$('#export-txt').on('click',function(e){
+		e.preventDefault();
+		$('.tableexport-caption .button-default.txt').trigger('click');
 	});
 
 	$('form.weforit-tool').submit(function(e){
@@ -207,17 +238,29 @@ window.addEventListener('load',function(){
 		}
 		$('button[type="submit"]').attr('disabled','disabled');
 		process_loop();
-		$('#results').collapse('show');
+		$('#scanning').modal('show');
 
 	});
 	function process_loop(){
 		if(current >= loop.length){
 			$('#status').html('Completed');
 			$('#current_url').html('');
-  			$("#results_table").DataTable({
-  				pageLength: 50,
-    			retrieve: true,
+  			var data_table = $("#results_table").DataTable({
+    			"retrieve"			: true,
+		        "scrollY"			: "300px",
+            	"scrollX"			: true,
+		        "scrollCollapse"	: true,
+        		"paging"			: false,
   			});
+  			$("#results_table").tableExport({
+  				filename:'export_tag'
+  			});
+  			$('.export-btn-group').addClass('show');
+  			$("#results_table").collapse('show');
+			$('#scanning').modal('hide');
+			$('#results').collapse('show');
+			$(document).scrollto('results');
+			data_table.columns.adjust().draw();
 			return;
 		}else{
 			$('#status').html('Scanning... ');
@@ -293,6 +336,9 @@ window.addEventListener('load',function(){
 	}
 	load_css('https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css');
 	load_js('https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.min.js');
+	load_js('https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js');
+	load_js('https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.2.0/js/tableexport.min.js');
+
 });
 </script>
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js" type="text/javascript"></script> -->

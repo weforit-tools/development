@@ -95,7 +95,17 @@ uppers = ['Id', 'Tv'];
 			reader.readAsText(input);
 		});
 	}
+	$.fn.scrollto = function(target,offset){
+		if(!offset){
+			offset = 0;
+		}
+        $('html, body').animate({
+            scrollTop: ($("#"+target).offset().top - offset)
+        }, 500);
+        return this;
+	}
 })(jQuery);
+
 function load_css(url){
     var node = document.createElement("link");
     node.setAttribute("href",url);
@@ -214,6 +224,7 @@ function text_counter(str){
     'words':total_words
   }
 }
+
 String.prototype.ltrim = function() {
     return this.replace(/^\s+/,"");
 }
