@@ -140,7 +140,11 @@
 						</div>
 						<div class="custom-control custom-switch small">
 							<input type="checkbox" class="custom-control-input" id="correction" checked="checked">
-							<label class="custom-control-label" style="padding-top:.15rem" for="correction">Auto Add http <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="Automatically Add http?s and www at the begining of non-existing URLs"></i></label>
+							<label class="custom-control-label" style="padding-top:.15rem" for="correction">Auto Add http <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="Automatically Add http at the begining of non-existing URLs"></i></label>
+						</div>
+						<div class="custom-control custom-switch small">
+							<input type="checkbox" class="custom-control-input" id="follow" checked="checked">
+							<label class="custom-control-label" style="padding-top:.15rem" for="follow">Follow Redirection <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="Follow Redirect Location"></i></label>
 						</div>
 					</div>
 				</div>
@@ -196,7 +200,7 @@
 				</div>
 				<div class="small" id="current_url"></div>
 			</div>
-			<div class="modal-footer text-center">
+			<div class="modal-footer justify-content-center">
 				<button id="stop" class="btn btn-danger">Stop</button>
 			</div>	
 		</div>
@@ -206,8 +210,19 @@
 window.addEventListener('load',function(){
 	
 
-	var current = 0, loop = [], tag = '', plaintext = 0, reverse = 1, trim = 1, correction = 1;
+	var current = 0, loop = [], tag = '', plaintext = 0, reverse = 1, trim = 1, correction = 1, follow = 1;
 	var display_format = '<div class="input">{value}</div>';
+	var config_datatable = {
+		"retrieve"			: true,
+        "scrollY"			: '300px',
+    	"scrollX"			: true,
+        "scrollCollapse"	: true,
+		"paging"			: false,
+
+	}
+	var config_export = {
+  		filename:'export_tag'
+	}
 	$('#loadFile').click2loadFile('#input');
 	$('#accept').on('change',function(){
 		if($(this).is(':checked') == true){
@@ -228,18 +243,10 @@ window.addEventListener('load',function(){
 		loop = [];
 		$('#status').html('Stopped');
 		$('#current_url').html('');
-			var data_table = $("#results_table").DataTable({
-			"retrieve"			: true,
-	        "scrollY"			: '300px',
-        	"scrollX"			: true,
-	        "scrollCollapse"	: true,
-    		"paging"			: false,
-			});
-			$("#results_table").tableExport({
-				filename:'export_tag'
-			});
-			$('.export-btn-group').addClass('show');
-			$("#results_table").collapse('show');
+		var data_table = $("#results_table").DataTable(config_datatable);
+		$("#results_table").tableExport(config_export);
+		$('.export-btn-group').addClass('show');
+		$("#results_table").collapse('show');
 		$('#scanning').modal('hide');
 		$('#results').collapse('show');
 		$(document).scrollto('results');
@@ -256,6 +263,7 @@ window.addEventListener('load',function(){
 		reverse 		= $('#reverse').is(':checked');
 		trim 			= $('#trim').is(':checked')==true?1:0;
 		correction		= $('#correction').is(':checked')==true?1:0;
+		follow			= $('#follow').is(':checked')==true?1:0;
 
 		if(!input){
 			return;
@@ -271,7 +279,7 @@ window.addEventListener('load',function(){
 		if(reverse == true){
 			loop.reverse();
 		}
-		$('button[type="submit"]').attr('disabled','disabled');
+		$('button[type="submit"]').remove();
 		process_loop();
 		$('#scanning').modal('show');
 
@@ -280,16 +288,8 @@ window.addEventListener('load',function(){
 		if(current >= loop.length){
 			$('#status').html('Completed');
 			$('#current_url').html('');
-  			var data_table = $("#results_table").DataTable({
-    			"retrieve"			: true,
-		        "scrollY"			: "300px",
-            	"scrollX"			: true,
-		        "scrollCollapse"	: true,
-        		"paging"			: false,
-  			});
-  			$("#results_table").tableExport({
-  				filename:'export_tag'
-  			});
+  			var data_table = $("#results_table").DataTable(config_datatable);
+  			$("#results_table").tableExport(config_export);
   			$('.export-btn-group').addClass('show');
   			$("#results_table").collapse('show');
 			$('#scanning').modal('hide');
@@ -319,7 +319,7 @@ window.addEventListener('load',function(){
 			return;
 		}
 		$('#total').html(current+'/'+loop.length);
-		extract_tag(url,tag,plaintext,function(data){
+		extract_tag(url,tag,plaintext,follow,function(data){
 			var server_response = '';
 			var url_value = display_format.replace('{value}',url);
 			if(data.status && data.status == 'success'){
@@ -345,7 +345,7 @@ window.addEventListener('load',function(){
 		});
 
 	}
-	function extract_tag(url,tag,plaintext,callback){
+	function extract_tag(url,tag,plaintext,follow_location,callback){
 		if(!url || !tag){
 			return;
 		}
@@ -353,6 +353,7 @@ window.addEventListener('load',function(){
 		formData.append('url', url);
 		formData.append('tag', tag);
 		formData.append('plaintext', plaintext);
+		formData.append('follow_location', follow_location);
 		$.ajax({
 			url:app.api+'html/extract-tag/',
 			type:'post',
