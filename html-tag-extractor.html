@@ -140,7 +140,7 @@
 						</div>
 						<div class="custom-control custom-switch small">
 							<input type="checkbox" class="custom-control-input" id="correction" checked="checked">
-							<label class="custom-control-label" style="padding-top:.15rem" for="correction">Auto Add https &amp; www <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="Automatically Add http?s and www at the begining of non-existing URLs"></i></label>
+							<label class="custom-control-label" style="padding-top:.15rem" for="correction">Auto Add http <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="Automatically Add http?s and www at the begining of non-existing URLs"></i></label>
 						</div>
 					</div>
 				</div>
@@ -196,6 +196,9 @@
 				</div>
 				<div class="small" id="current_url"></div>
 			</div>
+			<div class="modal-footer">
+				<button id="stop" class="btn btn-danger">Stop</button>
+			</div>	
 		</div>
 	</div>
 </div>
@@ -203,7 +206,7 @@
 window.addEventListener('load',function(){
 	
 
-	var current = 0, loop = [], tag = '', plaintext = 0, reverse = 1;
+	var current = 0, loop = [], tag = '', plaintext = 0, reverse = 1, trim = 1, correction = 1;
 	var display_format = '<div class="input">{value}</div>';
 	$('#loadFile').click2loadFile('#input');
 	$('#accept').on('change',function(){
@@ -221,18 +224,39 @@ window.addEventListener('load',function(){
 		e.preventDefault();
 		$('.tableexport-caption .button-default.txt').trigger('click');
 	});
+	$('#stop').on('click',function(){
+		loop = [];
+		$('#status').html('Stopped');
+		$('#current_url').html('');
+			var data_table = $("#results_table").DataTable({
+			"retrieve"			: true,
+	        "scrollY"			: '300px',
+        	"scrollX"			: true,
+	        "scrollCollapse"	: true,
+    		"paging"			: false,
+			});
+			$("#results_table").tableExport({
+				filename:'export_tag'
+			});
+			$('.export-btn-group').addClass('show');
+			$("#results_table").collapse('show');
+		$('#scanning').modal('hide');
+		$('#results').collapse('show');
+		$(document).scrollto('results');
+		data_table.columns.adjust().draw();
+		return;
+	});
 
 	$('form.weforit-tool').submit(function(e){
 		e.preventDefault();
-		var input = $('#input').val();
-		tag = $('#html-tag').val();
-		var tag_val = $('#html-tag option:selected').text();
-		var reverse = $('#reverse').is(':checked');
-		if($('#plaintext').is(':checked') == true){
-			plaintext = 1;
-		}else{
-			plaintext = 0
-		}
+		var input 		= $('#input').val();
+		tag 			= $('#html-tag').val();
+		var tag_val 	= $('#html-tag option:selected').text();
+		plaintext 		= $('#plaintext').is(':checked') == true?1:0;
+		reverse 		= $('#reverse').is(':checked');
+		trim 			= $('#trim').is(':checked')==true?1:0;
+		correction		= $('#correction').is(':checked')==true?1:0;
+
 		if(!input){
 			return;
 		}
@@ -282,17 +306,22 @@ window.addEventListener('load',function(){
 			current++;
 			process_loop();
 		}
+		var url = loop[current];
+		url = (trim == 1?url.trim():url);
+		if(url.indexOf("http") == -1 && correction == 1){
+			url = 'http://'+url;
+		}
 		//if url is invalid
-		if(!is_url(loop[current])){
-			$('#tag_list').append('<tr><td>'+(current+1)+'</td><td>0</td><td>'+loop[current]+'</td><td></td>');
+		if(!is_url(url)){
+			$('#tag_list').append('<tr><td>'+(current+1)+'</td><td>0</td><td>'+url+'</td><td></td>');
 			current++;
 			process_loop();
 			return;
 		}
 		$('#total').html(current+'/'+loop.length);
-		extract_tag(loop[current],tag,plaintext,function(data){
+		extract_tag(url,tag,plaintext,function(data){
 			var server_response = '';
-			var url_value = display_format.replace('{value}',loop[current]);
+			var url_value = display_format.replace('{value}',url);
 			if(data.status && data.status == 'success'){
 				var tag_value = [];
 				server_response = JSON.parse(data.response);
