@@ -128,11 +128,19 @@
 						</div>
 						<div class="custom-control custom-switch small">
 							<input type="checkbox" class="custom-control-input" id="plaintext" checked="checked">
-							<label class="custom-control-label" style="padding-top:.15rem" for="plaintext">Extract Plain Text Only</label>
+							<label class="custom-control-label" style="padding-top:.15rem" for="plaintext">Extract Plain Text Only <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="Select Extraction Method, Outer Text with Tag or Simple Plain Text"></i></label>
 						</div>
 						<div class="custom-control custom-switch small">
 							<input type="checkbox" class="custom-control-input" id="reverse" checked="checked">
-							<label class="custom-control-label" style="padding-top:.15rem" for="reverse">Start Reverse</label>
+							<label class="custom-control-label" style="padding-top:.15rem" for="reverse">Start Reverse <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="Start Reverse on basis of LIFO Method (Last In, First Out)"></i></label>
+						</div>
+						<div class="custom-control custom-switch small">
+							<input type="checkbox" class="custom-control-input" id="trim" checked="checked">
+							<label class="custom-control-label" style="padding-top:.15rem" for="trim">Trim URLs <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="Trim Every URL before Processing"></i></label>
+						</div>
+						<div class="custom-control custom-switch small">
+							<input type="checkbox" class="custom-control-input" id="correction" checked="checked">
+							<label class="custom-control-label" style="padding-top:.15rem" for="correction">Auto Add https &amp; www <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="Automatically Add http?s and www at the begining of non-existing URLs"></i></label>
 						</div>
 					</div>
 				</div>
@@ -176,13 +184,16 @@
 	</div>
 </section>
 <div class="modal" id="scanning" data-keyboard="false" data-backdrop="static">
-	<div class="modal-dialog">
+	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-body text-center">
 				<div class="spinner-border text-primary" role="status">
 					<span class="sr-only">Please Wait</span>
 				</div>
-				<div id="status" class="text-primary font-weight-bold"></div>
+				<div class="text-primary font-weight-bold">
+					<div id="total">0/0</div>
+					<div id="status"></div>
+				</div>
 				<div class="small" id="current_url"></div>
 			</div>
 		</div>
@@ -278,6 +289,7 @@ window.addEventListener('load',function(){
 			process_loop();
 			return;
 		}
+		$('#total').html(current+'/'+loop.length);
 		extract_tag(loop[current],tag,plaintext,function(data){
 			var server_response = '';
 			var url_value = display_format.replace('{value}',loop[current]);
