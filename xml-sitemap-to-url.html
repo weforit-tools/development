@@ -72,6 +72,9 @@
 				<button type="submit" id="submit" class="btn btn-primary"><i class="fa fa-code"></i> Extract URLs</button>
 				<span class="response"></span>
 			</div>
+			<div class="alert alert-primary fade" id="tip">
+				<strong><i class="fa fa-info-circle mr-2"></i>Tip:</strong> If you need to Run Extractor again then refresh page and help us to earn some Page Views.
+			</div>
 		</form>
 		
 		<div class="collapse my-4" id="results">
@@ -156,13 +159,16 @@ window.addEventListener('load',function(){
 			worker.postMessage(input);
 			worker.onmessage = function(e){
 				if(e.data == 'done'){
+					$('button[type="submit"]').hide();
 					$('#scanning').modal('hide');
 					var table = $("#results_table").DataTable(config_datatable);
 					$("#results_table").tableExport(config_export);
 					table.columns.adjust().draw();
 					$('.export-btn-group').addClass('show');
+					$('#tip').addClass('show');
 					$("#results").collapse('show');
 					$(document).scrollto('results_table',130);
+
 					return;
 				}
 				url.push(e.data);
