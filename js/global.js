@@ -225,6 +225,15 @@ function text_counter(str){
   }
 }
 
+function inlineWorker(selector, callback) {
+  window.URL = window.URL || window.webkitURL || null;
+  
+  var script = document.querySelector(selector);
+  if (script.type === 'javascript/worker') {
+    var blob = new Blob([script.textContent]);
+    callback( new Worker( window.URL.createObjectURL(blob) ) );
+  }
+}
 String.prototype.ltrim = function() {
     return this.replace(/^\s+/,"");
 }
