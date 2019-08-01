@@ -13,7 +13,16 @@
 		<script type="text/javascript">
 			var app = {
 				'api'			: 'https://weforit.com/api/',
-				'current_url'	: 'http://localhost/test/./ck-html-editor?skip=1',
+				'current_url'	: 'http://localhost/test/ck-html-editor?skip=1',
+				'data_table'	: {
+						"retrieve"			: true,
+				        "scrollY"			: '300px',
+				    	"scrollX"			: true,
+				        "scrollCollapse"	: true,
+						"paging"			: false
+				},
+				'table_export'	: {},
+				
 			}
 		</script>
 	</head>
@@ -91,16 +100,17 @@ window.addEventListener('load',function(){
 		format_tags: 'p;h1;h2;h3;h4;h5;h6;pre;address;div',
 		height:'250px'
 	});
-	CKEDITOR.instances['html-editor'].on('key', function() { 
+	CKEDITOR.instances['html-editor'].on('change', function() { 
     	$('#output').val(CKEDITOR.instances['html-editor'].getData());
 	});
 	CKEDITOR.instances['html-editor'].on('paste', function() { 
     	$('#output').val(CKEDITOR.instances['html-editor'].getData());
 	});
-
+	/*
 	$('#output').on('keyup',function(){
 		CKEDITOR.instances['html-editor'].setData(this.value);
 	})
+	*/
 });
 </script>
 <div class='static-page'><script src="https://cdn.weforit.com/tool/ckeditor/4113-standard/ckeditor.js"></script>

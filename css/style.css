@@ -2,6 +2,9 @@
 body{
 	background:#f6f6f6;
 }
+img{
+	max-width:100%;
+}
 .navbar-primary{
 	padding:0;
 }
