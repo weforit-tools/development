@@ -12,8 +12,9 @@
 		<link rel="icon" href="./favicon.ico" type="image/x-icon">
 		<script type="text/javascript">
 			var app = {
+				'scroll_offset'	: 60,
 				'api'			: 'https://weforit.com/api/',
-				'current_url'	: 'http://localhost/test/xml-sitemap-to-url?skip=1',
+				'current_url'	: 'http://localhost/test/./xml-sitemap-to-url?skip=1',
 				'data_table'	: {
 						"retrieve"			: true,
 				        "scrollY"			: '300px',
@@ -22,7 +23,6 @@
 						"paging"			: false
 				},
 				'table_export'	: {},
-				
 			}
 		</script>
 	</head>
@@ -214,7 +214,7 @@ window.addEventListener('load',function(){
 				$('#scanning .modal-body').append('<div class="small">Extraction Completed!! Now Formatting Data...</div>');
 				setTimeout(function(){
 					$('#urls').html(e.data);
-					$('#scanning .modal-body').append('<div class="small">Prepating Data into Tables... It can take sometime depending on numbers of URLs</div>');
+					$('#scanning .modal-body').append('<div class="small">Preparing Data into Tables... It can take sometime depending on numbers of URLs</div>');
 					setTimeout(function(){
 						$('button[type="submit"]').hide();
 						$('#scanning').modal('hide');

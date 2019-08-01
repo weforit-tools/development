@@ -12,6 +12,7 @@
 		<link rel="icon" href="./favicon.ico" type="image/x-icon">
 		<script type="text/javascript">
 			var app = {
+				'scroll_offset'	: 60,
 				'api'			: 'https://weforit.com/api/',
 				'current_url'	: 'http://localhost/test/htaccess-file-caching-generator?skip=1',
 				'data_table'	: {
@@ -22,7 +23,6 @@
 						"paging"			: false
 				},
 				'table_export'	: {},
-				
 			}
 		</script>
 	</head>
@@ -58,6 +58,10 @@
     color: #fff;
 }
 
+.site-header .lead{
+	font-size:110%;
+}
+
  .analyse .form-group{
   position:relative;
   max-width:500px;
@@ -79,6 +83,10 @@
 .btn-rounded {
     border-radius: 2rem;
 }
+.htaccess-caching .form-group{
+	margin-bottom:.1rem !important;
+}
+
 </style>
 <section class="intro site-header mb-0 jumbotron">
 	<div class="container px-0">
@@ -86,32 +94,35 @@
 			<div class="col-lg-7 px-5">
 				<h2 class="mb-3">.htaccess File Caching Generator</h2>
 				<h5 class="mb-4"><em>Speed Up Your Website Even More...</em></h5>
-				<p class="lead mt-4 mb-3">
-					<img class="mr-2" src="https://cdn.weforit.com/tool/images/check-white.png" style="width:2.5rem" />
+				<p class="lead mt-4 mb-2">
+					<img class="mr-2" src="https://cdn.weforit.com/tool/images/check-white.png" style="width:2rem" />
 					Compress HTML, JavaScript &amp; CSS
 				</p>
-				<p class="lead my-3">
-					<img class="mr-2" src="https://cdn.weforit.com/tool/images/check-white.png" style="width:2.5rem" />
+				<p class="lead my-2">
+					<img class="mr-2" src="https://cdn.weforit.com/tool/images/check-white.png" style="width:2rem" />
 					Enable G-Zip Compression
 				</p>
-				<p class="lead my-3">
-					<img class="mr-2" src="https://cdn.weforit.com/tool/images/check-white.png" style="width:2.5rem" />
+				<p class="lead my-2">
+					<img class="mr-2" src="https://cdn.weforit.com/tool/images/check-white.png" style="width:2rem" />
 					Leverage Browser Caching
 				</p>
-				<p class="lead my-3">
-					<img class="mr-2" src="https://cdn.weforit.com/tool/images/check-white.png" style="width:2.5rem" />
+				<p class="lead my-2">
+					<img class="mr-2" src="https://cdn.weforit.com/tool/images/check-white.png" style="width:2rem" />
 					Enable Text Compression
 				</p>
-				<p class="lead my-3">
-					<img class="mr-2" src="https://cdn.weforit.com/tool/images/check-white.png" style="width:2.5rem" />
+				<p class="lead mt-2 mb-4">
+					<img class="mr-2" src="https://cdn.weforit.com/tool/images/check-white.png" style="width:2rem" />
 					Serve Static Assets with an Efficient Cache Policy
 				</p>
+				<button type="button" class="btn btn-primary btn-rounded shadow-none px-5 py-3" onclick="$('#generator').collapse('show');scrollto('generator',app.scroll_offset)"><i class="fa fa-code"></i> Generate Code</button>
+				<!--
 				<form class="weforit-tool bg-transparent analyse mb-4" id="check-caching">
 					<div class="form-group">
 						<input type="url" class="form-control py-3" placeholder="Enter Website URL" />
-						<button type="submit" class="btn btn-primary btn-rounded px-5 py-2">Analyse</button>
+						<button type="submit" class="btn btn-primary btn-rounded shadow-none px-5 py-2">Analyse</button>
 					</div>
 				</form>
+				-->
 			</div>
 			<div class="col-lg-5 px-0 text-center">
 				<img class="shadow" src="https://cdn.weforit.com/tool/images/google-page-speed.png"/>
@@ -119,202 +130,584 @@
 		</div>
 	</div>
 </section>
-
-<section class="bg-light py-4">
+<section class="py-5 bg-white">
 	<div class="container">
-		<form class="weforit-tool bg-transparent">
-			<div class="row">
-				<div class="col-12 col-md-6 col-xl-8 bg-white py-4 shadow-sm">
-					
-				</div>
-				<div class="col-12 col-md-6 col-xl-4 bg-transparent">
-					<textarea class="bg-white shadow-sm form-control border-0" ></textarea>
-				</div>
-			</div>
-		</form>
-	</div>
-</section>
 
-
-<section class="bg-white py-4">
-	<div class="container">
-		<h1 class="text-center h4 mb-3">htaccess File Caching Generator</h1>
-		<form class="weforit-tool">
-			<div class="row">
-				<div class="col-12 col-md-12 col-lg-6">
-					<div class="control-box">
-						<div class="form-group mb-2">
-							<textarea id="input" class="form-control" style="white-space:pre;height: 164px;" placeholder="Input Text"></textarea>
-						</div>
-						<div class="d-flex align-items-center">
-							<label type="button" class="btn btn-light btn-sm mr-2">
-								<i class="fa fa-plus"></i>Load File
-								<input type="file" id="loadFile" name="loadfile" class="d-none"/>
-							</label>
-							<label type="button" class="btn btn-light btn-sm mr-2">
-								<i class="fa fa-times"></i>Clear
-								<button type="reset" class="d-none"></button>
-							</label>
-
-						</div>
-						<div class="d-block my-2 d-md-flex small">
-							<div class="w-50 px-2">
-								<div class="form-check">
-								  <label class="form-check-label">
-								    <input type="checkbox" checked="checked" class="form-check-input" name="trim">Trim (Start &amp; End)
-								  </label>
-								</div>
-								<div class="form-check">
-								  <label class="form-check-label">
-								    <input type="checkbox" class="form-check-input" name="ltrim">Trim Lines (Left)
-								  </label>
-								</div>
-							</div>
-							<div class="w-50 px-2">
-								<div class="form-check">
-								  <label class="form-check-label">
-								    <input type="checkbox" class="form-check-input" name="rtrim">Trim Lines (Right)
-								  </label>
-								</div>
-							</div>						
-						</div>
+		<h3 class="text-center"><em>First <span class="text-primary">Important Step</span> to Improve Page Speed</em></h3>
+		<p class="mb-5 text-muted text-center">Caching Can Improve 50% - 60% Page Speed of Your Website.</p>
+		<div class="row mt-5">
+			<div class="col-12 col-sm-6 col-md-3">
+				<div class="tool-box">
+					<div class="icon">
+						<i class="fa fa-pie-chart"></i>
 					</div>
-				</div>
-				<div class="col-12 col-md-12 col-lg-6">
-					<div class="control-box">
-						<div class="form-group mb-2">
-							<textarea readonly="readonly" id="output" style="white-space:pre;height: 160px;" class="bg-white form-control" placeholder="Output Text"></textarea>
-						</div>
-						<div class="d-flex align-items-center">
-							<button type="button" id="copy_text" class="btn btn-light btn-sm mr-2"><i class="fa fa-clipboard"></i>Copy Text</button>
-							<button type="button" id="save_file" class="btn btn-light btn-sm mr-2"><i class="fa fa-floppy-o"></i>Save</button>
-						</div>
-						<div class="row pt-2">
-							<div class="col-4 text-center py-2">
-								<div class="text-primary"><strong id="lb">0</strong></div>
-								<div class="small">Lines Before</div>
-							</div>
-							<div class="col-4 text-center py-2 border-left border-right">
-								<div class="text-primary"><strong id="la">0</strong></div>
-								<div class="small">Lines After</div>
-							</div>
-							<div class="col-4 text-center py-2">
-								<div class="text-primary"><strong id="lr">0</strong></div>
-								<div class="small">Lines Removed</div>
-							</div>
-						</div>
+					<div class="text">
+						Local Storage
+						<p class="small">Website Files are Stored in Local Storage and can be accessed on user request.</p>
 					</div>
 				</div>
 			</div>
-		</form>
-		<div class="bg-white py-3 px-2 my-4 shadow-sm">
-			<p class="text-center text-uppercase"><strong>How it Works?</strong></p>
-			<div class="row">
-				<div class="col-md-6">
-					<p>You Enter:</p>
-					<pre class="code small bg-light p-2">Hello, My Name is John Doe
-
-	I want to remove these blank lines
-
-
-
-	please help me out from this
-
-
-	really thanks!!
-					</pre>
-				</div>			
-				<div class="col-md-6">
-					<p>Outpur Will:</p>
-					<pre class="code small bg-light p-2">Hello, My Name is John Doe
-	I want to remove these blank lines
-	please help me out from this
-	really thanks!!</pre>
+			<div class="col-12 col-sm-6 col-md-3">
+				<div class="tool-box">
+					<div class="icon">
+						<i class="fa fa-compress"></i>
+					</div>
+					<div class="text">
+						Compression
+						<p class="small">Text Files are can be compressed over network and helpful in saving some bytes.</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-12 col-sm-6 col-md-3">
+				<div class="tool-box">
+					<div class="icon">
+						<i class="fa fa-code"></i>
+					</div>
+					<div class="text">
+					 	Minify Code
+						<p class="small">It can help in saving some bytes and it will not break any code functionality.</p>
+					</div>
+				</div>
+			</div>			
+			<div class="col-12 col-sm-6 col-md-3">
+				<div class="tool-box">
+					<div class="icon">
+						<i class="fa fa-code"></i>
+					</div>
+					<div class="text">
+					 	Long Time Caching
+						<p class="small">Static Assets like Videos, Images, Icon and etc can be cached for Longer time.</p>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
+
+<section class="bg-secondary text-white py-5">
+	<div class="container">
+		<h4 class="text-center mb-4"><em>Why Caching is the Most Important Part of Page Speed</em></h4>
+		<p class="lead text-center">Caching is the Most Important Part of Page Speed. The reason is Browser Store the Website File into storage and when a user visit this site again then browser restore website from local storage rather than connecting to server again and again. It save the time that is take by response of the server</p>
+	</div>
+</section>
+<section class="bg-white py-5">
+	<div class="container">
+		<h4>FAQs - htaccess File Caching Generator</h4>
+		<p class="text-muted">You'll find more information of Our Tool. If Have a Question related to File Caching then Feel Free to ask anything in our community </p>
+		<div class="row">
+			<div class="col-lg-6">
+some
+			</div>
+			<div class="col-lg-6">
+some
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="bg-light py-5">
+	<div class="container">
+		<div class="text-center">
+			<h4 class="mb-4">htaccess File Caching Generator</h4>
+			<button type="button" id="quick" onclick="$('#generator').collapse('show');scrollto('generator',app.scroll_offset);$('form#generator button[type=submit]').trigger('click');" class="btn btn-primary btn-rounded px-4 btn-sm py-2 mr-2"><i class="fa fa-code"></i> &nbsp;Quick Generate</button>
+			<button type="button" onclick="$('#generator').collapse('show');scrollto('generator',app.scroll_offset)" class="btn btn-primary btn-rounded px-4 btn-sm py-2 mr-2"><i class="fa fa-cogs"></i> &nbsp;More Options</button>
+		</div>
+		<form id="generator" class="mt-4 collapse weforit-tool htaccess-caching bg-transparent">
+			<div class="row">
+				<div class="col-12 col-md-12 col-xl-7 bg-white py-4 shadow-sm mb-4">
+					<h6 class="mb-3">Select File Type for Leaverage Browser Caching</h6>
+					<div class="form-row">
+						<div class="form-group col-12 col-md-3 mb-4">
+							<div class="custom-control custom-checkbox mt-1">
+								<input type="checkbox" class="custom-control-input" checked="checked" id="css">
+								<label class="custom-control-label" for="css">CSS / Styles</label>
+							</div>
+						</div>
+						<div class="form-group col-12 col-md-3 mb-0">
+							<div class="form-row">
+								<div class="form-group col-5 col-md-4">
+									<input type="text" id="css-d-1" class="form-control form-control-sm" placeholder="1" value="1"/>
+								</div>
+								<div class="form-group col-7 col-md-8">
+									<select class="form-control form-control-sm" id="css-d-2">
+							            <option value="minute">Minute</option>
+							            <option value="hour">Hour</option>
+							            <option value="day">Day</option>
+							            <option value="week">Week</option>
+							            <option value="month">Month</option>
+							            <option value="year" selected="year">Year</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group col-12 col-md-6 mb-0">
+							<small class="form-text text-muted">
+							  Caching for Static CSS and Stylesheet
+							</small>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-12 col-md-3 mb-0">
+							<div class="custom-control custom-checkbox mt-1">
+								<input type="checkbox" class="custom-control-input" checked="checked" id="javascript">
+								<label class="custom-control-label" for="javascript">JavaScript</label>
+							</div>
+						</div>
+						<div class="form-group col-12 col-md-3 mb-0">
+							<div class="form-row">
+								<div class="form-group col-5 col-md-4">
+									<input type="text" id="javascript-d-1" class="form-control form-control-sm" placeholder="1" value="1"/>
+								</div>
+								<div class="form-group col-7 col-md-8">
+									<select id="javascript-d-2" class="form-control form-control-sm">
+							            <option value="minute">Minute</option>
+							            <option value="hour">Hour</option>
+							            <option value="day">Day</option>
+							            <option value="week">Week</option>
+							            <option value="month">Month</option>
+							            <option value="year" selected="year">Year</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group col-12 col-md-6 mb-0">
+							<small class="form-text text-muted">
+							  Caching for Static JS or JavaScript Files
+							</small>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="form-group col-12 col-md-3 mb-0">
+							<div class="custom-control custom-checkbox mt-1">
+								<input type="checkbox" class="custom-control-input" checked="checked" id="favicon">
+								<label class="custom-control-label" for="favicon">Favicon</label>
+							</div>
+						</div>
+						<div class="form-group col-12 col-md-3 mb-0">
+							<div class="form-row">
+								<div class="form-group col-5 col-md-4">
+									<input type="text" id="favicon-d-1" class="form-control form-control-sm" placeholder="1" value="1"/>
+								</div>
+								<div class="form-group col-7 col-md-8">
+									<select id="favicon-d-2" class="form-control form-control-sm">
+							            <option value="minute">Minute</option>
+							            <option value="hour">Hour</option>
+							            <option value="day">Day</option>
+							            <option value="week">Week</option>
+							            <option value="month">Month</option>
+							            <option value="year" selected="year">Year</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group col-12 col-md-6 mb-0">
+							<small class="form-text text-muted">
+							  Caching for Site Favicon
+							</small>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="form-group col-12 col-md-3 mb-0">
+							<div class="custom-control custom-checkbox mt-1">
+								<input type="checkbox" class="custom-control-input" checked="true" id="images">
+								<label class="custom-control-label" for="images">Images</label>
+							</div>
+						</div>
+						<div class="form-group col-12 col-md-3 mb-0">
+							<div class="form-row">
+								<div class="form-group col-5 col-md-4">
+									<input type="text" id="images-d-1" class="form-control form-control-sm" placeholder="1" value="1"/>
+								</div>
+								<div class="form-group col-7 col-md-8">
+									<select id="images-d-2" class="form-control form-control-sm">
+							            <option value="minute">Minute</option>
+							            <option value="hour">Hour</option>
+							            <option value="day">Day</option>
+							            <option value="week">Week</option>
+							            <option value="month">Month</option>
+							            <option value="year" selected="year">Year</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group col-12 col-md-6 mb-0">
+							<small class="form-text text-muted">
+							  Caching All Types of Images and SVG
+							</small>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="form-group col-12 col-md-3 mb-0">
+							<div class="custom-control custom-checkbox mt-1">
+								<input type="checkbox" class="custom-control-input" checked="true" id="pdf">
+								<label class="custom-control-label" for="pdf">PDF</label>
+							</div>
+						</div>
+						<div class="form-group col-12 col-md-3 mb-0">
+							<div class="form-row">
+								<div class="form-group col-5 col-md-4">
+									<input type="text" id="pdf-d-1"  class="form-control form-control-sm" placeholder="1" value="1"/>
+								</div>
+								<div class="form-group col-7 col-md-8">
+									<select id="pdf-d-2" class="form-control form-control-sm">
+							            <option value="minute">Minute</option>
+							            <option value="hour">Hour</option>
+							            <option value="day">Day</option>
+							            <option value="week">Week</option>
+							            <option value="month">Month</option>
+							            <option value="year" selected="year">Year</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group col-12 col-md-6 mb-0">
+							<small class="form-text text-muted">
+							  Cache Control For PDF Files
+							</small>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="form-group col-12 col-md-3 mb-0">
+							<div class="custom-control custom-checkbox mt-1">
+								<input type="checkbox" class="custom-control-input" checked="true" id="flash">
+								<label class="custom-control-label" for="flash">Flash</label>
+							</div>
+						</div>
+						<div class="form-group col-12 col-md-3 mb-0">
+							<div class="form-row">
+								<div class="form-group col-5 col-md-4">
+									<input type="text" id="flash-d-1" class="form-control form-control-sm" placeholder="1" value="1"/>
+								</div>
+								<div class="form-group col-7 col-md-8">
+									<select id="flash-d-2" class="form-control form-control-sm">
+							            <option value="minute">Minute</option>
+							            <option value="hour">Hour</option>
+							            <option value="day">Day</option>
+							            <option value="week">Week</option>
+							            <option value="month">Month</option>
+							            <option value="year" selected="year">Year</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group col-12 col-md-6 mb-0">
+							<small class="form-text text-muted">
+							  Cache Flash Supported Files
+							</small>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="form-group col-12 col-md-3 mb-0">
+							<div class="custom-control custom-checkbox mt-1">
+								<input type="checkbox" class="custom-control-input" checked="true" id="videos">
+								<label class="custom-control-label" for="videos">Videos</label>
+							</div>
+						</div>
+						<div class="form-group col-12 col-md-3 mb-0">
+							<div class="form-row">
+								<div class="form-group col-5 col-md-4">
+									<input type="text" id="video-d-1" class="form-control form-control-sm" placeholder="1" value="1"/>
+								</div>
+								<div class="form-group col-7 col-md-8">
+									<select id="video-d-2" class="form-control form-control-sm">
+							            <option value="minute">Minute</option>
+							            <option value="hour">Hour</option>
+							            <option value="day">Day</option>
+							            <option value="week">Week</option>
+							            <option value="month">Month</option>
+							            <option value="year" selected="year">Year</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group col-12 col-md-6 mb-0">
+							<small class="form-text text-muted">
+							  All Type of Videos and Streaming
+							</small>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="form-group col-12 col-md-3 mb-0">
+							<div class="custom-control custom-checkbox mt-1">
+								<input type="checkbox" class="custom-control-input" checked="true" id="fonts">
+								<label class="custom-control-label" for="fonts">Fonts</label>
+							</div>
+						</div>
+						<div class="form-group col-12 col-md-3 mb-0">
+							<div class="form-row">
+								<div class="form-group col-5 col-md-4">
+									<input type="text" id="font-d-1" class="form-control form-control-sm" placeholder="1" value="1"/>
+								</div>
+								<div class="form-group col-7 col-md-8">
+									<select id="font-d-2" class="form-control form-control-sm">
+							            <option value="minute">Minute</option>
+							            <option value="hour">Hour</option>
+							            <option value="day">Day</option>
+							            <option value="week">Week</option>
+							            <option value="month">Month</option>
+							            <option value="year" selected="year">Year</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group col-12 col-md-6 mb-0">
+							<small class="form-text text-muted">
+							  Add Web Font Caching
+							</small>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="form-group col-12 col-md-3 mb-0">
+							<div class="custom-control custom-checkbox mt-1">
+								<input type="checkbox" class="custom-control-input" checked="true" id="default">
+								<label class="custom-control-label" for="default">Default</label>
+							</div>
+						</div>
+						<div class="form-group col-12 col-md-3 mb-0">
+							<div class="form-row">
+								<div class="form-group col-5 col-md-4">
+									<input type="text" id="default-d-1" class="form-control form-control-sm" placeholder="1" value="1"/>
+								</div>
+								<div class="form-group col-7 col-md-8">
+									<select id="default-d-2" class="form-control form-control-sm">
+							            <option value="minute">Minute</option>
+							            <option value="hour">Hour</option>
+							            <option value="day">Day</option>
+							            <option value="week">Week</option>
+							            <option value="month">Month</option>
+							            <option value="year" selected="year">Year</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group col-12 col-md-6 mb-0">
+							<small class="form-text text-muted">
+							  Default Text Based Files
+							</small>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-12 col-md-3 mb-0">
+							<div class="custom-control custom-checkbox mt-1">
+								<input type="checkbox" class="custom-control-input" checked="true" id="other">
+								<label class="custom-control-label" for="other">Other File Types</label>
+							</div>
+						</div>
+						<div class="form-group col-12 col-md-3 mb-0">
+							<div class="form-row">
+								<div class="form-group col-5 col-md-4">
+									<input type="text" id="other-d-1" class="form-control form-control-sm" placeholder="1" value="1"/>
+								</div>
+								<div class="form-group col-7 col-md-8">
+									<select id="other-d-2" class="form-control form-control-sm">
+							            <option value="minute">Minute</option>
+							            <option value="hour">Hour</option>
+							            <option value="day">Day</option>
+							            <option value="week">Week</option>
+							            <option value="month">Month</option>
+							            <option value="year" selected="year">Year</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group col-12 col-md-6 mb-0">
+							<input id="other-val" class="form-control form-control-sm" placeholder="ttf, woff, xls"/>
+						</div>
+					</div>
+					<div class="form-row mt-3 pt-3">
+						<h6>Compression</h6>
+						<div class="form-group col-12">
+							<div class="custom-control custom-checkbox mt-1">
+								<input type="checkbox" class="custom-control-input" checked="true" id="gzip">
+								<label class="custom-control-label" for="gzip">GZip Compression</label>
+							</div>								
+						</div>
+					</div>
+					<button type="submit" class="mt-4 d-flex align-items-center mx-auto btn btn-primary px-5 py-3 btn-rounded"><i class="fa fa-code"></i> &nbsp;Generate</button>
+					<div class="alert mt-4 alert-primary" id="tip" style='display:none'>
+						<strong><i class="fa fa-info-circle mr-2"></i>Tip:</strong> If you need to Run Generator again then <a href="htaccess-file-caching-generator">refresh page</a> and help us to earn some Page Views.
+					</div>
+				</div>
+				<div class="col-12 col-md-12 col-xl-5 px-0 px-xl-3 bg-transparent">
+					<div class="sticky-top" style="top:60px;z-index:1" id="output-card">
+						<div class="card card-primary shadow-sm ">
+							<div class="card-header bg-dark text-white">
+								.htaccess
+							</div>
+							<div class="card-body p-0">
+								<textarea rows="13" id="output" onclick="this.select()" onfocus="this.select()" class="bg-white form-control form-control-sm border-0" ></textarea>
+							</div>
+						</div>
+						
+						<div class="text-center mt-4">
+							<button type="button" id="copy_text" class="btn btn-dark mr-2"><i class="fa fa-clipboard mr-2"></i>Copy Code</button>
+							<button type="button" id="save_file" class="btn btn-dark"><i class="fa fa-download mr-2"></i>Download File</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+<section class="bg-white py-5">
+	<div class="container">
+		<h4><em>What is Lorem Ipsum?</em></h4>
+		<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+	</div>
+</section>
+<script type='javascript/worker' id='generate-code'>
+	self.addEventListener('message',function(e){
+		var val = e.data;
+		var code = [];
+		code.push('# Caching Start (tool.weforit.com) #');
+		code.push('<IfModule mod_expires.c>');
+		code.push('ExpiresActive On');
+		val._default==true?code.push('ExpiresDefault "access plus '+val._default_d1+' '+val._default_d2+'"'):'';
+		if(val._css == true){
+			code.push('#css');
+			code.push('ExpiresByType text/css "access plus '+val._css_d1+' '+val._css_d2+'"');
+		}
+
+		if(val._js == true){
+			code.push('#JavaScript');
+			code.push('ExpiresByType text/javascript "access plus '+val._js_d1+' '+val._js_d2+'"');
+			code.push('ExpiresByType text/x-javascript "access plus '+val._js_d1+' '+val._js_d2+'"');
+			code.push('ExpiresByType application/javascript "access plus '+val._js_d1+' '+val._js_d2+'"');
+		}
+		if(val._images == true){
+			code.push('#images');
+			code.push('ExpiresByType image/jpg "access plus '+val._images_d1+' '+val._images_d2+'"');
+			code.push('ExpiresByType image/jpeg "access plus '+val._images_d1+' '+val._images_d2+'"');
+			code.push('ExpiresByType image/gif "access plus '+val._images_d1+' '+val._images_d2+'"');
+			code.push('ExpiresByType image/png "access plus '+val._images_d1+' '+val._images_d2+'"');
+			code.push('ExpiresByType image/webp "access plus '+val._images_d1+' '+val._images_d2+'"');
+			code.push('ExpiresByType image/svg+xml "access plus '+val._images_d1+' '+val._images_d2+'"');
+		}
+		if(val._favicon == true){
+			code.push('#favicon');
+			code.push('AddType image/x-icon .ico');
+			code.push('ExpiresByType image/ico "access plus '+val._favicon_d1+' '+val._favicon_d2+'"');
+			code.push('ExpiresByType image/icon "access plus '+val._favicon_d1+' '+val._favicon_d2+'"');
+			code.push('ExpiresByType image/x-icon "access plus '+val._favicon_d1+' '+val._favicon_d2+'"');
+		}
+		if(val._pdf == true){
+			code.push('#pdf');
+			code.push('ExpiresByType application/pdf "access plus '+val._pdf_d1+' '+val._pdf_d2+'"');
+		}
+		if(val._font == true){
+			code.push('#font');
+			code.push('ExpiresByType font/ttf "access plus '+val._font_d1+' '+val._font_d2+'"');
+			code.push('ExpiresByType font/woff "access plus '+val._font_d1+' '+val._font_d2+'"');
+		}
+		if(val._flash == true){
+			code.push('#flash');
+			code.push('ExpiresByType application/x-shockwave-flash "access plus '+val._flash_d1+' '+val._flash_d2+'"');
+		}
+		if(val._video == true){
+			code.push('#videos');
+			code.push('ExpiresByType video/mp4  "access plus '+val._video_d1+' '+val._video_d2+'"');
+			code.push('ExpiresByType video/mpeg  "access plus '+val._video_d1+' '+val._video_d2+'"');
+		}
+
+		if(val._other == true && val. _other_val.length > 0){
+			code.push('<FilesMatch "\\.('+((val._other_val.split(',')).join('|'))+')$">');
+			var j;
+			switch(val._other_d2){
+				case'minute':j=val._other_d1*60;
+				break;
+				case'hour':j=val._other_d1*60*60;
+				break;
+				case'day':j=(val._other_d1*60*60)*24;
+				break;
+				case'week':j=((val._other_d1*60*60)*24)*7;
+				break;
+				case'month':j=((val._other_d1*60*60)*24)*30;
+				break;
+				case'year':j=((val._other_d1*60*60)*24)*365;
+				break;
+				default:j=val._other_d1;
+				break
+			}
+			code.push('Header set Cache-Control public, "'+'max-age='+j+'"');
+			code.push('</FilesMatch>');
+		}
+  		code.push('</IfModule>');
+		code.push('# Caching End#');
+		setTimeout(function(){postMessage(code.join('\r\n'))},500);
+	});
+</script>
+
 <script>
 window.addEventListener('load',function(){
-	var ltrim = 0, rtrim = 0, setrim = 1;
-	$('#loadFile').on('change',function(){
-		load_file('#loadFile','#input',callback_remove_empty_lines);
+	$('#save_file').on('click',function(e){
+		e.preventDefault();
+		download('#output','.htaccess');
 	});
-	$('[name="ltrim"]').on('change',function(){
-		if ($(this).is(':checked')) {
-			ltrim = 1;
-		}else{
-			ltrim = 0;
-		}
-	});
-	$('[name="ltrim"]').on('change',function(){
-		if ($(this).is(':checked')) {
-			rtrim = 1;
-		}else{
-			rtrim = 0;
-		}
-	});
-	$('[name="trim"]').on('change',function(){
-		if ($(this).is(':checked')) {
-			setrim = 1;
-		}else{
-			setrim = 0;
-		}
-	});
-	$('#input, #input_sep, #output_sep, [name="ltrim"], [name="rtrim"],[name="trim"]').on('change keyup paste',function(){
-		callback_remove_empty_lines();
-	});
-	
-	$('#save_file').click2download('#output');
 	$('#copy_text').click2copy('#output');
-	
-	function remove_empty_lines(){
-		var string = $('#input').val();
-		if(!string){
-			return;
-		}
-		var trim = {
-			'trim':setrim,
-			'left':ltrim,
-			'right':rtrim,
-		}
-		string = trim.trim==1?string.trim():string;
-		var lines = string.split(/\r|\n/);
-		var new_lines = [];
-		var total = 0;
-		$.each(lines,function(i,v){
-			if(!v || !v.trim()){
-				return true;
-			}
-			if(trim.left == 1 && total != 1){
-				v = v.ltrim();
-			}
-			if(trim.right == 1){
-				v = v.rtrim();
-			}
-
-			if(!v){
-				return true;
-			}
-			new_lines.push(v);
-			total++;
-		});
-		return {
-			"before":lines.length,
-			"after":total,
-			"data":new_lines.join('\r\n')
+	$('form#generator').submit(function(e){
+		e.preventDefault();
+		val = {
+			'_default'		: $('#default').is(":checked"),
+			'_default_d1' 	: $('#default-d-1').val(),
+			'_default_d2' 	: $('#default-d-2').val(),
+			'_css' 			: $('#css').is(":checked"),
+			'_css_d1' 		: $('#css-d-1').val(),
+			'_css_d2' 		: $('#css-d-2').val(),
+			'_js'  			: $('#javascript').is(":checked"),
+			'_js_d1'  		: $('#javascript-d-1').val(),
+			'_js_d2'  		: $('#javascript-d-2').val(),
+			'_images'  		: $('#images').is(":checked"),
+			'_images_d1'  	: $('#images-d-1').val(),
+			'_images_d2'  	: $('#images-d-2').val(),
+			'_favicon'  	: $('#favicon').is(":checked"),
+			'_favicon_d1'  	: $('#favicon-d-1').val(),
+			'_favicon_d2'  	: $('#favicon-d-2').val(),
+			'_pdf'  		: $('#pdf').is(":checked"),
+			'_pdf_d1'  		: $('#pdf-d-1').val(),
+			'_pdf_d2'  		: $('#pdf-d-2').val(),
+			'_flash'  		: $('#flash').is(":checked"),
+			'_flash_d1'  	: $('#flash-d-1').val(),
+			'_flash_d2'  	: $('#flash-d-2').val(),
+			'_video'  		: $('#video').is(":checked"),
+			'_video_d1'  	: $('#video-d-1').val(),
+			'_video_d2'  	: $('#video-d-2').val(),
+			'_font'  		: $('#font').is(":checked"),
+			'_font_d1'  	: $('#font-d-1').val(),
+			'_font_d2'  	: $('#font-d-2').val(),
+			'_other'  		: $('#other').is(":checked"),
+			'_other_d1'  	: $('#other-d-1').val(),
+			'_other_d2'  	: $('#other-d-2').val(),
+			'_other_val'  	: ($('#other-val').val()),
+			'_gzip'  		: ($('#gzip').val())
 		};
-	}
-	function callback_remove_empty_lines(){
-		var lines = remove_empty_lines();
-		$('#output').val(lines.data);
-		$('#lb').html(lines.before);
-		$('#la').html(lines.after);
-		$('#lr').html(lines.before - lines.after);
-	}
+		//$('button[type="submit"]').remove();
+		$('button[type="submit"]').attr('disabled','disabled');
+		$('#quick').attr('disabled','disabled');
+		$('button[type="submit"] .fa').removeClass('fa fa-code').addClass('spinner-border spinner-border-sm');
+		inlineWorker('#generate-code',function(worker){
+			worker.postMessage(val);
+			worker.onmessage  = function(e){
+				$('#output').val(e.data).focus();
+				worker.terminate();
+				worker = undefined;
+				scrollto('output-card');
+				$('button[type="submit"] .spinner-border').removeClass('spinner-border spinner-border-sm').addClass('fa fa-code');
+				$('#tip').delay(10000).fadeIn();
+				snackbar('Code Generated');
+			}
+		})
+
+	})
 })
 </script>
+
 
 		<footer class="bg-dark text-muted py-4">
 			<div class="container">

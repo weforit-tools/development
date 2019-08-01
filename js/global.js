@@ -1,9 +1,9 @@
 verbs = ['A', 'An', 'The', 'And', 'But', 'Or', 'For', 'Nor', 'As', 'At', 'By', 'For', 'From', 'In', 'Into', 'Near', 'Of', 'On', 'Onto', 'To', 'With','Is','Am','Are'];
 uppers = ['Id', 'Tv'];
+var snackbar_timeout = 5000;
+var copied_message = 'Copied';
 
 (function($){
-	var snackbar_timeout = 5000;
-	var copied_message = 'Copied';
 	$(document).on('click','[data-dismiss="snackbar"]',function(){
 		$('.snackbar').collapse('hide');
 		setTimeout(function(){
@@ -105,7 +105,29 @@ uppers = ['Id', 'Tv'];
         return this;
 	}
 })(jQuery);
+function snackbar(message,timeout){
+		$('body').append(function(){
+			var snackbar = '<div class="collapse snackbar"><div class="content">'+message+'</div><button data-dismiss="snackbar">&times;</button></div>'
+			return snackbar;
+		});
+		setTimeout(function(){
+			$('.snackbar').collapse('show');
+		},0);
+		
+		setTimeout(function(){
+			$('.snackbar').collapse('hide');
+		},timeout?timeout:snackbar_timeout);
 
+}
+function scrollto(target,offset){
+	if(!offset){
+		offset = 0;
+	}
+    $('html, body').animate({
+        scrollTop: ($("#"+target).offset().top - offset)
+    }, 500);
+    return this;
+}
 function load_css(url){
     var node = document.createElement("link");
     node.setAttribute("href",url);
@@ -119,6 +141,7 @@ function load_js(url){
     node.setAttribute("type","text/javascript");
     document.getElementsByTagName("head")[0].appendChild(node);
 }
+
 $('[data-toggle="tooltip"]').tooltip();
 /*
 setInterval(function(){
@@ -164,6 +187,39 @@ function load_file(input,output,callback){
 		return;
 	}
 	reader.readAsText(input);
+}
+function download(input,filename){
+	if(!input){
+		return false;
+	}
+	input = $(input).val();
+	if(!input.trim()){
+		return false;
+	}
+	var filename = prompt('Please Enter File Name',filename?filename:'file.txt');
+	if(!filename || filename == 'null'){
+		return false;
+	}
+	filename = filename.trim();
+	if(!filename){
+		return false;
+	}
+	var blob = new Blob([input], {type:'text/plain'});
+	var downloadLink = document.createElement("a");
+	downloadLink.download = filename;
+	if (window.webkitURL != null){
+		// Chrome allows the link to be clicked
+		// without actually adding it to the DOM.
+		downloadLink.href = window.webkitURL.createObjectURL(blob);
+	}else{
+		// Firefox requires the link to be added to the DOM
+		// before it can be clicked.
+		downloadLink.href = window.URL.createObjectURL(blob);
+		downloadLink.onclick = destroyClickedElement;
+		downloadLink.style.display = "none";
+		document.body.appendChild(downloadLink);
+	}
+	downloadLink.click();
 }
 function save_file(string, filename){
 	var blob = new Blob([string], {type:'text/plain'});

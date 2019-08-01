@@ -12,8 +12,17 @@
 		<link rel="icon" href="./favicon.ico" type="image/x-icon">
 		<script type="text/javascript">
 			var app = {
+				'scroll_offset'	: 60,
 				'api'			: 'https://weforit.com/api/',
 				'current_url'	: 'http://localhost/test/explore?skip=1',
+				'data_table'	: {
+						"retrieve"			: true,
+				        "scrollY"			: '300px',
+				    	"scrollX"			: true,
+				        "scrollCollapse"	: true,
+						"paging"			: false
+				},
+				'table_export'	: {},
 			}
 		</script>
 	</head>
@@ -43,71 +52,22 @@
 			</div>
 		</nav>
 
-<style>
-
-	.tool-box{
-		display:block;
-		margin:0 auto 3rem auto;
-		text-align:center;
-		position:relative;
-		color:inherit;
-	}
-
-	.tool-box:hover,
-	.tool-box:focus,
-	.tool-box:active{
-		color:var(--primary);
-		text-decoration: none;
-	}
-	.tool-box .icon{
-		display:block;
-		width:5rem;
-		height:5rem;
-		text-align:center;
-		border:1px solid rgba(0,0,0,.1);
-		display: flex;
-		align-items:center;
-		justify-content: center;
-		border-radius: 100%;
-		margin:0 auto .5rem auto;
-		transition: .3s;
-	}
-	.tool-box .icon img{
-		width:2rem;
-	}
-	.tool-box .icon .fa{
-		font-size: 2rem;
-	}
-	.tool-box .text{
-		position:relative;
-		font-weight: 500;
-	}
-	.tool-box .text:before{
-		content:" ";
-		position:absolute;
-		left:50%;
-		bottom:-0.3rem;
-		height:2px;
-		width:0;
-		background:var(--primary);
-		transition:.3s;
-	}
-	.tool-box:hover .icon,
-	.tool-box:focus .icon,
-	.tool-box:active .icon{
-		border-color:var(--primary);
-	}
-	.tool-box:hover .text:before{
-		width:100%;
-		left:0;
-	}
-</style>
 <section class="bg-white py-5">
 	<div class="container">
 		<h1 class="h4 text-center">Text Tools</h1>
 		<hr/>
 		<div class="row mt-5">
 		
+			<!-- Tool -->
+			<div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+				<a class="tool-box" href="./htaccess-file-caching-generator">
+					<div class="icon">
+						<i class="fa fa-bolt"></i>					</div>
+					<div class="text">Caching Generator</div>
+				</a>
+			</div>
+			<!-- /Tool -->
+					
 			<!-- Tool -->
 			<div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2">
 				<a class="tool-box" href="./reverse-text">
