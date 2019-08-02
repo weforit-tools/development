@@ -287,3 +287,9 @@
     }
   }
 }
+@each $color, $value in $theme-colors {
+  .card-#{$color} .card-header{
+    background-color:$value;
+    color:theme-color-level($color,-10);
+  }
+}

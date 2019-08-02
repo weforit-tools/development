@@ -54,7 +54,7 @@
 
 <style>
 .site-header{
-	background-image: linear-gradient(#4cc7ff,#9ee1ff);
+	background-image: linear-gradient(#006695,#4cc7ff);
     color: #fff;
 }
 
@@ -115,7 +115,7 @@
 					Serve Static Assets with an Efficient Cache Policy
 				</p>
 				<div class="text-center text-md-left mb-4">
-					<button type="button" class="btn btn-primary btn-rounded shadow-none px-5 py-3" onclick="$('#generator').collapse('show');scrollto('generator',app.scroll_offset)"><i class="fa fa-code"></i> Generate Code</button>
+					<button type="button" class="btn btn-secondary shadow-lg btn-rounded px-5 py-3" onclick="$('#generator').collapse('show');scrollto('generator',app.scroll_offset)"><i class="fa fa-code"></i> Generate Code</button>
 				</div>
 			</div>
 			<div class="col-lg-5 px-0 text-center">
@@ -184,16 +184,215 @@
 		<p class="lead text-center">Caching is the Most Important Part of Page Speed. The reason is Browser Store the Website File into storage and when a user visit this site again then browser restore website from local storage rather than connecting to server again and again. It save the time that is take by response of the server</p>
 	</div>
 </section>
-<section class="bg-white py-5">
+<style>
+	.section-faq .card{
+		border:0!important;
+	}
+	.section-faq .card-header{
+		position:relative;
+		color:inherit;
+		border-left:1px solid var(--primary);
+		border-radius: 0;
+	}
+
+	.section-faq .card-header:after,
+	.section-faq .card-header.collapsed:after{
+		content:'\002B';
+		float:right;
+		font-weight: bold;
+		font-size:1rem;
+		line-height:1;
+		color:var(--primary);
+	}
+	.section-faq .card-header:after{
+		content:'\2212';		
+	}
+	.section-faq .card-body{
+		padding-top:.5rem;
+		padding-top:.5rem;
+		border-radius: 0;
+	}
+</style>
+<section class="bg-white py-5 section-faq">
 	<div class="container">
 		<h4>FAQs - htaccess File Caching Generator</h4>
 		<p class="text-muted">You'll find more information of Our Tool. If Have a Question related to File Caching then Feel Free to ask anything in our community </p>
 		<div class="row">
 			<div class="col-lg-6">
-some
+				<div class="section-1 small" id="s1">
+					<div class="card mb-2 shadow-sm card-default ">
+						<a class="collapsed card-header bg-white" data-toggle="collapse" data-target="#s1-a1" href="javascript:void(0)">
+							What is htaccess Caching Generator?
+						</a>
+						<div class="collapse" id="s1-a1" data-parent="#s1">
+							<div class="card-body">
+								...
+							</div>
+						</div>
+					</div>
+					<div class="card mb-2 shadow-sm card-default">
+						<a class="collapsed card-header bg-white" data-toggle="collapse" data-target="#s1-a2" href="javascript:void(0)">
+							How Caching Generator Works?
+						</a>
+						<div class="collapse" id="s1-a2" data-parent="#s1">
+							<div class="card-body">
+								...
+							</div>
+						</div>
+					</div>
+					<div class="card mb-2 shadow-sm card-default ">
+						<a class="collapsed card-header bg-white" data-toggle="collapse" data-target="#s1-a3" href="javascript:void(0)">
+							What is Caching?
+						</a>
+						<div class="collapse" id="s1-a3" data-parent="#s1">
+							<div class="card-body">
+								...
+							</div>
+						</div>
+					</div>
+					<div class="card mb-2 shadow-sm card-default ">
+						<a class="collapsed card-header bg-white" data-toggle="collapse" data-target="#s1-a4" href="javascript:void(0)">
+							How Caching Works?
+						</a>
+						<div class="collapse" id="s1-a4" data-parent="#s1">
+							<div class="card-body">
+								...
+							</div>
+						</div>
+					</div>
+					<div class="card mb-2 shadow-sm card-default ">
+						<a class="collapsed card-header bg-white" data-toggle="collapse" data-target="#s1-a5" href="javascript:void(0)">
+							What is .htaccess File?
+						</a>
+						<div class="collapse" id="s1-a5" data-parent="#s1">
+							<div class="card-body">
+								...
+							</div>
+						</div>
+					</div>
+					<div class="card mb-2 shadow-sm card-default ">
+						<a class="collapsed card-header bg-white" data-toggle="collapse" data-target="#s1-a6" href="javascript:void(0)">
+							How to Implement Code?
+						</a>
+						<div class="collapse" id="s1-a6" data-parent="#s1">
+							<div class="card-body">
+								...
+							</div>
+						</div>
+					</div>
+					<div class="card mb-2 shadow-sm card-default ">
+						<a class="collapsed card-header bg-white" data-toggle="collapse" data-target="#s1-a7" href="javascript:void(0)">
+							Caching Code is not Working?
+						</a>
+						<div class="collapse" id="s1-a7" data-parent="#s1">
+							<div class="card-body">
+								...
+							</div>
+						</div>
+					</div>
+					<div class="card mb-2 shadow-sm card-default ">
+						<a class="collapsed card-header bg-white" data-toggle="collapse" data-target="#s1-a8" href="javascript:void(0)">
+							My Website doesn't have any .htaccess File
+						</a>
+						<div class="collapse" id="s1-a8" data-parent="#s1">
+							<div class="card-body">
+								...
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="col-lg-6">
-some
+				<div class="section-2 small" id="s2">
+					<div class="card mb-2 shadow-sm card-default ">
+						<a class="collapsed card-header bg-white" data-toggle="collapse" data-target="#s2-a1" href="javascript:void(0)">
+							How to Cache CSS Files?
+						</a>
+						<div class="collapse" id="s2-a1" data-parent="#s2">
+							<div class="card-body">
+								...
+							</div>
+						</div>
+					</div>
+
+					<div class="card mb-2 shadow-sm card-default ">
+						<a data-target="#s2-a2" class="collapsed card-header bg-white" data-toggle="collapse" href="javascript:void(0)">
+							How to Cache Javascript Files?
+						</a>
+						<div class="collapse" id="s2-a2" data-parent="#s2">
+							<div class="card-body">
+								...
+							</div>
+						</div>
+					</div>
+
+					<div class="card mb-2 shadow-sm card-default ">
+						<a data-target="#s2-a3" class="collapsed card-header bg-white" data-toggle="collapse" href="javascript:void(0)">
+							How to Cache Favicon?
+						</a>
+						<div class="collapse" id="s2-a3" data-parent="#s2">
+							<div class="card-body">
+								...
+							</div>
+						</div>
+					</div>
+
+					<div class="card mb-2 shadow-sm card-default ">
+						<a data-target="#s2-a4" class="collapsed card-header bg-white" data-toggle="collapse" href="javascript:void(0)">
+							How to Cache Images?
+						</a>
+						<div class="collapse" id="s2-a4" data-parent="#s2">
+							<div class="card-body">
+								...
+							</div>
+						</div>
+					</div>
+
+					<div class="card mb-2 shadow-sm card-default ">
+						<a data-target="#s2-a5" class="collapsed card-header bg-white" data-toggle="collapse" href="javascript:void(0)">
+							How to Cache PDF?
+						</a>
+						<div class="collapse" id="s2-a5" data-parent="#s2">
+							<div class="card-body">
+								...
+							</div>
+						</div>
+					</div>
+
+					<div class="card mb-2 shadow-sm card-default ">
+						<a data-target="#s2-a5" class="collapsed card-header bg-white" data-toggle="collapse" href="javascript:void(0)">
+							How to Cache Flash Files?
+						</a>
+						<div class="collapse" id="s2-a5" data-parent="#s2">
+							<div class="card-body">
+								...
+							</div>
+						</div>
+					</div>
+
+					<div class="card mb-2 shadow-sm card-default ">
+						<a data-target="#s2-a6" class="collapsed card-header bg-white" data-toggle="collapse" href="javascript:void(0)">
+							How to Cache Video Files?
+						</a>
+						<div class="collapse" id="s2-a6" data-parent="#s2">
+							<div class="card-body">
+								...
+							</div>
+						</div>
+					</div>
+
+					<div class="card mb-2 shadow-sm card-default ">
+						<a data-target="#s2-a7" class="collapsed card-header bg-white" data-toggle="collapse" href="javascript:void(0)">
+							How to Cache Any File?
+						</a>
+						<div class="collapse" id="s2-a7" data-parent="#s2">
+							<div class="card-body">
+								...
+							</div>
+						</div>
+					</div>
+
+				</div>
 			</div>
 		</div>
 	</div>
