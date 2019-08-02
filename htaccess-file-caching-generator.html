@@ -115,7 +115,7 @@
 					Serve Static Assets with an Efficient Cache Policy
 				</p>
 				<div class="text-center text-md-left mb-4">
-					<button type="button" class="btn btn-secondary shadow-lg btn-rounded px-5 py-3" onclick="$('#generator').collapse('show');scrollto('generator',app.scroll_offset)"><i class="fa fa-code"></i> Generate Code</button>
+					<button type="button" class="btn btn-light shadow-lg btn-rounded px-5 py-3" onclick="$('#generator').collapse('show');scrollto('generator',app.scroll_offset)"><i class="fa fa-code"></i> Generate Code</button>
 				</div>
 			</div>
 			<div class="col-lg-5 px-0 text-center">
@@ -728,8 +728,8 @@
 						<strong><i class="fa fa-info-circle mr-2"></i>Tip:</strong> If you need to Run Generator again then <a href="htaccess-file-caching-generator">refresh page</a> and help us to earn some Page Views.
 					</div>
 				</div>
-				<div class="col-12 col-md-12 col-xl-5 px-0 px-xl-3 bg-transparent">
-					<div class="sticky-top" style="top:60px;z-index:1" id="output-card">
+				<div class="col-12 col-md-12 col-xl-5 px-0 px-xl-3 bg-transparent" id="output-card">
+					<div class="sticky-top" style="top:60px;z-index:1">
 						<div class="card card-primary shadow-sm ">
 							<div class="card-header bg-dark text-white">
 								.htaccess
@@ -759,7 +759,7 @@
 	self.addEventListener('message',function(e){
 		var val = e.data;
 		var code = [];
-		code.push('# Caching Start (tool.weforit.com) #');
+		code.push('# Caching Start #');
 		code.push('<IfModule mod_expires.c>');
 		code.push('ExpiresActive On');
 		val._default==true?code.push('ExpiresDefault "access plus '+val._default_d1+' '+val._default_d2+'"'):'';
@@ -832,7 +832,7 @@
 			code.push('</FilesMatch>');
 		}
   		code.push('</IfModule>');
-		code.push('# Caching End#');
+		code.push('# Caching End : tool.weforit.com #');
 		setTimeout(function(){postMessage(code.join('\r\n'))},500);
 	});
 </script>
