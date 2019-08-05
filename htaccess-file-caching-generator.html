@@ -14,7 +14,7 @@
 			var app = {
 				'scroll_offset'	: 60,
 				'api'			: 'https://weforit.com/api/',
-				'current_url'	: 'http://localhost/test/htaccess-file-caching-generator?skip=1',
+				'current_url'	: 'http://localhost/test/./htaccess-file-caching-generator?skip=1',
 				'data_table'	: {
 						"retrieve"			: true,
 				        "scrollY"			: '300px',
@@ -310,7 +310,11 @@
 						</a>
 						<div class="collapse" id="s2-a1" data-parent="#s2">
 							<div class="card-body">
-								...
+								<p class="mb-0">.htaccess Code (Append)</p>
+								<pre class="code mb-0 bg-dark text-white p-2">&lt;IfModule mod_expires.c&gt;
+#Cache CSS
+ExpiresByType text/css "access plus 1 year"
+&lt;/IfModule&gt;</pre>
 							</div>
 						</div>
 					</div>
@@ -321,7 +325,13 @@
 						</a>
 						<div class="collapse" id="s2-a2" data-parent="#s2">
 							<div class="card-body">
-								...
+								<p class="mb-0">.htaccess Code (Append)</p>
+								<pre class="code mb-0 bg-dark text-white p-2">&lt;IfModule mod_expires.c&gt;
+#Cache JavaScript
+ExpiresByType text/javascript "access plus 1 year"
+ExpiresByType text/x-javascript "access plus 1 year"
+ExpiresByType application/javascript "access plus 1 year"
+&lt;/IfModule&gt;</pre>
 							</div>
 						</div>
 					</div>
@@ -332,7 +342,14 @@
 						</a>
 						<div class="collapse" id="s2-a3" data-parent="#s2">
 							<div class="card-body">
-								...
+								<p class="mb-0">.htaccess Code (Append)</p>
+								<pre class="code mb-0 bg-dark text-white p-2">&lt;IfModule mod_expires.c&gt;
+#Cache Favicon
+AddType image/x-icon .ico
+ExpiresByType image/ico "access plus 1 year"
+ExpiresByType image/icon "access plus 1 year"
+ExpiresByType image/x-icon "access plus 1 year"
+&lt;/IfModule&gt;</pre>
 							</div>
 						</div>
 					</div>
@@ -343,7 +360,16 @@
 						</a>
 						<div class="collapse" id="s2-a4" data-parent="#s2">
 							<div class="card-body">
-								...
+								<p class="mb-0">.htaccess Code (Append)</p>
+								<pre class="code mb-0 bg-dark text-white p-2">&lt;IfModule mod_expires.c&gt;
+#Cache Images
+ExpiresByType image/jpg "access plus 1 year"
+ExpiresByType image/jpeg "access plus 1 year"
+ExpiresByType image/gif "access plus 1 year"
+ExpiresByType image/png "access plus 1 year"
+ExpiresByType image/webp "access plus 1 year"
+ExpiresByType image/svg+xml "access plus 1 year"
+&lt;/IfModule&gt;</pre>
 							</div>
 						</div>
 					</div>
@@ -354,38 +380,47 @@
 						</a>
 						<div class="collapse" id="s2-a5" data-parent="#s2">
 							<div class="card-body">
-								...
-							</div>
-						</div>
-					</div>
-
-					<div class="card mb-2 shadow-sm card-default ">
-						<a data-target="#s2-a5" class="collapsed card-header bg-white" data-toggle="collapse" href="javascript:void(0)">
-							How to Cache Flash Files?
-						</a>
-						<div class="collapse" id="s2-a5" data-parent="#s2">
-							<div class="card-body">
-								...
+								<p class="mb-0">.htaccess Code (Append)</p>
+								<pre class="code mb-0 bg-dark text-white p-2">&lt;IfModule mod_expires.c&gt;
+#Cache PDF
+ExpiresByType application/pdf "access plus 1 year"
+&lt;/IfModule&gt;</pre>
 							</div>
 						</div>
 					</div>
 
 					<div class="card mb-2 shadow-sm card-default ">
 						<a data-target="#s2-a6" class="collapsed card-header bg-white" data-toggle="collapse" href="javascript:void(0)">
-							How to Cache Video Files?
+							How to Cache Flash Files?
 						</a>
 						<div class="collapse" id="s2-a6" data-parent="#s2">
 							<div class="card-body">
-								...
+								<p class="mb-0">.htaccess Code (Append)</p>
+								<pre class="code mb-0 bg-dark text-white p-2">&lt;IfModule mod_expires.c&gt;
+#Cache Flash Files
+ExpiresByType application/x-shockwave-flash "access plus 1 year"
+&lt;/IfModule&gt;</pre>
 							</div>
 						</div>
 					</div>
 
 					<div class="card mb-2 shadow-sm card-default ">
 						<a data-target="#s2-a7" class="collapsed card-header bg-white" data-toggle="collapse" href="javascript:void(0)">
-							How to Cache Any File?
+							How to Cache Video Files?
 						</a>
 						<div class="collapse" id="s2-a7" data-parent="#s2">
+							<div class="card-body">
+								<p class="mb-0">.htaccess Code (Append)</p>
+								
+							</div>
+						</div>
+					</div>
+
+					<div class="card mb-2 shadow-sm card-default ">
+						<a data-target="#s2-a8" class="collapsed card-header bg-white" data-toggle="collapse" href="javascript:void(0)">
+							How to Cache Any File?
+						</a>
+						<div class="collapse" id="s2-a8" data-parent="#s2">
 							<div class="card-body">
 								...
 							</div>
@@ -405,327 +440,453 @@
 			<button type="button" id="quick" onclick="$('#generator').collapse('show');scrollto('generator',app.scroll_offset);$('form#generator button[type=submit]').trigger('click');" class="btn btn-primary btn-rounded px-4 btn-sm py-2 mr-2"><i class="fa fa-code"></i> &nbsp;Quick Generate</button>
 			<button type="button" onclick="$('#generator').collapse('show');scrollto('generator',app.scroll_offset)" class="btn btn-primary btn-rounded px-4 btn-sm py-2 mr-2"><i class="fa fa-cogs"></i> &nbsp;More Options</button>
 		</div>
-		<form id="generator" class="mt-4 collapse weforit-tool htaccess-caching bg-transparent">
-			<div class="row">
-				<div class="col-12 col-md-12 col-xl-7 bg-white py-4 shadow-sm mb-4">
-					<h6 class="mb-3">Select File Type for Leaverage Browser Caching</h6>
-					<div class="form-row">
-						<div class="form-group col-12 col-md-3 mb-4">
-							<div class="custom-control custom-checkbox mt-1">
-								<input type="checkbox" class="custom-control-input" checked="checked" id="css">
-								<label class="custom-control-label" for="css">CSS / Styles</label>
-							</div>
-						</div>
-						<div class="form-group col-12 col-md-3 mb-0">
-							<div class="form-row">
-								<div class="form-group col-5 col-md-4">
-									<input type="text" id="css-d-1" class="form-control form-control-sm" placeholder="1" value="1"/>
-								</div>
-								<div class="form-group col-7 col-md-8">
-									<select class="form-control form-control-sm" id="css-d-2">
-							            <option value="minute">Minute</option>
-							            <option value="hour">Hour</option>
-							            <option value="day">Day</option>
-							            <option value="week">Week</option>
-							            <option value="month">Month</option>
-							            <option value="year" selected="year">Year</option>
-									</select>
-								</div>
-							</div>
-						</div>
-						<div class="form-group col-12 col-md-6 mb-0">
-							<small class="form-text text-muted">
-							  Caching for Static CSS and Stylesheet
-							</small>
-						</div>
-					</div>
-					<div class="form-row">
-						<div class="form-group col-12 col-md-3 mb-0">
-							<div class="custom-control custom-checkbox mt-1">
-								<input type="checkbox" class="custom-control-input" checked="checked" id="javascript">
-								<label class="custom-control-label" for="javascript">JavaScript</label>
-							</div>
-						</div>
-						<div class="form-group col-12 col-md-3 mb-0">
-							<div class="form-row">
-								<div class="form-group col-5 col-md-4">
-									<input type="text" id="javascript-d-1" class="form-control form-control-sm" placeholder="1" value="1"/>
-								</div>
-								<div class="form-group col-7 col-md-8">
-									<select id="javascript-d-2" class="form-control form-control-sm">
-							            <option value="minute">Minute</option>
-							            <option value="hour">Hour</option>
-							            <option value="day">Day</option>
-							            <option value="week">Week</option>
-							            <option value="month">Month</option>
-							            <option value="year" selected="year">Year</option>
-									</select>
-								</div>
-							</div>
-						</div>
-						<div class="form-group col-12 col-md-6 mb-0">
-							<small class="form-text text-muted">
-							  Caching for Static JS or JavaScript Files
-							</small>
-						</div>
-					</div>
+		<form id="generator" class="mt-4 px-0 collapse weforit-tool htaccess-caching bg-transparent">
+			<div class="row mx-0">
+				<div class="col-12 col-md-12 col-xl-7 px-0">
+					<div class="bg-white py-4 shadow-sm mb-4 px-3">
+						<h6 class="mb-3">Select File Type for Leaverage Browser Caching</h6>
 
-					<div class="form-row">
-						<div class="form-group col-12 col-md-3 mb-0">
-							<div class="custom-control custom-checkbox mt-1">
-								<input type="checkbox" class="custom-control-input" checked="checked" id="favicon">
-								<label class="custom-control-label" for="favicon">Favicon</label>
-							</div>
-						</div>
-						<div class="form-group col-12 col-md-3 mb-0">
-							<div class="form-row">
-								<div class="form-group col-5 col-md-4">
-									<input type="text" id="favicon-d-1" class="form-control form-control-sm" placeholder="1" value="1"/>
-								</div>
-								<div class="form-group col-7 col-md-8">
-									<select id="favicon-d-2" class="form-control form-control-sm">
-							            <option value="minute">Minute</option>
-							            <option value="hour">Hour</option>
-							            <option value="day">Day</option>
-							            <option value="week">Week</option>
-							            <option value="month">Month</option>
-							            <option value="year" selected="year">Year</option>
-									</select>
+						<div class="form-row">
+							<div class="form-group col-12 col-md-3 mb-4">
+								<div class="custom-control custom-checkbox mt-1">
+									<input type="checkbox" class="custom-control-input" checked="checked" id="css">
+									<label class="custom-control-label" for="css">CSS / Styles</label>
 								</div>
 							</div>
+							<div class="form-group col-12 col-md-3 mb-0">
+								<div class="form-row">
+									<div class="form-group col-5 col-md-4">
+										<input type="text" id="css-d-1" class="form-control form-control-sm" placeholder="1" value="1"/>
+									</div>
+									<div class="form-group col-7 col-md-8">
+										<select class="form-control form-control-sm" id="css-d-2">
+								            <option value="seconds">Seconds</option>
+								            <option value="hour">Hour</option>
+								            <option value="day">Day</option>
+								            <option value="week">Week</option>
+								            <option value="month" selected="selected">Month</option>
+								            <option value="year">Year</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group col-12 col-md-6 mb-0">
+								<small class="form-text text-muted">
+								  Caching for Static CSS and Stylesheet
+								</small>
+							</div>
 						</div>
-						<div class="form-group col-12 col-md-6 mb-0">
-							<small class="form-text text-muted">
-							  Caching for Site Favicon
-							</small>
-						</div>
-					</div>
 
-					<div class="form-row">
-						<div class="form-group col-12 col-md-3 mb-0">
-							<div class="custom-control custom-checkbox mt-1">
-								<input type="checkbox" class="custom-control-input" checked="true" id="images">
-								<label class="custom-control-label" for="images">Images</label>
-							</div>
-						</div>
-						<div class="form-group col-12 col-md-3 mb-0">
-							<div class="form-row">
-								<div class="form-group col-5 col-md-4">
-									<input type="text" id="images-d-1" class="form-control form-control-sm" placeholder="1" value="1"/>
-								</div>
-								<div class="form-group col-7 col-md-8">
-									<select id="images-d-2" class="form-control form-control-sm">
-							            <option value="minute">Minute</option>
-							            <option value="hour">Hour</option>
-							            <option value="day">Day</option>
-							            <option value="week">Week</option>
-							            <option value="month">Month</option>
-							            <option value="year" selected="year">Year</option>
-									</select>
+						<div class="form-row">
+							<div class="form-group col-12 col-md-3 mb-4">
+								<div class="custom-control custom-checkbox mt-1">
+									<input type="checkbox" class="custom-control-input" checked="checked" id="feed">
+									<label class="custom-control-label" for="feed">Feeds</label>
 								</div>
 							</div>
+							<div class="form-group col-12 col-md-3 mb-0">
+								<div class="form-row">
+									<div class="form-group col-5 col-md-4">
+										<input type="text" id="feed-d-1" class="form-control form-control-sm" placeholder="1" value="1"/>
+									</div>
+									<div class="form-group col-7 col-md-8">
+										<select class="form-control form-control-sm" id="feed-d-2">
+								            <option value="seconds">Seconds</option>
+								            <option value="hour" selected="selected">Hour</option>
+								            <option value="day">Day</option>
+								            <option value="week">Week</option>
+								            <option value="month">Month</option>
+								            <option value="year">Year</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group col-12 col-md-6 mb-0">
+								<small class="form-text text-muted">
+								  Feeds File (atom, rdf and rss)
+								</small>
+							</div>
 						</div>
-						<div class="form-group col-12 col-md-6 mb-0">
-							<small class="form-text text-muted">
-							  Caching All Types of Images and SVG
-							</small>
-						</div>
-					</div>
 
-					<div class="form-row">
-						<div class="form-group col-12 col-md-3 mb-0">
-							<div class="custom-control custom-checkbox mt-1">
-								<input type="checkbox" class="custom-control-input" checked="true" id="pdf">
-								<label class="custom-control-label" for="pdf">PDF</label>
-							</div>
-						</div>
-						<div class="form-group col-12 col-md-3 mb-0">
-							<div class="form-row">
-								<div class="form-group col-5 col-md-4">
-									<input type="text" id="pdf-d-1"  class="form-control form-control-sm" placeholder="1" value="1"/>
-								</div>
-								<div class="form-group col-7 col-md-8">
-									<select id="pdf-d-2" class="form-control form-control-sm">
-							            <option value="minute">Minute</option>
-							            <option value="hour">Hour</option>
-							            <option value="day">Day</option>
-							            <option value="week">Week</option>
-							            <option value="month">Month</option>
-							            <option value="year" selected="year">Year</option>
-									</select>
+						<div class="form-row">
+							<div class="form-group col-12 col-md-3 mb-4">
+								<div class="custom-control custom-checkbox mt-1">
+									<input type="checkbox" class="custom-control-input" checked="checked" id="di">
+									<label class="custom-control-label" for="di">Data Files</label>
 								</div>
 							</div>
+							<div class="form-group col-12 col-md-3 mb-0">
+								<div class="form-row">
+									<div class="form-group col-5 col-md-4">
+										<input type="text" id="di-d-1" class="form-control form-control-sm" placeholder="1" value="0"/>
+									</div>
+									<div class="form-group col-7 col-md-8">
+										<select class="form-control form-control-sm" id="di-d-2">
+								            <option value="seconds" selected="selected">Seconds</option>
+								            <option value="hour">Hour</option>
+								            <option value="day">Day</option>
+								            <option value="week">Week</option>
+								            <option value="month">Month</option>
+								            <option value="year" selected="year">Year</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group col-12 col-md-6 mb-0">
+								<small class="form-text text-muted">
+								  Data Interchange Files (JSON and XML Files)
+								</small>
+							</div>
 						</div>
-						<div class="form-group col-12 col-md-6 mb-0">
-							<small class="form-text text-muted">
-							  Cache Control For PDF Files
-							</small>
-						</div>
-					</div>
 
-					<div class="form-row">
-						<div class="form-group col-12 col-md-3 mb-0">
-							<div class="custom-control custom-checkbox mt-1">
-								<input type="checkbox" class="custom-control-input" checked="true" id="flash">
-								<label class="custom-control-label" for="flash">Flash</label>
-							</div>
-						</div>
-						<div class="form-group col-12 col-md-3 mb-0">
-							<div class="form-row">
-								<div class="form-group col-5 col-md-4">
-									<input type="text" id="flash-d-1" class="form-control form-control-sm" placeholder="1" value="1"/>
-								</div>
-								<div class="form-group col-7 col-md-8">
-									<select id="flash-d-2" class="form-control form-control-sm">
-							            <option value="minute">Minute</option>
-							            <option value="hour">Hour</option>
-							            <option value="day">Day</option>
-							            <option value="week">Week</option>
-							            <option value="month">Month</option>
-							            <option value="year" selected="year">Year</option>
-									</select>
+						<div class="form-row">
+							<div class="form-group col-12 col-md-3 mb-4">
+								<div class="custom-control custom-checkbox mt-1">
+									<input type="checkbox" class="custom-control-input" checked="checked" id="di">
+									<label class="custom-control-label" for="di">Manifest</label>
 								</div>
 							</div>
+							<div class="form-group col-12 col-md-3 mb-0">
+								<div class="form-row">
+									<div class="form-group col-5 col-md-4">
+										<input type="text" id="di-d-1" class="form-control form-control-sm" placeholder="1" value="0"/>
+									</div>
+									<div class="form-group col-7 col-md-8">
+										<select class="form-control form-control-sm" id="di-d-2">
+								            <option value="seconds" selected="selected">Seconds</option>
+								            <option value="hour">Hour</option>
+								            <option value="day">Day</option>
+								            <option value="week">Week</option>
+								            <option value="month">Month</option>
+								            <option value="year" selected="year">Year</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group col-12 col-md-6 mb-0">
+								<small class="form-text text-muted">
+								  Data Interchange Files (JSON and XML Files)
+								</small>
+							</div>
 						</div>
-						<div class="form-group col-12 col-md-6 mb-0">
-							<small class="form-text text-muted">
-							  Cache Flash Supported Files
-							</small>
+						<div class="form-row">
+							<div class="form-group col-12 col-md-3 mb-4">
+								<div class="custom-control custom-checkbox mt-1">
+									<input type="checkbox" class="custom-control-input" checked="checked" id="html">
+									<label class="custom-control-label" for="html">HTML</label>
+								</div>
+							</div>
+							<div class="form-group col-12 col-md-3 mb-0">
+								<div class="form-row">
+									<div class="form-group col-5 col-md-4">
+										<input type="text" id="html-d-1" class="form-control form-control-sm" placeholder="1" value="0"/>
+									</div>
+									<div class="form-group col-7 col-md-8">
+										<select class="form-control form-control-sm" id="html-d-2">
+								            <option value="seconds" selected="selected">Seconds</option>
+								            <option value="hour">Hour</option>
+								            <option value="day">Day</option>
+								            <option value="week">Week</option>
+								            <option value="month">Month</option>
+								            <option value="year" selected="year">Year</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group col-12 col-md-6 mb-0">
+								<small class="form-text text-muted">
+								  HTML Files
+								</small>
+							</div>
 						</div>
-					</div>
+						<div class="form-row">
+							<div class="form-group col-12 col-md-3 mb-0">
+								<div class="custom-control custom-checkbox mt-1">
+									<input type="checkbox" class="custom-control-input" checked="checked" id="javascript">
+									<label class="custom-control-label" for="javascript">JavaScript</label>
+								</div>
+							</div>
+							<div class="form-group col-12 col-md-3 mb-0">
+								<div class="form-row">
+									<div class="form-group col-5 col-md-4">
+										<input type="text" id="javascript-d-1" class="form-control form-control-sm" placeholder="1" value="1"/>
+									</div>
+									<div class="form-group col-7 col-md-8">
+										<select id="javascript-d-2" class="form-control form-control-sm">
+								            <option value="seconds">Seconds</option>
+								            <option value="hour">Hour</option>
+								            <option value="day">Day</option>
+								            <option value="week">Week</option>
+								            <option value="month">Month</option>
+								            <option value="year" selected="selected">Year</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group col-12 col-md-6 mb-0">
+								<small class="form-text text-muted">
+								  Caching for Static JS or JavaScript Files
+								</small>
+							</div>
+						</div>
 
-					<div class="form-row">
-						<div class="form-group col-12 col-md-3 mb-0">
-							<div class="custom-control custom-checkbox mt-1">
-								<input type="checkbox" class="custom-control-input" checked="true" id="videos">
-								<label class="custom-control-label" for="videos">Videos</label>
-							</div>
-						</div>
-						<div class="form-group col-12 col-md-3 mb-0">
-							<div class="form-row">
-								<div class="form-group col-5 col-md-4">
-									<input type="text" id="video-d-1" class="form-control form-control-sm" placeholder="1" value="1"/>
-								</div>
-								<div class="form-group col-7 col-md-8">
-									<select id="video-d-2" class="form-control form-control-sm">
-							            <option value="minute">Minute</option>
-							            <option value="hour">Hour</option>
-							            <option value="day">Day</option>
-							            <option value="week">Week</option>
-							            <option value="month">Month</option>
-							            <option value="year" selected="year">Year</option>
-									</select>
+						<div class="form-row">
+							<div class="form-group col-12 col-md-3 mb-0">
+								<div class="custom-control custom-checkbox mt-1">
+									<input type="checkbox" class="custom-control-input" checked="checked" id="favicon">
+									<label class="custom-control-label" for="favicon">Favicon</label>
 								</div>
 							</div>
+							<div class="form-group col-12 col-md-3 mb-0">
+								<div class="form-row">
+									<div class="form-group col-5 col-md-4">
+										<input type="text" id="favicon-d-1" class="form-control form-control-sm" placeholder="1" value="1"/>
+									</div>
+									<div class="form-group col-7 col-md-8">
+										<select id="favicon-d-2" class="form-control form-control-sm">
+								            <option value="seconds">Seconds</option>
+								            <option value="hour">Hour</option>
+								            <option value="day">Day</option>
+								            <option value="week">Week</option>
+								            <option value="month">Month</option>
+								            <option value="year" selected="year">Year</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group col-12 col-md-6 mb-0">
+								<small class="form-text text-muted">
+								  Caching for Site Favicon
+								</small>
+							</div>
 						</div>
-						<div class="form-group col-12 col-md-6 mb-0">
-							<small class="form-text text-muted">
-							  All Type of Videos and Streaming
-							</small>
-						</div>
-					</div>
 
-					<div class="form-row">
-						<div class="form-group col-12 col-md-3 mb-0">
-							<div class="custom-control custom-checkbox mt-1">
-								<input type="checkbox" class="custom-control-input" checked="true" id="fonts">
-								<label class="custom-control-label" for="fonts">Fonts</label>
-							</div>
-						</div>
-						<div class="form-group col-12 col-md-3 mb-0">
-							<div class="form-row">
-								<div class="form-group col-5 col-md-4">
-									<input type="text" id="font-d-1" class="form-control form-control-sm" placeholder="1" value="1"/>
-								</div>
-								<div class="form-group col-7 col-md-8">
-									<select id="font-d-2" class="form-control form-control-sm">
-							            <option value="minute">Minute</option>
-							            <option value="hour">Hour</option>
-							            <option value="day">Day</option>
-							            <option value="week">Week</option>
-							            <option value="month">Month</option>
-							            <option value="year" selected="year">Year</option>
-									</select>
+						<div class="form-row">
+							<div class="form-group col-12 col-md-3 mb-0">
+								<div class="custom-control custom-checkbox mt-1">
+									<input type="checkbox" class="custom-control-input" checked="true" id="images">
+									<label class="custom-control-label" for="images">Images</label>
 								</div>
 							</div>
+							<div class="form-group col-12 col-md-3 mb-0">
+								<div class="form-row">
+									<div class="form-group col-5 col-md-4">
+										<input type="text" id="images-d-1" class="form-control form-control-sm" placeholder="1" value="1"/>
+									</div>
+									<div class="form-group col-7 col-md-8">
+										<select id="images-d-2" class="form-control form-control-sm">
+								            <option value="seconds">Seconds</option>
+								            <option value="hour">Hour</option>
+								            <option value="day">Day</option>
+								            <option value="week">Week</option>
+								            <option value="month">Month</option>
+								            <option value="year" selected="year">Year</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group col-12 col-md-6 mb-0">
+								<small class="form-text text-muted">
+								  Caching All Types of Images and SVG
+								</small>
+							</div>
 						</div>
-						<div class="form-group col-12 col-md-6 mb-0">
-							<small class="form-text text-muted">
-							  Add Web Font Caching
-							</small>
-						</div>
-					</div>
 
-					<div class="form-row">
-						<div class="form-group col-12 col-md-3 mb-0">
-							<div class="custom-control custom-checkbox mt-1">
-								<input type="checkbox" class="custom-control-input" checked="true" id="default">
-								<label class="custom-control-label" for="default">Default</label>
-							</div>
-						</div>
-						<div class="form-group col-12 col-md-3 mb-0">
-							<div class="form-row">
-								<div class="form-group col-5 col-md-4">
-									<input type="text" id="default-d-1" class="form-control form-control-sm" placeholder="1" value="1"/>
-								</div>
-								<div class="form-group col-7 col-md-8">
-									<select id="default-d-2" class="form-control form-control-sm">
-							            <option value="minute">Minute</option>
-							            <option value="hour">Hour</option>
-							            <option value="day">Day</option>
-							            <option value="week">Week</option>
-							            <option value="month">Month</option>
-							            <option value="year" selected="year">Year</option>
-									</select>
+						<div class="form-row">
+							<div class="form-group col-12 col-md-3 mb-0">
+								<div class="custom-control custom-checkbox mt-1">
+									<input type="checkbox" class="custom-control-input" checked="true" id="pdf">
+									<label class="custom-control-label" for="pdf">PDF</label>
 								</div>
 							</div>
-						</div>
-						<div class="form-group col-12 col-md-6 mb-0">
-							<small class="form-text text-muted">
-							  Default Text Based Files
-							</small>
-						</div>
-					</div>
-					<div class="form-row">
-						<div class="form-group col-12 col-md-3 mb-0">
-							<div class="custom-control custom-checkbox mt-1">
-								<input type="checkbox" class="custom-control-input" checked="true" id="other">
-								<label class="custom-control-label" for="other">Other File Types</label>
-							</div>
-						</div>
-						<div class="form-group col-12 col-md-3 mb-0">
-							<div class="form-row">
-								<div class="form-group col-5 col-md-4">
-									<input type="text" id="other-d-1" class="form-control form-control-sm" placeholder="1" value="1"/>
-								</div>
-								<div class="form-group col-7 col-md-8">
-									<select id="other-d-2" class="form-control form-control-sm">
-							            <option value="minute">Minute</option>
-							            <option value="hour">Hour</option>
-							            <option value="day">Day</option>
-							            <option value="week">Week</option>
-							            <option value="month">Month</option>
-							            <option value="year" selected="year">Year</option>
-									</select>
+							<div class="form-group col-12 col-md-3 mb-0">
+								<div class="form-row">
+									<div class="form-group col-5 col-md-4">
+										<input type="text" id="pdf-d-1"  class="form-control form-control-sm" placeholder="1" value="1"/>
+									</div>
+									<div class="form-group col-7 col-md-8">
+										<select id="pdf-d-2" class="form-control form-control-sm">
+								            <option value="seconds">Seconds</option>
+								            <option value="hour">Hour</option>
+								            <option value="day">Day</option>
+								            <option value="week">Week</option>
+								            <option value="month">Month</option>
+								            <option value="year" selected="year">Year</option>
+										</select>
+									</div>
 								</div>
 							</div>
+							<div class="form-group col-12 col-md-6 mb-0">
+								<small class="form-text text-muted">
+								  Cache Control For PDF Files
+								</small>
+							</div>
 						</div>
-						<div class="form-group col-12 col-md-6 mb-0">
-							<input id="other-val" class="form-control form-control-sm" placeholder="ttf, woff, xls"/>
+
+						<div class="form-row">
+							<div class="form-group col-12 col-md-3 mb-0">
+								<div class="custom-control custom-checkbox mt-1">
+									<input type="checkbox" class="custom-control-input" checked="true" id="flash">
+									<label class="custom-control-label" for="flash">Flash</label>
+								</div>
+							</div>
+							<div class="form-group col-12 col-md-3 mb-0">
+								<div class="form-row">
+									<div class="form-group col-5 col-md-4">
+										<input type="text" id="flash-d-1" class="form-control form-control-sm" placeholder="1" value="1"/>
+									</div>
+									<div class="form-group col-7 col-md-8">
+										<select id="flash-d-2" class="form-control form-control-sm">
+								            <option value="seconds">Seconds</option>
+								            <option value="hour">Hour</option>
+								            <option value="day">Day</option>
+								            <option value="week">Week</option>
+								            <option value="month">Month</option>
+								            <option value="year" selected="year">Year</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group col-12 col-md-6 mb-0">
+								<small class="form-text text-muted">
+								  Cache Flash Supported Files
+								</small>
+							</div>
 						</div>
-					</div>
-					<div class="form-row mt-3 pt-3">
-						<h6>Compression</h6>
-						<div class="form-group col-12">
-							<div class="custom-control custom-checkbox mt-1">
-								<input type="checkbox" class="custom-control-input" checked="true" id="gzip">
-								<label class="custom-control-label" for="gzip">GZip Compression</label>
-							</div>								
+
+						<div class="form-row">
+							<div class="form-group col-12 col-md-3 mb-0">
+								<div class="custom-control custom-checkbox mt-1">
+									<input type="checkbox" class="custom-control-input" checked="true" id="videos">
+									<label class="custom-control-label" for="videos">Videos</label>
+								</div>
+							</div>
+							<div class="form-group col-12 col-md-3 mb-0">
+								<div class="form-row">
+									<div class="form-group col-5 col-md-4">
+										<input type="text" id="video-d-1" class="form-control form-control-sm" placeholder="1" value="1"/>
+									</div>
+									<div class="form-group col-7 col-md-8">
+										<select id="video-d-2" class="form-control form-control-sm">
+								            <option value="seconds">Seconds</option>
+								            <option value="hour">Hour</option>
+								            <option value="day">Day</option>
+								            <option value="week">Week</option>
+								            <option value="month">Month</option>
+								            <option value="year" selected="year">Year</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group col-12 col-md-6 mb-0">
+								<small class="form-text text-muted">
+								  All Type of Videos and Streaming
+								</small>
+							</div>
 						</div>
-					</div>
-					<button type="submit" class="mt-4 d-flex align-items-center mx-auto btn btn-primary px-5 py-3 btn-rounded"><i class="fa fa-code"></i> &nbsp;Generate</button>
-					<div class="alert mt-4 alert-primary" id="tip" style='display:none'>
-						<strong><i class="fa fa-info-circle mr-2"></i>Tip:</strong> If you need to Run Generator again then <a href="htaccess-file-caching-generator">refresh page</a> and help us to earn some Page Views.
+
+						<div class="form-row">
+							<div class="form-group col-12 col-md-3 mb-0">
+								<div class="custom-control custom-checkbox mt-1">
+									<input type="checkbox" class="custom-control-input" checked="true" id="fonts">
+									<label class="custom-control-label" for="fonts">Fonts</label>
+								</div>
+							</div>
+							<div class="form-group col-12 col-md-3 mb-0">
+								<div class="form-row">
+									<div class="form-group col-5 col-md-4">
+										<input type="text" id="font-d-1" class="form-control form-control-sm" placeholder="1" value="1"/>
+									</div>
+									<div class="form-group col-7 col-md-8">
+										<select id="font-d-2" class="form-control form-control-sm">
+								            <option value="seconds">Seconds</option>
+								            <option value="hour">Hour</option>
+								            <option value="day">Day</option>
+								            <option value="week">Week</option>
+								            <option value="month">Month</option>
+								            <option value="year" selected="year">Year</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group col-12 col-md-6 mb-0">
+								<small class="form-text text-muted">
+								  Add Web Font Caching
+								</small>
+							</div>
+						</div>
+
+						<div class="form-row">
+							<div class="form-group col-12 col-md-3 mb-0">
+								<div class="custom-control custom-checkbox mt-1">
+									<input type="checkbox" class="custom-control-input" checked="true" id="default">
+									<label class="custom-control-label" for="default">Default</label>
+								</div>
+							</div>
+							<div class="form-group col-12 col-md-3 mb-0">
+								<div class="form-row">
+									<div class="form-group col-5 col-md-4">
+										<input type="text" id="default-d-1" class="form-control form-control-sm" placeholder="1" value="1"/>
+									</div>
+									<div class="form-group col-7 col-md-8">
+										<select id="default-d-2" class="form-control form-control-sm">
+								            <option value="seconds">Seconds</option>
+								            <option value="hour">Hour</option>
+								            <option value="day">Day</option>
+								            <option value="week">Week</option>
+								            <option value="month">Month</option>
+								            <option value="year" selected="year">Year</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group col-12 col-md-6 mb-0">
+								<small class="form-text text-muted">
+								  Default Text Based Files
+								</small>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-12 col-md-3 mb-0">
+								<div class="custom-control custom-checkbox mt-1">
+									<input type="checkbox" class="custom-control-input" checked="true" id="other">
+									<label class="custom-control-label" for="other">Other</label>
+								</div>
+							</div>
+							<div class="form-group col-12 col-md-3 mb-0">
+								<div class="form-row">
+									<div class="form-group col-5 col-md-4">
+										<input type="text" id="other-d-1" class="form-control form-control-sm" placeholder="1" value="1"/>
+									</div>
+									<div class="form-group col-7 col-md-8">
+										<select id="other-d-2" class="form-control form-control-sm">
+								            <option value="seconds">Seconds</option>
+								            <option value="hour">Hour</option>
+								            <option value="day">Day</option>
+								            <option value="week">Week</option>
+								            <option value="month" selected="selected">Month</option>
+								            <option value="year">Year</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group col-12 col-md-6 mb-0">
+								<input id="other-val" class="form-control form-control-sm" placeholder="ttf, woff, xls"/>
+							</div>
+						</div>
+						<div class="form-row mt-3 pt-3">
+							<h6>Compression</h6>
+							<div class="form-group col-12">
+								<div class="custom-control custom-checkbox mt-1">
+									<input type="checkbox" class="custom-control-input" checked="true" id="gzip">
+									<label class="custom-control-label" for="gzip">GZip Compression</label>
+								</div>								
+							</div>
+						</div>
+						<button type="submit" class="mt-4 d-flex align-items-center mx-auto btn btn-primary px-5 py-3 btn-rounded"><i class="fa fa-code"></i> &nbsp;Generate</button>
+						<div class="alert mt-4 alert-primary" id="tip" style='display:none'>
+							<strong><i class="fa fa-info-circle mr-2"></i>Tip:</strong> If you need to Run Generator again then <a href="htaccess-file-caching-generator">refresh page</a> and help us to earn some Page Views.
+						</div>
 					</div>
 				</div>
 				<div class="col-12 col-md-12 col-xl-5 px-0 px-xl-3 bg-transparent" id="output-card">
@@ -808,7 +969,42 @@
 			code.push('ExpiresByType video/mp4  "access plus '+val._video_d1+' '+val._video_d2+'"');
 			code.push('ExpiresByType video/mpeg  "access plus '+val._video_d1+' '+val._video_d2+'"');
 		}
-
+		if(val._gzip == true){
+			code.push('#GZip Compression');
+			code.push('<IfModule mod_filter.c>');
+			code.push('AddOutputFilterByType DEFLATE "application/atom+xml"');
+			code.push('AddOutputFilterByType DEFLATE "application/javascript"');
+			code.push('AddOutputFilterByType DEFLATE "application/json"');
+			code.push('AddOutputFilterByType DEFLATE "application/ld+json"');
+			code.push('AddOutputFilterByType DEFLATE "application/manifest+json"');
+			code.push('AddOutputFilterByType DEFLATE "application/rdf+xml"');
+			code.push('AddOutputFilterByType DEFLATE "application/rss+xml"');
+			code.push('AddOutputFilterByType DEFLATE "application/schema+json"');
+			code.push('AddOutputFilterByType DEFLATE "application/vnd.geo+json"');
+			code.push('AddOutputFilterByType DEFLATE "application/vnd.ms-fontobject"');
+			code.push('AddOutputFilterByType DEFLATE "application/x-font-ttf"');
+			code.push('AddOutputFilterByType DEFLATE "application/x-javascript"');
+			code.push('AddOutputFilterByType DEFLATE "application/x-web-app-manifest+json"');
+			code.push('AddOutputFilterByType DEFLATE "application/xhtml+xml"');
+			code.push('AddOutputFilterByType DEFLATE "application/xml"');
+			code.push('AddOutputFilterByType DEFLATE "font/eot"');
+			code.push('AddOutputFilterByType DEFLATE "font/opentype"');
+			code.push('AddOutputFilterByType DEFLATE "image/bmp"');
+			code.push('AddOutputFilterByType DEFLATE "image/svg+xml"');
+			code.push('AddOutputFilterByType DEFLATE "image/vnd.microsoft.icon"');
+			code.push('AddOutputFilterByType DEFLATE "image/x-icon"');
+			code.push('AddOutputFilterByType DEFLATE "text/cache-manifest"');
+			code.push('AddOutputFilterByType DEFLATE "text/css"');
+			code.push('AddOutputFilterByType DEFLATE "text/html"');
+			code.push('AddOutputFilterByType DEFLATE "text/javascript"');
+			code.push('AddOutputFilterByType DEFLATE "text/plain"');
+			code.push('AddOutputFilterByType DEFLATE "text/vcard"');
+			code.push('AddOutputFilterByType DEFLATE "text/vnd.rim.location.xloc"');
+			code.push('AddOutputFilterByType DEFLATE "text/vtt"');
+			code.push('AddOutputFilterByType DEFLATE "text/x-component"');
+			code.push('AddOutputFilterByType DEFLATE "text/x-cross-domain-policy"');
+			code.push('AddOutputFilterByType DEFLATE "text/xml"');
+		}
 		if(val._other == true && val. _other_val.length > 0){
 			code.push('<FilesMatch "\\.('+((val._other_val.split(',')).join('|'))+')$">');
 			var j;
@@ -839,6 +1035,9 @@
 
 <script>
 window.addEventListener('load',function(){
+	/*
+	 https://philipgwynne.com/blog/2016-07-25-enabling-caching-and-gzip-compression-with-htaccess
+	*/
 	$('#save_file').on('click',function(e){
 		e.preventDefault();
 		download('#output','.htaccess');
@@ -908,7 +1107,7 @@ window.addEventListener('load',function(){
 			</div>
 		</footer>
 		<script src="./js/jquery-3.3.1.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> -->
 		<script src="./js/bootstrap.min.js"></script>
 		<script src="./js/global.js"></script>
 	</body>

@@ -178,7 +178,7 @@ img{
 	height:2px;
 	width:0;
 	background:var(--primary);
-	transition:.3s;
+	transition:.1s;
 }
 .tool-box:hover .icon,
 .tool-box:focus .icon,
@@ -188,4 +188,17 @@ img{
 .tool-box:hover .text:before{
 	width:100%;
 	left:0;
+}
+
+.card-header:after,
+.card-header.collapsed:after{
+	font-family:fontawesome;
+	float:right;
+	content:"\f054";
+	transition:.3s;
+	transform:rotate(0deg);
+	font-size: 90%;
+}
+.card-header:after{
+	transform:rotate(90deg);
 }

@@ -1,0 +1,416 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title> </title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="./css/lib.css">
+		<link rel="stylesheet" href="./css/font-awesome.min.css">
+		<link rel="stylesheet" href="./css/style.css">
+		<link rel="manifest" href="./manifest.json">
+		<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+		<link rel="icon" href="./favicon.ico" type="image/x-icon">
+		<script type="text/javascript">
+			var app = {
+				'scroll_offset'	: 60,
+				'api'			: 'https://weforit.com/api/',
+				'current_url'	: 'http://localhost/test/url-to-xml-sitemap-generator?skip=1',
+				'data_table'	: {
+						"retrieve"			: true,
+				        "scrollY"			: '300px',
+				    	"scrollX"			: true,
+				        "scrollCollapse"	: true,
+						"paging"			: false
+				},
+				'table_export'	: {},
+			}
+		</script>
+	</head>
+	<body>
+		<nav class="sticky-top navbar navbar-expand-lg navbar-light bg-white shadow-sm navbar-primary">
+			<div class="container">
+				<a class="navbar-brand" href="/"><img src="./images/icons/favicon-32x32.png" class="mr-2"/></a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#weforit-primary-navbar" aria-controls="weforit-primary-navbar" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="weforit-primary-navbar">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item">
+							<a class="nav-link" href="/">Home</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/about">About</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/explore">Explore</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/contact">Contact</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+
+<style>
+	.process{
+		font-size:.9rem;
+	}
+	.process .card-header,
+	.process .card-body{
+		padding:.4rem 1rem;
+	}
+	.process .card-header{
+		font-weight:500;
+	}
+	.process table th:first-child,
+	.process table td:first-child{
+		text-align:center;
+		max-width:60px;
+	}
+	.process .table-responsive{
+		max-height:600px;
+	}
+	.process .table-responsive .form-control-sm{
+		font-size:12px;
+		padding:.3rem;
+	}
+	.table-responsive thead th{
+		position: sticky;
+		top:-1px;
+		z-index:999;
+		background:#fff;
+	}
+</style>
+<section class="bg-white py-4">
+	<div class="container">
+		<h1 class="text-center h4 mb-3">URL to Sitemap</h1>
+		<form class="weforit-tool">
+			<div class="collapse show" id="step1">
+				<div class="row">
+					<div class="col-12 col-md-7 col-lg-8 col-xl-9">
+						<div class="control-box mb-2">
+							<div class="form-group mb-2">
+								<textarea id="input" class="form-control" style="white-space:pre;height: 200px;" placeholder="Enter the URL Every New Line"></textarea>
+							</div>
+							<div class="d-block d-md-flex align-items-center">
+								
+								<label type="button" class="btn btn-light btn-sm mr-2 mb-1" data-toggle="tooltip" title="Reset All Controls">
+									<i class="fa fa-times"></i>Clear
+									<button type="reset" class="d-none"></button>
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-md-5 col-lg-4 col-xl-3">
+						<div class="control-box mb-2 small">
+							<div class="pb-2 mb-3 border-bottom"><strong>Global Setting</strong></div>
+							<div class="form-group mb-2">
+								<label class="mb-0">Priority</label>
+								<select name="priority" class="form-control form-control-sm"><option value="">-</option><option value="1.0">1.0</option><option value="0.9">0.9</option><option value="0.8">0.8</option><option value="0.7">0.7</option><option value="0.6">0.6</option><option value="0.5">0.5</option><option value="0.4">0.4</option><option value="0.3">0.3</option><option value="0.2">0.2</option><option value="0.1">0.1</option></select>
+							</div>
+							<div class="form-group mb-2">
+								<label class="mb-0">Change Frequency</label>
+								<select name="changefreq" class="form-control form-control-sm"><option value="">-</option><option value="always">Always</option><option value="hourly">Hourly</option><option value="daily">Daily</option><option value="weekly">Weekly</option><option value="monthly">Monthly</option><option value="yearly">Yearly</option><option value="never">Never</option></select>
+							</div>
+							<div class="form-group mb-2">
+								<label class="mb-0">Last Modified</label>
+								<input type="datetime-local" name="lastmod" class="lastmod form-control form-control-sm">
+							</div>
+							<div class="custom-control custom-switch">
+								<input type="checkbox" class="custom-control-input" id="edit">
+								<label class="custom-control-label" for="edit">Edit URL <i class="fa fa-info-circle text-primary" data-toggle="tooltip" title="Make URLs Editable before creating sitemap. (Can be Slower)"></i></label>
+							</div>
+						</div>
+					</div>					
+				</div>
+				<div class="text-center my-2">
+					<button type="button" id="btn_step2" class="btn btn-primary">Generate</button>
+				</div>
+			</div>
+			<div class="process collapse" id="step2">
+				<div class="card card-primary">
+					<div class="card-header text-white">
+						<i class="fa fa-gears"></i> URL Settings
+					</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-12"><strong id="status"></strong> <span id="count">0</span></div>
+						</div>
+						<div class="alert alert-primary">
+							<i class="fa fa-info-circle"></i> Processing URL can be take some time depending on total numbers of URLs.
+						</div>
+						<div class="table-responsive" id="edit-url">
+							<table class="table table-sm ">
+								<thead>
+									<tr>
+										<th>S.No</th>
+										<th>URL</th>
+										<th>Priority</th>
+										<th>Change Frequency</th>
+										<th>Last Modified</th>
+										<th>Options</th>
+									</tr>
+								</thead>
+								<tbody id="url-setting" class="clusterize-content">
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="card-footer bg-transparent text-center">
+						<button type="submit" class="btn btn-primary">Generate Sitemap</button>
+					</div>
+				</div>
+				
+				</div>
+			</div>
+
+		</form>
+	</div>
+</section>
+<div class="modal" id="please_wait" data-keyboard="false" data-backdrop="static">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-body text-center">
+				<div class="spinner-border text-primary" role="status">
+					<span class="sr-only">Please Wait</span>
+				</div>
+				<div class="font-weight-bold text-primary">Generating Sitemap...</div>
+				<div><span class="count">0</span> URL Added</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal" id="delete_row_modal" data-keyboard="false" data-backdrop="static">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-body text-center">
+				<h4 class="text-center text-danger">Are you sure, You want to Delete URL</h4>
+				<span id="remove_url"></span>
+			</div>
+			<div class="modal-footer text-center">
+				<button type="button" id="delete_row_yes" class="btn btn-danger mr-2">Yes</button>
+				<button type="button" data-dismiss="modal" class="btn btn-danger">No</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="javascript/process" id="print-url">
+	var input = '', i = 0;
+	self.onmessage = function(e){
+		input = e.data;
+		if(input.type == 'file'){
+
+		}else{
+			input = e.data.val;
+			
+		}
+		input = input.split(/\r?\n/g);
+		_extract();
+	}
+	function _extract(){
+		if(i >= input.length){
+			postMessage('done');			
+		}
+		if(!input[i] || !input[i].trim()){
+			i++;
+			_extract();
+		}
+		setTimeout(function(){
+			postMessage(input[i]);
+			i++;
+			_extract();
+		},5);
+	}
+</script>
+
+<script type="javascript/process" id="generate_sitemap">
+	importScripts('http://localhost/test/development/js/functions.js');
+	self.onmessage = function(e){
+		var input = e.data;
+		var sitemap = [];
+		sitemap.push('<?xml version="1.0" encoding="UTF-8"?>');
+		sitemap.push('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">');
+		for(i=0;i<input.length;i++){
+			if(!input[i].loc){
+				continue;
+			}
+			var url = [];
+			url.push('\t'+'<url>');
+			url.push('\t\t'+'<loc>'+(input[i].loc).encodeHTML()+'</loc>');
+			if(input[i].lastmod){
+				url.push('\t\t'+'<lastmod>'+(input[i].lastmod).encodeHTML()+'</lastmod>');
+			}
+			if(input[i].changefreq){
+				url.push('\t\t'+'<changefreq>'+(input[i].changefreq).encodeHTML()+'</changefreq>');
+			}
+			if(input[i].priority){
+				url.push('\t\t'+'<priority>'+(input[i].priority).encodeHTML()+'</priority>');
+			}	
+			url.push('\t'+'</url>');
+			sitemap.push(url.join('\n'));
+		}
+		sitemap.push('</urlset>');
+		postMessage(sitemap.join('\n'));
+	}
+</script>
+
+<script>
+var input = '', count = 0, priority = 0, frequency = '', lastmod = '', edit = 0;
+var url = [], frequency_list = ['Always','Hourly','Daily','Weekly','Monthly','Yearly','Never'];
+window.addEventListener('load',function(){
+	$('#btn_step2').on('click',function(){
+		input = $('#input').val();
+		if(!input || !input.trim()){
+			return;
+		}
+		priority 	= $('select[name="priority"]').val();
+		frequency 	= $('select[name="changefreq"]').val();
+		lastmod 	= $('input[name="lastmod"]').val();
+		edit 		= $('#edit').is(':checked') == true?1:0;
+
+		if(edit != 1){
+			$('#please_wait').modal('show');
+		}else{
+			$(this).hide();
+		}
+
+		start_process('#print-url',function(process){
+			process.postMessage({'type':0,'val':input});
+			process.onmessage = function(response){
+				if(response.data == 'done'){
+					process.terminate();
+					process = undefined;
+					$('#status').html('Total URL:');
+					if(edit != 1){
+						generate_sitemap();
+					}
+					return;
+				}
+				if(edit != 1){
+					url.push({
+						'loc'		: response.data,
+						'priority'	: priority,
+						'lastmod'	: lastmod,
+						'changefreq': frequency,
+					});
+					count++;
+					$('.count').html(count);
+					/*
+					$('#count').html(count);
+					$('#status').html('Preparing URLs...');
+					$('#edit-url').remove();
+					$('#step2').collapse('show');
+					*/
+					return;
+				}
+				count++;
+				var html = [];
+				//count
+				html.push('<td>'+count+'</td>');
+				//url
+				html.push('<td><input readonly="readonly" class="url form-control form-control-sm" type="url" value="'+response.data+'"/></td>');
+				//Priority
+				var output = '<select class="priority form-control form-control-sm"><option value="">-</option>';
+				for(var i=1.0;i>=0.1;i=i-0.1){
+					var val = i.toFixed(1);
+					output += '<option value="'+val+'"'+(priority == val?' selected="selected"':'')+'>'+val+'</option>';
+				}
+				output += '</select>';
+				html.push('<td>'+ output +'</td>');
+				//Change Frequency
+				var output = '<td><select class="changefreq form-control form-control-sm"><option value="">-</option>';
+				$(frequency_list).each(function(i,v){
+					var  selected = v.toLowerCase() == frequency?' selected="selected"':'';
+					output += '<option value="'+v.toLowerCase()+'"'+selected+'>'+v+'</option>'
+				});
+				output += '</select></td>';
+				html.push(output);
+				//Last Modified
+				html.push('<td><input type="datetime-local" value="'+(lastmod?lastmod:'')+'" class="lastmod form-control form-control-sm"/></td>');
+				//options
+				html.push('<td><button type="button" data-toggle="modal" data-target="#delete_row_modal" data-id="'+count+'" data-url="'+ response.data +'" class="btn btn-danger btn-sm ">Delete</button></td>');
+				
+				$('#url-setting').append('<tr id="row_'+count+'">'+html.join('')+'</tr>');
+				$('#count').html(count);
+				$('#status').html('Preparing URLs...');
+			}
+			if(edit != 1){
+				
+			}else{
+				$('#step2').collapse('show');
+			}
+
+		});
+	});
+	$('form.weforit-tool').submit(function(e){
+		e.preventDefault();
+		if(!count){
+			return;
+		}
+		$('#edit-url tbody tr',this).each(function(i,v){
+			url.push({
+				'loc'		: $('.url',this).val(),
+				'priority'	: $('.priority',this).val(),
+				'lastmod'	: $('.lastmod',this).val(),
+				'changefreq': $('.changefreq',this).val(),
+			});
+		});
+		$('#please_wait').modal('show');
+		generate_sitemap();
+	})
+	$('#delete_row_modal').on('show.bs.modal', function (event) {
+	  var button = $(event.relatedTarget) // Button that triggered the modal
+	  var row_id = button.data('id');
+	  var row_url = button.data('url');
+	  var modal = $(this)
+	  modal.find('#remove_url').text(row_url);
+	  modal.find('#delete_row_yes').attr('data-row',row_id);
+	})
+	$('#delete_row_yes').on('click',function(e){
+		e.preventDefault();
+		var id = $(this).attr('data-row');
+		$('#row_'+id).addClass('bg-warning text-white').fadeOut('slow',function(){
+			$('#row_'+id).remove();
+			count--;
+			$('#count').html(count);
+		});
+		$('#delete_row_modal').modal('hide');
+	})
+});
+
+function generate_sitemap(){
+	start_process('#generate_sitemap',function(process){
+		process.postMessage(url);
+		process.onmessage = function(e){
+			process.terminate();
+			process = undefined;
+			var blob = new Blob([e.data], {type:'application/xml'});
+			var link = window.URL.createObjectURL(blob);
+			$('#please_wait .modal-body').html(function(){
+				return  '<h4 class="text-primary">Sitemap Ready!!</h4>'
+						+'<p>'+count+' URL has been added into Sitemap</p>'
+						+'<p>Click Download button below and Download Your Sitemap</p>'
+						+'<a href="'+link+'" class="btn btn-primary" download="sitemap.xml">Download sitemap.xml</a>'
+			});
+		};
+	})
+}
+
+</script>
+
+
+		<footer class="bg-dark text-muted py-4">
+			<div class="container">
+				Copyright &copy; 2019
+			</div>
+		</footer>
+		<script src="./js/jquery-3.3.1.min.js"></script>
+		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> -->
+		<script src="./js/bootstrap.min.js"></script>
+		<script src="./js/global.js"></script>
+	</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Convert Image</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="./css/lib.css">
+		<link rel="stylesheet" href="./css/font-awesome.min.css">
+		<link rel="stylesheet" href="./css/style.css">
+		<link rel="manifest" href="./manifest.json">
+		<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+		<link rel="icon" href="./favicon.ico" type="image/x-icon">
+		<script type="text/javascript">
+			var app = {
+				'scroll_offset'	: 60,
+				'api'			: 'https://weforit.com/api/',
+				'current_url'	: 'http://localhost/test/convert-image?skip=1',
+				'data_table'	: {
+						"retrieve"			: true,
+				        "scrollY"			: '300px',
+				    	"scrollX"			: true,
+				        "scrollCollapse"	: true,
+						"paging"			: false
+				},
+				'table_export'	: {},
+			}
+		</script>
+	</head>
+	<body>
+		<nav class="sticky-top navbar navbar-expand-lg navbar-light bg-white shadow-sm navbar-primary">
+			<div class="container">
+				<a class="navbar-brand" href="/"><img src="./images/icons/favicon-32x32.png" class="mr-2"/></a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#weforit-primary-navbar" aria-controls="weforit-primary-navbar" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="weforit-primary-navbar">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item">
+							<a class="nav-link" href="/">Home</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/about">About</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/explore">Explore</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/contact">Contact</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+
+<div class='container'>
+	<form id="generator" class="weforit-tool">
+		<label class="btn btn-primary btn-sm">
+			Add Images
+			<input type="file" class="d-none" name="imgs" multiple/>
+		</label>
+		<div class="control-box" id="loaded_images">
+
+		</div>
+		<button type="submit" class="btn btn-primary">Submit</button>
+	</form>
+	<div id="output">
+
+	</div>
+</div>
+<style>
+	.img-loaded{
+		width:200px;
+		height:200px;
+		background-color:var(--danger);
+		display: inline-block;
+		margin:2px;
+		overflow: hidden;
+		position:relative;
+	}
+	.img-loaded img{
+		width:100%;
+		height: 100%;
+	}
+	.img-loaded .size{
+		position:absolute;
+		left:0;
+		bottom:0;
+		right:0;
+		font-size:.6rem;
+		background:rgba(0,0,0,.4);
+		color:#fff;
+		padding:.1rem .3rem;
+		text-align: center;
+		text-transform: uppercase;
+		font-weight:bold;
+		letter-spacing: .01rem;
+	}
+	.img-loaded .download{
+		position: absolute;
+	    top: 40%;
+	    left: 0;
+	    font-size: .7rem;
+	    background: var(--primary);
+	    color: #fff;
+	    padding: .1rem .3rem;
+	    left: 50%;
+	    transform: translate(-50%, -40%);
+	}
+</style>
+<script type="javascript/process" id="read_image">
+	self.onmessage 	= function(e){
+		var images 	= e.data.images;
+		var start	= e.data.start;
+		for(i=0;i<images.length;i++){
+			var src = URL.createObjectURL(images[i]);
+			postMessage({'id':start,'src':src});
+			start++;
+		}
+	};
+</script>
+
+<script>
+dropzone.addEventListener("dragover", function(event) {
+  event.preventDefault();
+}, true);
+dropzone.addEventListener("drop", function(event) {
+  event.preventDefault();
+  // Ready to do something with the dropped object
+}, true);
+window.addEventListener('load',function(){
+	var files = [];
+	$('input[name="imgs"').on('change',function(){
+		if(!this.files.length){
+			return;
+		}
+		var tf = this.files;
+		//add a preview 
+		
+		$.each(this.files,function(i,file){
+			files.push(file);
+			$('#loaded_images').append('<div class="img-loaded" id="img_'+(files.length-1)+'"><img /><span class="size">'+get_filesize(file.size)+'</span></div>');
+		});
+		start_process('#read_image',function(response){
+			response.postMessage({'images':tf,'start':files.length-tf.length});
+			response.onmessage = function(e){
+				if(e.data == 'done'){
+					response.terminate();
+					response = undefined;
+				}else{
+				    $('#img_' + e.data.id + ' img').attr('src',e.data.src);
+				}
+			}
+		})
+		this.value = '';
+	})
+	$('form.weforit-tool').submit(function(e){
+		e.preventDefault();
+		$('#output').append('<div><i class="fa fa-spin fa-refresh"></i></div>');
+		var type = 'png';
+		
+
+		process_images(0);
+		function process_images(current){
+			if(current >= files.length){
+				return;
+			}
+			if(!files[current]){
+				current++;
+				process_images(current);				
+			}
+			var filename = files[current].name; 
+			convert_image(files[current],type,function(canvas){
+				canvas.toBlob(function(blob){
+					var link_blob = URL.createObjectURL(blob);
+					$('#img_'+ current).append('<a class="download" href="'+link_blob+'" download="'+filename+'">Download<br/>'+get_filesize(blob.size)+'</a>');
+				},'image/png',0.01);
+
+				/*
+				image.height = 100;
+				var a = URL.createObjectURL(image.src);
+				$('#img_'+ current).append('<a class="download" href="'+a+'">Download</a>');
+				current++;
+				process_images(current);
+				*/
+			});
+			
+		}
+
+	});
+
+})
+
+function convert_image(file,type,callback){
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function(event){
+        var img = new Image();
+        img.src = event.target.result;
+        img.onload = function(){
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            canvas.getContext("2d").drawImage(img, 0, 0);
+            //var image = new Image();
+            //image.src = canvas.toDataURL("image/"+type.toLowerCase());
+            callback(canvas);
+        }
+    }
+}
+</script>
+
+		<footer class="bg-dark text-muted py-4">
+			<div class="container">
+				Copyright &copy; 2019
+			</div>
+		</footer>
+		<script src="./js/jquery-3.3.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<script src="./js/bootstrap.min.js"></script>
+		<script src="./js/global.js"></script>
+	</body>
+</html>
