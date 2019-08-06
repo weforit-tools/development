@@ -15,7 +15,7 @@
 			var app = {
 				'scroll_offset'	: 60,
 				'api'			: 'https://weforit.com/api/',
-				'current_url'	: 'http://localhost/test/url-to-xml-sitemap-generator?skip=1',
+				'current_url'	: 'http://localhost/test/./url-to-xml-sitemap-generator?skip=1',
 				'data_table'	: {
 						"retrieve"			: true,
 				        "scrollY"			: '300px',
@@ -403,18 +403,18 @@ function generate_sitemap(){
 }
 function check_support(){
 	var yes = 1;
-	var html = '<div class="alert alert-danger text-left">Your browser doesn\'t support following functions. Please use a modern browser to run this Tool. We are really sorry about that';
+	var html = '<div class="alert alert-danger text-left">Sorry, Your browser doesn\'t support following functions:-';
 	html+='<ul class="small mt-1 mb-0">';
 	if (typeof(Worker) == "undefined") {
 		yes = 0;
-		html += '<li><strong>Web Worker</strong>';
+		html += '<li><strong>Web Worker</strong></li>';
 	}
 	if (typeof URL !== "function") {
 		// It is not supported
 		yes = 0;
-		html += '<li><strong>URL Functions</strong>';
+		html += '<li><strong>URL Functions</strong></li>';
 	}
-	html += '</div>';
+	html += '</ul>Please use a modern browser to run this Tool. Our recommendation are Chrome or Mozilla Firefox</div>';
 	if(yes == 0){
 		$('#btn_step2').remove();
 		$('.check-support').html(html);		

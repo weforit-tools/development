@@ -121,13 +121,7 @@
 </script>
 
 <script>
-dropzone.addEventListener("dragover", function(event) {
-  event.preventDefault();
-}, true);
-dropzone.addEventListener("drop", function(event) {
-  event.preventDefault();
-  // Ready to do something with the dropped object
-}, true);
+
 window.addEventListener('load',function(){
 	var files = [];
 	$('input[name="imgs"').on('change',function(){
@@ -157,7 +151,7 @@ window.addEventListener('load',function(){
 	$('form.weforit-tool').submit(function(e){
 		e.preventDefault();
 		$('#output').append('<div><i class="fa fa-spin fa-refresh"></i></div>');
-		var type = 'png';
+		var type = 'jpeg';
 		
 
 		process_images(0);
@@ -216,8 +210,9 @@ function convert_image(file,type,callback){
 			</div>
 		</footer>
 		<script src="./js/jquery-3.3.1.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> -->
 		<script src="./js/bootstrap.min.js"></script>
 		<script src="./js/global.js"></script>
+		<script src="./js/functions.js"></script>
 	</body>
 </html>

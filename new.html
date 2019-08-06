@@ -10,30 +10,240 @@
 		<link rel="manifest" href="./manifest.json">
 		<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
 		<link rel="icon" href="./favicon.ico" type="image/x-icon">
-		<script type="text/javascript">
-			var app = {
-				'scroll_offset'	: 60,
-				'api'			: 'https://weforit.com/api/',
-				'current_url'	: 'http://localhost/test/ck-html-editor?skip=1',
-				'data_table'	: {
-						"retrieve"			: true,
-				        "scrollY"			: '300px',
-				    	"scrollX"			: true,
-				        "scrollCollapse"	: true,
-						"paging"			: false
-				},
-				'table_export'	: {},
+		<style>
+			body{
+				position: relative;
 			}
-		</script>
+			#wrapper{
+				height: 100%;
+				position: relative;
+			}
+			.wrapper:before, .wrapper:after {
+			    content: " ";
+			    display: table;
+			}
+			#header{
+				max-height: 100px;
+				z-index: 1030;
+				position:sticky;
+  				position: -webkit-sticky;
+				top:0;
+			}
+			#header .logo{
+				-webkit-transition: width .3s ease-in-out;
+			    -o-transition: width .3s ease-in-out;
+			    transition: width .3s ease-in-out;
+				display:block;
+				width:230px;	
+				text-align:center;
+				height:50px;
+				line-height:50px;
+				font-size:20px;
+				padding:0 1rem;
+				background:var(--secondary);
+				color:var(--white);
+			}
+			#header .logo-sm,
+			#header .logo-lg{
+				display:block;
+			}
+			.sidebar-toggle{
+				color:var(--white);
+			}
+			#header .logo{
+				float:left;
+			}
+			#header .navbar{
+				-webkit-transition: margin-left .3s ease-in-out;
+			    -o-transition: margin-left .3s ease-in-out;
+			    transition: margin-left .3s ease-in-out;
+			    margin-bottom: 0;
+			    margin-left: 230px;
+			    border: none;
+			    min-height: 50px;
+			    border-radius: 0;
+			    padding:0;
+			}
+			#header .navbar .nav-link{
+				font-size:.9rem;
+				padding:.9rem;
+				color:#fff;
+			}
+			#header .navbar .nav-link:hover,
+			#header .navbar .nav-link:active,
+			#header .navbar .nav-link:focus{
+				background-color:var(--secondary);
+				color:#fff;
+			}
+			#header .navbar-nav{
+				padding:0 ;
+			}
+			.main-sidebar{
+				-webkit-transition: -webkit-transform .3s ease-in-out,margin .3s ease-in-out;
+			    -moz-transition: -moz-transform .3s ease-in-out,margin .3s ease-in-out;
+			    -o-transition: -o-transform .3s ease-in-out,margin .3s ease-in-out;
+				position:fixed;
+				top:50px;
+				left:0;
+				width:230px;
+				height:100%;
+				background:var(--dark);
+    			transform: translate(0, 0);
+				z-index:110;
+				overflow-y:auto;
+			}
+			.main-sidebar .nav-link{
+				color:var(--white);
+				opacity:.8;
+				padding:.7rem 1.1rem;
+				white-space: nowrap;
+				font-size:80%;
+			}
+			.main-sidebar > .navbar-nav{
+				border-top:1px solid rgba(255,255,255,.15);				
+			}
+			.main-sidebar > .navbar-nav,
+			.main-sidebar .nav-link{
+				border-bottom:1px solid rgba(255,255,255,.15);
+
+			}
+			.main-sidebar section{
+				padding:.7rem 1.1rem;
+			}
+			.main-sidebar::-webkit-scrollbar {
+			  width: 5px;
+			}
+			.main-sidebar .search{
+				position:relative;				
+			}
+			.main-sidebar .search .form-control{
+				padding:.5rem 1rem;
+				height:auto;
+				background:#2b3035;
+				border-color:transparent;
+			}
+			.main-sidebar .search .btn{
+				position:absolute;
+				top:0;
+				right:0;
+				color:var(--gray);
+				padding:.3rem .5rem;
+			}
+			.main-sidebar .search .form-control:focus{
+				border-color:rgba(255,255,255,.2);
+			}
+			/* Track */
+			.main-sidebar::-webkit-scrollbar-track {
+			  background: var(--dark); 
+			}
+
+			/* Handle */
+			.main-sidebar::-webkit-scrollbar-thumb {
+			  background: #222; 
+			}
+
+			/* Handle on hover */
+			.main-sidebar::-webkit-scrollbar-thumb:hover {
+			  background: #000; 
+			}
+			.content-wrapper{
+				padding:0 1rem;
+			}
+			.footer{
+				background:var(--white);
+				padding:.5rem 1rem;
+			}
+			.content-wrapper,
+			.footer{
+				-webkit-transition: -webkit-transform .3s ease-in-out,margin .3s ease-in-out;
+			    -moz-transition: -moz-transform .3s ease-in-out,margin .3s ease-in-out;
+			    -o-transition: -o-transform .3s ease-in-out,margin .3s ease-in-out;
+			    transition: transform .3s ease-in-out,margin .3s ease-in-out;
+				margin-left: 230px;
+				z-index:100;
+			}
+			.sidebar-close .main-sidebar{
+    			transform: translate(-230px, 0);
+			}
+			.sidebar-close .content-wrapper,
+			.sidebar-close .footer{
+    			margin-left: 0;
+			}
+			.main-sidebar .nav-link .fa{
+				width:1.2rem;
+			}
+			.main-sidebar .nav-link.active,
+			.main-sidebar .nav-link:hover,
+			.main-sidebar .nav-link:focus,
+			.main-sidebar .nav-link:active{
+				background:#2b3035;			
+			}
+			.main-sidebar .nav-link:after{
+				content:"\f105";
+				font-family:fontawesome;
+				float:right;
+				transition:.3s;
+			}
+			.main-sidebar .nav-item [data-toggle="collapse"].nav-link:after{
+				transform:rotate(90deg);
+			}
+			.main-sidebar .nav-item [data-toggle="collapse"].nav-link.collapsed:after{
+				transform:rotate(0deg);
+			}
+			.main-sidebar .navbar-nav .navbar-nav{
+				background:#212529;
+				padding-left:.1rem;
+			}
+			.main-sidebar .navbar-nav .navbar-nav .nav-link{
+				font-size:80%;
+				color:#d6d6d6;
+				padding-top:.4rem;
+				padding-bottom:.4rem;
+			}
+			.main-sidebar .navbar-nav .navbar-nav .nav-link.active,
+			.main-sidebar .navbar-nav .navbar-nav .nav-link:hover,
+			.main-sidebar .navbar-nav .navbar-nav .nav-link:focus,
+			.main-sidebar .navbar-nav .navbar-nav .nav-link:active{
+				background:transparent;
+				opacity:1;
+			}
+			
+			@media screen and (max-width:768px){
+				.main-sidebar{
+					top:100px;
+    				transform: translate(-230px, 0);
+				}
+				.content-wrapper,
+				.footer{
+	    			margin-left:0;
+				}
+				.sidebar-close .content-wrapper,
+				.sidebar-close .footer{
+    				margin-left:230px;
+				}
+				.sidebar-close .main-sidebar{
+	    			transform: translate(0, 0);					
+				}
+				#header .logo{
+					width:100%;
+				}
+				#header .navbar{
+					margin-left:0;
+				}
+				#header .logo,
+				#header .navbar{
+					float:none;
+				}
+			}
+		</style>
 	</head>
 	<body>
-		
-		<div id="wrapper">
+				<div id="wrapper">
 			<header id="header">
-				<a class="logo" href="./">
+				<a class="logo" href="#">
 					<span class="logo-lg">WeForIT Tools</span>
 				</a>
-				<nav class="navbar navbar-expand navbar-dark bg-primary shadow-sm">
+				<nav class="navbar navbar-expand navbar-dark bg-primary">
 					<a href="#" class="sidebar-toggle nav-link" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 						<i class="fa fa-bars"></i>
 					</a>
@@ -112,86 +322,15 @@
 				</ul>
 			</aside>
 			<div class="content-wrapper">
-
-<section class="bg-white py-4">
-	<div class="container-fluid">
-		<form class="weforit-tool">
-			<h5 class="text-center">CK HTML Editor</h5>
-			<p class="text-center text-muted mb-4">
-				Get Nice &amp; Clean HTML Code, Start Type or Copy-Paste your Code
-			</p>
-			<div class="row">
-				<div class="col-12 col-md-12 col-lg-7">
-					<div class="card card-primary border-0">
-						<div class="card-header rounded-0 bg-primary text-white font-weight-bold">
-							Visutal Editor
-							<label href="javascript:void(0)" style="cursor:pointer;" class="mb-0 small text-white float-right"><i class="fa fa-plus-circle mr-1"></i>Import File
-								<input type="file" id="loadFile" name="loadfile" class="d-none"/>
-							</label>
+				<div class="container-fluid my-4">
+					<div class="row">
+											<!-- Tool -->
+						<div class="col-6 col-sm-6 col-md-4 col-lg-3">
+							<a class="tool-box bg-white shadow-sm pt-3 pb-1" href="./htaccess-file-caching-generator">
+								<div class="icon">
+									<i class="fa fa-bolt"></i>								</div>
+								<div class="text">Caching Generator</div>
+							</a>
 						</div>
-						<div class="card-body p-0">
-							<textarea id="html-editor" class="form-control" style="white-space:pre;height: 219px;" placeholder="Please Start typing, Paste, or Load File"></textarea>
-						</div>
-					</div>
-				</div>
-				<div class="col-12 col-md-12 col-lg-5">
-					<div class="control-box p-0 bg-white card card-primary border">
-						<div class="card-header rounded-0 bg-primary text-white font-weight-bold">
-							HTML Editor
-						</div>
-						<div class="card-body rounded-0 p-0">
-							<textarea id="output" style="white-space:pre;height: 353px;" class="small bg-dark text-white form-control border-0  rounded-0" placeholder="HTML Editor/Output"></textarea>
-						</div>
-					</div>
-				</div>
-			</div>
-		</form>
-	</div>
-</section>
-<script>
-window.addEventListener('load',function(){
-	$('#loadFile').click2loadFile('#html-editor',function(e){
-		CKEDITOR.instances['html-editor'].setData(e.target.result);
-    	$('#output').val(CKEDITOR.instances['html-editor'].getData());
-	});
-	$('#save_file').click2download('#output');
-	$('#copy_text').click2copy('#output');		
-	CKEDITOR.replace( 'html-editor',{
-		format_tags: 'p;h1;h2;h3;h4;h5;h6;pre;address;div',
-		height:'250px'
-	});
-	CKEDITOR.instances['html-editor'].on('change', function() { 
-    	$('#output').val(CKEDITOR.instances['html-editor'].getData());
-	});
-	CKEDITOR.instances['html-editor'].on('paste', function() { 
-    	$('#output').val(CKEDITOR.instances['html-editor'].getData());
-	});
-	/*
-	$('#output').on('keyup',function(){
-		CKEDITOR.instances['html-editor'].setData(this.value);
-	})
-	*/
-});
-</script>
-<div class='static-page'><script src="https://cdn.weforit.com/tool/ckeditor/4113-standard/ckeditor.js"></script>
-
-			</div>
-			<div class="footer shadow-sm border-top small">
-				<div class="container-fluid">
-					<strong>Copyright &copy; 2019</strong>
-				</div>
-			</div>
-		</div>
-		<script src="./js/jquery-3.3.1.min.js"></script>
-		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> -->
-		<script src="./js/bootstrap.min.js"></script>
-		<script src="./js/global.js"></script>
-		<script src="./js/functions.js"></script>
-		<script type="text/javascript">
-			$('.sidebar-toggle').on('click',function(e){
-				e.preventDefault();
-				$('body').toggleClass('sidebar-close');
-			});
-		</script>
-	</body>
-</html>
+						<!-- /Tool -->
+						
