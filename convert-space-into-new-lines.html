@@ -14,7 +14,7 @@
 			var app = {
 				'scroll_offset'	: 60,
 				'api'			: 'https://weforit.com/api/',
-				'current_url'	: 'http://localhost/test/convert-space-into-new-lines?skip=1',
+				'current_url'	: 'http://localhost/test/./convert-space-into-new-lines?skip=1',
 				'data_table'	: {
 						"retrieve"			: true,
 				        "scrollY"			: '300px',
@@ -33,7 +33,8 @@
 				<a class="logo" href="./">
 					<span class="logo-lg">WeForIT Tools</span>
 				</a>
-				<nav class="navbar navbar-expand navbar-dark bg-primary">
+				<nav class="navbar navbar-expand navbar-dark bg-primary shadow-sm">
+					<a href="/" class="nav-link logo-mobile"><img style="width:1.2rem" src="./images/icons/favicon-32x32.png"/></a>
 					<a href="#" class="sidebar-toggle nav-link" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 						<i class="fa fa-bars"></i>
 					</a>
@@ -167,8 +168,11 @@ window.addEventListener('load',function(){
 })
 </script>
 
+			</div>
 			<div class="footer shadow-sm border-top small">
-				<strong>Copyright &copy; 2019</strong>
+				<div class="container-fluid">
+					<strong>Copyright &copy; 2019</strong>
+				</div>
 			</div>
 		</div>
 		<script src="./js/jquery-3.3.1.min.js"></script>
@@ -176,5 +180,11 @@ window.addEventListener('load',function(){
 		<script src="./js/bootstrap.min.js"></script>
 		<script src="./js/global.js"></script>
 		<script src="./js/functions.js"></script>
+		<script type="text/javascript">
+			$('.sidebar-toggle').on('click',function(e){
+				e.preventDefault();
+				$('body').toggleClass('sidebar-close');
+			});
+		</script>
 	</body>
 </html>
