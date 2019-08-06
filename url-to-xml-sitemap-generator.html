@@ -128,6 +128,7 @@
 				</div>
 				<div class="text-center my-2">
 					<button type="button" id="btn_step2" class="btn btn-primary">Generate</button>
+					<div class='check-support'></div>
 				</div>
 			</div>
 			<div class="process collapse" id="step2">
@@ -228,7 +229,7 @@
 </script>
 
 <script type="javascript/process" id="generate_sitemap">
-	importScripts('http://localhost/test/development/js/functions.js');
+	importScripts('https://tool.weforit.com//js/functions.js');
 	self.onmessage = function(e){
 		var input = e.data;
 		var sitemap = [];
@@ -262,6 +263,7 @@
 var input = '', count = 0, priority = 0, frequency = '', lastmod = '', edit = 0;
 var url = [], frequency_list = ['Always','Hourly','Daily','Weekly','Monthly','Yearly','Never'];
 window.addEventListener('load',function(){
+	check_support();
 	$('#btn_step2').on('click',function(){
 		input = $('#input').val();
 		if(!input || !input.trim()){
@@ -399,7 +401,25 @@ function generate_sitemap(){
 		};
 	})
 }
-
+function check_support(){
+	var yes = 1;
+	var html = '<div class="alert alert-danger text-left">Your browser doesn\'t support following functions. Please use a modern browser to run this Tool. We are really sorry about that';
+	html+='<ul class="small mt-1 mb-0">';
+	if (typeof(Worker) == "undefined") {
+		yes = 0;
+		html += '<li><strong>Web Worker</strong>';
+	}
+	if (typeof URL !== "function") {
+		// It is not supported
+		yes = 0;
+		html += '<li><strong>URL Functions</strong>';
+	}
+	html += '</div>';
+	if(yes == 0){
+		$('#btn_step2').remove();
+		$('.check-support').html(html);		
+	}
+}
 </script>
 
 
