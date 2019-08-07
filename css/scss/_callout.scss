@@ -1,0 +1,53 @@
+//
+// Base styles
+//
+
+.callout {
+  position: relative;
+  padding: $callout-padding-y $callout-padding-x;
+  margin-bottom: $callout-margin-bottom;
+  border: $callout-border-width solid transparent;
+  border-left-width: $callout-border-left-width;
+  @include border-radius($callout-border-radius);
+}
+
+// Headings for larger callout
+.callout-heading {
+  // Specified to prevent conflicts of changing $headings-color
+  color: inherit;
+}
+
+// Provide class for links that match callout
+.callout-link {
+  font-weight: $callout-link-font-weight;
+}
+
+
+// Dismissible callout
+//
+// Expand the right padding and account for the close button's positioning.
+
+.callout-dismissible {
+  padding-right: $close-font-size + $callout-padding-x * 2;
+
+  // Adjust close link position
+  .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: $callout-padding-y $callout-padding-x;
+    color: inherit;
+  }
+}
+
+
+// Alternate styles
+//
+// Generate contextual modifier classes for colorizing the callout.
+
+@each $color, $value in $theme-colors {
+  .callout-#{$color} {
+    @include alert-variant(theme-color-level($color, $callout-bg-level), theme-color-level($color, $callout-border-level), theme-color-level($color, $callout-color-level));
+    border-left-color:#{$value};
+  }
+}

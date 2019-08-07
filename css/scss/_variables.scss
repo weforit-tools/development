@@ -34,14 +34,14 @@ $grays: map-merge(
   $grays
 );
 
-$blue:    #007bff !default;
-$indigo:  #6610f2 !default;
+$blue:    #03a9f4 !default;
+$indigo:  #006695 !default;
 $purple:  #6f42c1 !default;
 $pink:    #e83e8c !default;
 $red:     #dc3545 !default;
 $orange:  #fd7e14 !default;
-$yellow:  #ffc107 !default;
-$green:   #28a745 !default;
+$yellow:  #ec942c !default;
+$green:   #156b00 !default;
 $teal:    #20c997 !default;
 $cyan:    #17a2b8 !default;
 
@@ -978,6 +978,22 @@ $alert-bg-level:                    -10 !default;
 $alert-border-level:                -9 !default;
 $alert-color-level:                 6 !default;
 
+
+// Callout
+//
+// Define callout colors, border radius, and padding.
+
+$callout-padding-y:                   .75rem !default;
+$callout-padding-x:                   1.25rem !default;
+$callout-margin-bottom:               1rem !default;
+$callout-border-radius:               0 !default;
+$callout-link-font-weight:            $font-weight-bold !default;
+$callout-border-width:                $border-width !default;
+
+$callout-bg-level:                    -10 !default;
+$callout-border-level:                -9 !default;
+$callout-color-level:                 6 !default;
+$callout-border-left-width:           5px !default;
 
 // Progress bars
 

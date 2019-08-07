@@ -3767,6 +3767,109 @@ input[type="button"].btn-block {
   .alert-dark .alert-link {
     color: #040505; }
 
+.callout {
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-left-width: 5px;
+  border-radius: 0; }
+
+.callout-heading {
+  color: inherit; }
+
+.callout-link {
+  font-weight: 700; }
+
+.callout-dismissible {
+  padding-right: 4rem; }
+  .callout-dismissible .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.75rem 1.25rem;
+    color: inherit; }
+
+.callout-primary {
+  color: #02587f;
+  background-color: #cdeefd;
+  border-color: #b8e7fc;
+  border-left-color: #03a9f4; }
+  .callout-primary hr {
+    border-top-color: #a0dffb; }
+  .callout-primary .alert-link {
+    color: #01354d; }
+
+.callout-secondary {
+  color: #00354d;
+  background-color: #cce0ea;
+  border-color: #b8d4e1;
+  border-left-color: #006695; }
+  .callout-secondary hr {
+    border-top-color: #a6c9d9; }
+  .callout-secondary .alert-link {
+    color: #00121a; }
+
+.callout-success {
+  color: #0b3800;
+  background-color: #d0e1cc;
+  border-color: #bdd6b8;
+  border-left-color: #156b00; }
+  .callout-success hr {
+    border-top-color: #aecda8; }
+  .callout-success .alert-link {
+    color: #010500; }
+
+.callout-info {
+  color: #006600;
+  background-color: #ccf3cc;
+  border-color: #b8eeb8;
+  border-left-color: #00c400; }
+  .callout-info hr {
+    border-top-color: #a3e9a3; }
+  .callout-info .alert-link {
+    color: #003300; }
+
+.callout-warning {
+  color: #7b4d17;
+  background-color: #fbead5;
+  border-color: #fae1c4;
+  border-left-color: #ec942c; }
+  .callout-warning hr {
+    border-top-color: #f8d5ac; }
+  .callout-warning .alert-link {
+    color: #50320f; }
+
+.callout-danger {
+  color: #6e1010;
+  background-color: #f6d2d2;
+  border-color: #f3c0c0;
+  border-left-color: #d41e1e; }
+  .callout-danger hr {
+    border-top-color: #efabab; }
+  .callout-danger .alert-link {
+    color: #410a0a; }
+
+.callout-light {
+  color: #818182;
+  background-color: #fefefe;
+  border-color: #fdfdfe;
+  border-left-color: #f8f9fa; }
+  .callout-light hr {
+    border-top-color: #ececf6; }
+  .callout-light .alert-link {
+    color: #686868; }
+
+.callout-dark {
+  color: #1b1e21;
+  background-color: #d6d8d9;
+  border-color: #c6c8ca;
+  border-left-color: #343a40; }
+  .callout-dark hr {
+    border-top-color: #b9bbbe; }
+  .callout-dark .alert-link {
+    color: #040505; }
+
 @keyframes progress-bar-stripes {
   from {
     background-position: 1rem 0; }

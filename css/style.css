@@ -368,7 +368,7 @@ img{
 
 .tool-box{
 	display:block;
-	margin:0 auto 3rem auto;
+	margin:0 auto 2rem auto;
 	text-align:center;
 	position:relative;
 	color:inherit;
@@ -402,8 +402,8 @@ img{
 .tool-box .text{
 	position:relative;
 	font-weight: 500;
-	padding-bottom:.5rem;
-	font-size: .9rem;
+	padding:0 .5rem .5rem .5rem;
+	font-size: .8rem;
 }
 .tool-box .text:before{
 	content:" ";
@@ -425,8 +425,8 @@ img{
 	left:0;
 }
 
-.card-header:after,
-.card-header.collapsed:after{
+.accordion .card-header:after,
+.accordion .card-header.collapsed:after{
 	font-family:fontawesome;
 	float:right;
 	content:"\f054";
@@ -434,6 +434,9 @@ img{
 	transform:rotate(0deg);
 	font-size: 90%;
 }
-.card-header:after{
+.accordion .card-header:after{
 	transform:rotate(90deg);
+}
+.accordion .card-border{
+	border-width:3px!important;
 }
