@@ -127,94 +127,145 @@
 	padding:1rem;
 	cursor:pointer;
 }
-.card-tool{
-	float:right;
+#drop-box.highlight{
+	background-color:#fff;
 }
-.card-tool .btn{
-	padding:0 .25rem;
+
+.exclude-file-item{
+	position: relative;
+	max-width:140px;
+	height:1rem;
+	display:table;
+	float:left;
+	margin:2px;
 }
-.card-tool .btn:last-child{
-	padding-right:0;
+.exclude-file-item input{
+	width:100%;
+	font-size:12px;
+	padding:2px 17px 2px 4px;
+}
+.exclude-file-item .btn{
+	position: absolute;
+	right:2px;
+	top:0;
+	padding: 0 4px;
+	height:25px;
 }
 </style>
 <div class="container-fluid py-3">
 	<h4 class="text-muted mb-4"><i class="fa fa-list mr-2"></i>File List Generator</h4>
 	<div class="callout callout-primary shadow-sm">
 		<div class="callout-heading"><strong>How it Works?</strong></div>
-		<p class="mb-0">This Tool will give you file name list of all selected files</p>
+		<p class="mb-0">This Tool will give you file name list of all selected files. <a href="#">Click here</a> to Watch Video</p>
 	</div>
 	<form class="mb-4">
-		<div class="row">
-			<div class="col-12 col-lg-6">
-				<div class="card shadow-sm">
-					<div class="card-body">
-							<label class="upload-area w-100" id="droparea">
-								<div class="py-5 my-2">
-								    <input type="file" class="d-none" id="filelist" multiple onchange="add_files(this.files)">
-								    <i class="fa fa-plus-circle mr-2"></i>Select or Drop Files
-								</div>
-							</label>
-							<div class="result mt-3">
-								<div><strong>Files Loaded: </strong><span id="total">0</span></div>
-							</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-12 col-lg-6">
-				<div class="card card-default">
-					<div class="card-header py-2 bg-transparent">
-						Output
-						<div class="card-tool">
-							<button type="button" id="save_file" title="Export File" data-toggle="tooltip" class="btn"><i class="fa fa-floppy-o"></i></button>
-							<button type="reset" title="Reset" data-toggle="tooltip" class="btn"><i class="fa fa-refresh"></i></button>
-						</div>
-					</div>
-					<div class="card-body p-0 ">
-						<textarea rows="10" placeholder="Please Select File From Left Side" readonly="readonly" id="output" class="rounded-0 form-control form-control-sm h-100"></textarea>
-					</div>
-				</div>
-				
-			</div>
+		<div class="text-left mb-2">
+			<button type="button" data-toggle="modal" data-target="#options" class="btn btn-sm btn-primary"><i class="fa fa-gears mr-2"></i>Options</button>
+			<button type="button" id="save_file" class="btn btn-sm btn-primary" disabled="true"><i class="fa fa-download mr-2"></i>Download List</button>
 		</div>
+		<label class="upload-area w-100" id="drop-box" for="filelist">
+			<div class="py-5 my-2">
+			    <input type="file" class="d-none" id="filelist" multiple="true" onchange="add_files(this.files)">
+			    <i class="fa fa-plus-circle mr-2"></i>Select or Drop Files
+			</div>
+		</label>
 	</form>
 </div>
 
+
+<!-- Options -->
+<div class="modal fade" id="options" data-keyboard="false" data-backdrop="static">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5><i class="fa fa-gears mr-2"></i>Options</h5>
+			</div>
+			<div class="modal-body small">
+				<div class="card border-0 card-default">
+					<div class="card-header p-0 bg-transparent ">
+						<strong>Files to Exclude</strong>
+						<div class="card-tool">
+							<button type="button" data-toggle="add-exclude-file" class="btn p-0"><i class="fa fa-plus-circle"></i></button>
+						</div>
+					</div>
+					<div class="card-body bg-light py-1 px-2 overflow-auto" style="height:100px;" id="exclude-file">
+
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer text-right">
+				<button type="button" class="btn btn-primary btn-sm mr-2" data-toggle="save_option"><i class="fa fa-floppy-o mr-2"></i>Save</button>
+				<button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i class="fa fa-times mr-2"></i>Cancel</button>
+			</div>
+		</div>
+	</div>
+</div>
+<style>
+</style>
 <script>
-var count = 0;
-let dropArea = document.getElementById('droparea')
-;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-  dropArea.addEventListener(eventName, preventDefaults, false)
-})
+var count = 0, exclude = [];
+
 window.addEventListener('load',function(){
 	$('#save_file').click2download('#output');
+	var dropbox = '#drop-box';
+	$(dropbox).on('dragenter dragover drop dragleave',function(e){
+		e.preventDefault();
+		e.stopPropagation();
+	});
+	$(dropbox).on('dragenter dragover',function(e){
+		$(this).addClass('highlight');
+	});
+	$(dropbox).on('drop dragleave',function(e){
+		$(this).removeClass('highlight');
+	});
+	$(dropbox).on('drop',function(e){
+		console.log();
+		if(e.originalEvent && e.originalEvent.dataTransfer && e.originalEvent.dataTransfer.files){
+			add_files(e.originalEvent.dataTransfer.files);
+		}
+	});
+
+
+
+
+	$('[data-toggle="add-exclude-file"]').on('click',function(e){
+		e.preventDefault();
+		var id = 'f_'+Math.floor(Date.now() / 1000)+'_'+random_str(10);
+		$('#exclude-file').append('<div class="exclude-file-item" id="'+id+'"><input type="text" placeholder="*.mp3 / filename"><button type="button" onclick="document.getElementById(\''+id+'\').remove()" class="btn">&times;</button></div>');
+
+	});
+
+	$('[data-toggle="save_option"]').on('click',function(e){
+		$(this).attr('disabled','disabled');
+		if($('#exclude-file input').length){
+			exclude = [];
+			$('#exclude-file input').each(function(i,v){
+				var val = $(v).val();
+				if(!val || !val.trim()){
+					return false;
+				}
+				exclude.push(val);
+			});
+		}
+		$('#options').modal('hide');
+		console.log(exclude);
+	});
+
+	$('#options').on('shown.bs.modal', function () {
+	  $('[data-toggle="save_option"]').removeAttr('disabled');
+	  if(exclude.length > 0){
+	  	$('#exclude-file').html('');
+	  	$(exclude).each(function(i,v){
+			var id = 'f_'+Math.floor(Date.now() / 1000)+'_'+random_str(10);
+			$('#exclude-file').append('<div class="exclude-file-item" id="'+id+'"><input value="'+v+'" type="text" placeholder="*.mp3 / filename"><button type="button" onclick="document.getElementById(\''+id+'\').remove()" class="btn">&times;</button></div>');
+	  	})
+	  }
+
+	})
 
 })
-function preventDefaults (e) {
-  e.preventDefault()
-  e.stopPropagation()
-}
-;['dragenter', 'dragover'].forEach(eventName => {
-  dropArea.addEventListener(eventName, highlight, false)
-})
 
-;['dragleave', 'drop'].forEach(eventName => {
-  dropArea.addEventListener(eventName, unhighlight, false)
-});
-dropArea.addEventListener('drop', handleDrop, false)
 
-function highlight(e) {
-  dropArea.classList.add('bg-warning')
-}
-
-function unhighlight(e) {
-  dropArea.classList.remove('bg-warning')
-}
-
-function handleDrop(e) {
-  let dt = e.dataTransfer
-  let files = dt.files
-  add_files(files);
-}
 function add_files(files){
 	console.log(files);
 	if(!files || !files.length){
@@ -234,8 +285,6 @@ function add_files(files){
 		$('#total').html(count);
 	}
 }
-
-
 </script>
 
 			</div>

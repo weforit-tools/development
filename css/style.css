@@ -440,3 +440,13 @@ img{
 .accordion .card-border{
 	border-width:3px!important;
 }
+
+.card-tool{
+	float:right;
+}
+.card-tool .btn{
+	padding:0 .25rem;
+}
+.card-tool .btn:last-child{
+	padding-right:0;
+}
