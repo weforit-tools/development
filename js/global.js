@@ -301,3 +301,6 @@ function random_str(length) {
 Element.prototype.remove = function() {
     this.parentElement.removeChild(this);
 }
+
+if(!$(".modal").parent().is('body'))
+    $(".modal").appendTo("body");

@@ -442,10 +442,13 @@ img{
 }
 
 .card-tool{
-	float:right;
+	position:absolute;
+	right:1rem;
+	top:2px;
 }
 .card-tool .btn{
 	padding:0 .25rem;
+	cursor:pointer;
 }
 .card-tool .btn:last-child{
 	padding-right:0;

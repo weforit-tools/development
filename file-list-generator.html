@@ -156,21 +156,35 @@
 	<h4 class="text-muted mb-4"><i class="fa fa-list mr-2"></i>File List Generator</h4>
 	<div class="callout callout-primary shadow-sm">
 		<div class="callout-heading"><strong>How it Works?</strong></div>
-		<p class="mb-0">This Tool will give you file name list of all selected files. <a href="#"><strong>Click here</strong></a> to Watch Video</p>
+		<p class="mb-0">This Tool will give you file name list of all selected files. We are not saving or uploading any files. All process can be done by your browser.<br/><a href="#"><strong>Click here</strong></a> to Watch Video</p>
 	</div>
 	<form class="mb-4">
-		<div class="text-left mb-2">
-			<button type="button" data-toggle="modal" data-target="#options" class="btn btn-sm btn-primary"><i class="fa fa-gears mr-2"></i>Options</button>
-			<button type="button" id="show_list" data-toggle="modal" data-target="#file_list" class="btn btn-sm btn-primary" disabled="true"><i class="fa fa-list mr-2"></i>Show File List</button>
-			<button type="button" id="save_file" class="btn btn-sm btn-primary" disabled="true"><i class="fa fa-download mr-2"></i>Download List</button>
-		</div>
-		<label class="upload-area w-100" id="drop-box" for="filelist">
-			<div class="py-5 my-2">
-			    <input type="file" class="d-none" id="filelist" multiple="true" onchange="add_files(this.files)">
-			    <i class="fa fa-plus-circle mr-2"></i>Select or Drop Files
+		<div class="card card-default shadow-sm">
+			<div class="card-header py-1 pr-2 pl-3 bg-transparent">
+				<strong>Import Files</strong>
+				<div class="card-tool">
+					<button type="button" data-toggle="modal" data-target="#file_list" class="btn bg-info text-white"><span data-toggle="tooltip" title="Files Count" class="total">0</span></button>
+					<button type="button" data-toggle="modal" data-target="#options" class="btn"><i data-toggle="tooltip" title="Options" class="fa fa-wrench"></i></button>
+					<button type="button" data-toggle="modal" data-target="#file_list" id="show_list" class="btn"><i data-toggle="tooltip" title="Show File List" class="fa fa-list"></i></button>
+					<button type="button" id="save_file" class="btn"><i data-toggle="tooltip" title="Download File" class="fa fa-download"></i></button>
+				</div>
 			</div>
-		</label>
-		<div><strong>Files Selected: </strong><span id="total">0</span></div>
+			<div class="card-body">
+				<div class="alert alert-info">
+					<strong><i class="fa fa-info-circle mr-2"></i>Tip</strong>
+					<br/>
+					If you want add filter into list then navigate to Options before Selecting Files
+				</div>
+				<label class="upload-area w-100" id="drop-box" for="filelist">
+					<div class="py-5 my-2">
+					    <input type="file" class="d-none" id="filelist" multiple="true" onchange="add_files(this.files)">
+					    <i class="fa fa-plus-circle mr-2"></i>Select or Drop Files
+					</div>
+				</label>
+				<div><strong>Files Count: </strong><span class="total">0</span></div>
+			</div>
+		</div>
+		
 	</form>
 </div>
 
@@ -192,7 +206,7 @@
 
 
 <!-- Options -->
-<div class="modal fade" id="options" data-keyboard="false" data-backdrop="static">
+<div class="modal fade" id="options" data-keyboard="false" data-backdrop="static"  tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -202,8 +216,8 @@
 				<div class="card border-0 card-default">
 					<div class="card-header p-0 bg-transparent ">
 						<strong>Files to Exclude</strong>
-						<div class="card-tool">
-							<button type="button" data-toggle="add-exclude-file" class="btn p-0"><i class="fa fa-plus-circle"></i></button>
+						<div class="card-tool" style="right:2px;top:-3px">
+							<button type="button" data-toggle="add-exclude-file" class="btn p-0"><i data-toggle="tooltip" title="Add File" class="fa fa-plus-circle"></i></button>
 						</div>
 					</div>
 					<div class="card-body bg-light py-1 px-2 overflow-auto" style="height:100px;" id="exclude-file">
@@ -222,9 +236,48 @@
 		</div>
 	</div>
 </div>
+<script type='javascript/process' id='extract-names'>
+	importScripts('https://tool.weforit.com//js/functions.js');
+	var start = 0, files = [], exclude = [];
+	self.onmessage = function(e){
+		files = e.data.value;
+		exclude = e.data.exclude;
+		extract_name(start);
+	}
+	function extract_name(start){
+		if(start >= files.length){
+			postMessage('done');
+			return;
+		}
+		if(!files[start] || !files[start].name){
+			start++;
+			extract_name(start);
+			return;
+		}
+		var file = files[start];
+		//check for exclude file extenstion
+		var ext = get_filetype(file.name);
 
+		if(exclude.indexOf('*.'+ext) > -1 || exclude.indexOf('.'+ext) > -1){
+			//extension found
+			start++;
+			extract_name(start);
+			return;		
+		}
+		//check for exclude file name
+		if(exclude.indexOf(file.name) > -1){
+			//file found
+			start++;
+			extract_name(start);
+			return;			
+		}
+		postMessage(files[start].name);
+		start++;
+		setTimeout(function(){extract_name(start)},0);
+	}
+</script>
 <script>
-var count = 0, exclude = [];
+var count = 0, exclude = [], start = 0, list = [];
 
 window.addEventListener('load',function(){
 	$('#save_file').click2download('#output');
@@ -240,13 +293,10 @@ window.addEventListener('load',function(){
 		$(this).removeClass('highlight');
 	});
 	$(dropbox).on('drop',function(e){
-		console.log();
 		if(e.originalEvent && e.originalEvent.dataTransfer && e.originalEvent.dataTransfer.files){
 			add_files(e.originalEvent.dataTransfer.files);
 		}
 	});
-
-
 
 
 	$('[data-toggle="add-exclude-file"]').on('click',function(e){
@@ -281,16 +331,39 @@ window.addEventListener('load',function(){
 	  	})
 	  }
 
-	})
+	});
 
-})
+
+});
 
 
 function add_files(files){
-	console.log(files);
 	if(!files || !files.length){
 		return;
 	}
+	start_process('#extract-names',function(process){
+		process.postMessage({'value':files,'exclude':exclude});
+		process.onmessage = function(e){
+			if(e.data == 'done'){
+				process.terminate();
+				process = undefined;
+				return;				
+			}
+			count++;
+			$('#output').val(function(){
+				if(!$('#output').val()){
+					return e.data; 
+				}
+				return  this.value + "\r\n" + e.data;
+			});
+			$('.total').html(count);
+		}
+	});
+	if(count > 0){
+		$('#save_file').removeAttr('disabled');
+		$('#show_list').removeAttr('disabled');
+	}
+	/*
 
 	for(var i = 0; i<files.length; i++){
 		if(!files[i] || !files[i].name){
@@ -305,10 +378,8 @@ function add_files(files){
 		});
 		$('#total').html(count);
 	}
-	if(count > 0){
-		$('#save_file').removeAttr('disabled');
-		$('#show_list').removeAttr('disabled');
-	}
+
+	*/
 }
 </script>
 
