@@ -173,7 +173,7 @@
 	<h4 class="text-muted mb-4"><i class="fa fa-list mr-2"></i>File List Generator</h4>
 	<div class="callout callout-primary shadow-sm">
 		<div class="callout-heading"><strong>How it Works?</strong></div>
-		<p class="mb-0">Do you have millions of files in a folder and do you want file list? Here You Go..., This Tool will provide list of thousands files in few seconds<br/><a href="#"><strong>Click here</strong></a> to Watch Video</p>
+		<p class="mb-0">Do you have thousands of files in a folder and do you want file list? Here You Go..., This Tool will provide list of thousands files in few seconds<br/><a href="#"><strong>Click here</strong></a> to Watch Video</p>
 	</div>
 	<form class="mb-4">
 		<div class="card card-default shadow-sm">
@@ -192,7 +192,7 @@
 						<div class="py-5 my-2">
 						    <input type="file" class="d-none" id="filelist" multiple="true" onchange="add_files(this.files)">
 						    <div class="h4"><i class="fa fa-plus-circle mr-2"></i>Select or Drop Files</div>
-						    <small>(Your files are safe in your device. We are not going to upload any files)</small>
+						    <small>Your files are safe in your device. We are not going to upload any files</small>
 						    <br/>
 						    <small>All file types accepted without any limit</small>
 						</div>
@@ -209,7 +209,7 @@
 				  <div style="transition:none;" class="progress-bar progress-bar-striped progress-bar-animated w-0" role="progressbar" ></div>
 				</div>
 				<div class="collapse" id="process_complete">
-					<div class="callout callout-success">
+					<div class="callout callout-info">
 						<strong>Bingo!!</strong><br/>
 						File List is ready and you can download file list just by clicking on <i class="fa fa-download"></i> icon above on right hand side.
 						<br/>
@@ -272,7 +272,7 @@
 			<div class="modal-body small">
 				<div class="card border-0 card-default">
 					<div class="card-header p-0 bg-transparent ">
-						<strong>Files to Exclude</strong>
+						<strong>Files to Exclude (Case Sensitive)</strong>
 						<div class="card-tool" style="right:2px;top:-3px">
 							<button type="button" data-toggle="add-exclude-file" class="btn p-0"><i data-toggle="tooltip" title="Add File" class="fa fa-plus-circle"></i></button>
 						</div>
@@ -281,8 +281,21 @@
 
 					</div>
 					<div class="mt-2">
-						<div class="mb-4">Sort By (Comming Soon)</div>
-						<div class="mb-4">Remove Names (Comming Soon)</div>
+						<div class="form-group">
+							<label><strong>Sort by (Comming Soon)</strong>
+							<div class="custom-control custom-radio">
+								<input disabled="y" type="radio" class="custom-control-input" id="sortby_none" checked="yes" name="sort">
+								<label class="custom-control-label" for="sortby_none" >None</label>
+							</div>
+							<div class="custom-control custom-radio">
+								<input disabled="y" type="radio" class="custom-control-input" id="sortby_asc" name="sort">
+								<label class="custom-control-label" for="sortby_asc">Ascending Order (0 - 9, A - Z)</label>
+							</div>
+							<div class="custom-control custom-radio">
+								<input disabled="y" type="radio" class="custom-control-input" id="sortby_desc" name="sort">
+								<label class="custom-control-label" for="sortby_desc">Descending (9 - 0, Z - A)</label>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -372,6 +385,8 @@ window.addEventListener('load',function(){
 		if(!list || !list.length){
 			return;
 		}
+		$('#output_added').val('');
+		$('#output_excluded').val('');
 		excluded 		= [];
 		added 			= [];
 		count 			= 0;
