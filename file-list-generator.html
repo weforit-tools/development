@@ -126,6 +126,7 @@
 	background-color:var(--light);
 	padding:1rem;
 	cursor:pointer;
+	position:relative;
 }
 #drop-box.highlight{
 	background-color:#fff;
@@ -151,6 +152,22 @@
 	padding: 0 4px;
 	height:25px;
 }
+.drop-box{
+	position:relative;
+}
+.drop-box .disable-wrapper{
+	position:absolute;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	background-color:rgba(255,255,255,.9);
+	z-index:1;
+	display:none;
+}
+.drop-box .disable-wrapper.active{
+	display:block;
+}
 </style>
 <div class="container-fluid py-3">
 	<h4 class="text-muted mb-4"><i class="fa fa-list mr-2"></i>File List Generator</h4>
@@ -163,25 +180,35 @@
 			<div class="card-header py-1 pr-2 pl-3 bg-transparent">
 				<strong>Import Files</strong>
 				<div class="card-tool">
-					<button type="button" data-toggle="modal" data-target="#file_list" class="btn bg-info text-white"><span data-toggle="tooltip" title="Files Count" class="total">0</span></button>
+					<button type="button" data-toggle="modal" data-target="#file_list" class="btn bg-info text-white"><span data-toggle="tooltip" title="Files Added" class="total_added">0</span></button>
+					<button type="button" data-toggle="modal" data-target="#file_list" class="btn bg-danger text-white"><span data-toggle="tooltip" title="Files Excluded" class="total_excluded">0</span></button>
 					<button type="button" data-toggle="modal" data-target="#options" class="btn"><i data-toggle="tooltip" title="Options" class="fa fa-wrench"></i></button>
 					<button type="button" data-toggle="modal" data-target="#file_list" id="show_list" class="btn"><i data-toggle="tooltip" title="Show File List" class="fa fa-list"></i></button>
-					<button type="button" id="save_file" class="btn"><i data-toggle="tooltip" title="Download File" class="fa fa-download"></i></button>
+					<button type="button" data-toggle="modal" data-target="#file_list" class="btn"><i data-toggle="tooltip" title="Download File" class="fa fa-download"></i></button>
 				</div>
 			</div>
 			<div class="card-body">
-				<div class="alert alert-info">
-					<strong><i class="fa fa-info-circle mr-2"></i>Tip</strong>
-					<br/>
-					If you want add filter into list then navigate to Options before Selecting Files
-				</div>
-				<label class="upload-area w-100" id="drop-box" for="filelist">
-					<div class="py-5 my-2">
-					    <input type="file" class="d-none" id="filelist" multiple="true" onchange="add_files(this.files)">
-					    <i class="fa fa-plus-circle mr-2"></i>Select or Drop Files
+				<div class="drop-box">
+					<label class="upload-area w-100" id="drop-box" for="filelist">
+						<div class="py-5 my-2">
+						    <input type="file" class="d-none" id="filelist" multiple="true" onchange="add_files(this.files)">
+						    <div class="h4"><i class="fa fa-plus-circle mr-2"></i>Select or Drop Files</div>
+						    <small>(Your files are safe in your device. We are not going to upload any files)</small>
+						    <br/>
+						    <small>All Types are File Accepted, File Size Doesn't matter</small>
+						</div>
+					</label>
+					<div class="disable-wrapper py-5 text-center">
+						<div class="my-2">
+							<i class="fa fa-3x fa-refresh fa-spin"></i>
+							<h4 class="mt-2">Please Wait, We are Processing Your Files</h4>
+						</div>
 					</div>
-				</label>
+				</div>
 				<div><strong>Files Count: </strong><span class="total">0</span></div>
+				<div class="progress fade">
+				  <div style="transition:none;" class="progress-bar progress-bar-striped progress-bar-animated w-0" role="progressbar" ></div>
+				</div>
 			</div>
 		</div>
 		
@@ -191,14 +218,34 @@
 <!-- Show File List -->
 
 <div class="modal fade" id="file_list">
-	<div class="modal-dialog">
+	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="mb-0"><i class="fa fa-list mr-2"></i>File List</h5>
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 			<div class="modal-body">
-				<textarea rows="10" class="form-control form-control-sm" readonly="yes" id="output"></textarea>
+				<div class="row">
+					<div class="col-12 col-sm-6">
+						<div class="form-group">
+							<label>Files Added</label>
+							<textarea rows="10" class="form-control form-control-sm" readonly="yes" id="output_added"></textarea>
+						</div>
+						<div class="text-center">
+							<button type="button" id="download_added" class="btn btn-sm btn-secondary"><i class="fa fa-download mr-2"></i>Download</button>
+						</div>
+					</div>
+					<div class="col-12 col-sm-6">
+						<div class="form-group">
+							<label>Files Excluded</label>
+							<textarea rows="10" class="form-control form-control-sm" readonly="yes" id="output_excluded"></textarea>
+						</div>
+						<div class="text-center">
+							<button type="button" id="download_excluded" class="btn btn-sm btn-secondary"><i class="fa fa-download mr-2"></i>Download</button>
+						</div>
+					</div>
+				</div>
+				
 			</div>
 		</div>
 	</div>
@@ -261,6 +308,7 @@
 		if(exclude.indexOf('*.'+ext) > -1 || exclude.indexOf('.'+ext) > -1){
 			//extension found
 			start++;
+			post_message(file.name,'excluded');
 			extract_name(start);
 			return;		
 		}
@@ -268,19 +316,31 @@
 		if(exclude.indexOf(file.name) > -1){
 			//file found
 			start++;
+			post_message(file.name,'excluded');
 			extract_name(start);
 			return;			
 		}
-		postMessage(files[start].name);
+		post_message(file.name,'added');
 		start++;
 		setTimeout(function(){extract_name(start)},0);
 	}
+	function post_message(message,type){
+		postMessage({'name':message,'type':type});
+	}
 </script>
 <script>
-var count = 0, exclude = [], start = 0, list = [];
+var count 			= 0,
+	count_excluded 	= 0,
+	count_added 	= 0,
+	exclude 		= [],
+	start 			= 0,
+	list 			= [],
+	excluded 		= [],
+	added 			= [];
 
 window.addEventListener('load',function(){
-	$('#save_file').click2download('#output');
+	$('#download_added').click2download('#output_added');
+	$('#download_excluded').click2download('#output_excluded');
 	var dropbox = '#drop-box';
 	$(dropbox).on('dragenter dragover drop dragleave',function(e){
 		e.preventDefault();
@@ -336,50 +396,58 @@ window.addEventListener('load',function(){
 
 });
 
-
 function add_files(files){
 	if(!files || !files.length){
 		return;
 	}
+	for(i=0;i<files.length;i++){
+		list.push(files[i]);
+	}
+	process_files(files);
+}
+function process_files(files){
+	$('.progress-bar').css('width','0');
+	$('.progress').addClass('show');
+	$('.drop-box .disable-wrapper').addClass('active');
+	var total = 0;
 	start_process('#extract-names',function(process){
 		process.postMessage({'value':files,'exclude':exclude});
 		process.onmessage = function(e){
 			if(e.data == 'done'){
 				process.terminate();
 				process = undefined;
+				$('.drop-box .disable-wrapper').removeClass('active');
+				$('.progress').removeClass('show');
+				$('#file_list').modal('show');
 				return;				
 			}
+			var width =  (total / files.length) * 100;
+			$('.progress-bar').css('width',width+'%');
 			count++;
-			$('#output').val(function(){
-				if(!$('#output').val()){
-					return e.data; 
-				}
-				return  this.value + "\r\n" + e.data;
-			});
+			total++;
 			$('.total').html(count);
+			if(e.data.type == 'added'){
+				count_added++;
+				$('#output_added').val(function(){
+					if(!$('#output_added').val()){
+						return e.data.name; 
+					}
+					return  this.value + "\r\n" + e.data.name;
+				});
+				$('.total_added').html(count_added);
+			}
+			if(e.data.type == 'excluded'){
+				count_excluded++;
+				$('#output_excluded').val(function(){
+					if(!$('#output_excluded').val()){
+						return e.data.name; 
+					}
+					return  this.value + "\r\n" + e.data.name;
+				});
+				$('.total_excluded').html(count_excluded);
+			}
 		}
 	});
-	if(count > 0){
-		$('#save_file').removeAttr('disabled');
-		$('#show_list').removeAttr('disabled');
-	}
-	/*
-
-	for(var i = 0; i<files.length; i++){
-		if(!files[i] || !files[i].name){
-			continue;
-		}
-		count++;
-		$('#output').val(function(){
-			if(!$('#output').val()){
-				return files[i].name; 
-			}
-			return  this.value + "\r\n" + files[i].name;
-		});
-		$('#total').html(count);
-	}
-
-	*/
 }
 </script>
 
