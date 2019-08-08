@@ -122,14 +122,14 @@
 <style>
 .upload-area{
 	text-align:center;
-	border:3px dashed var(--gray);
+	border:2px dashed var(--gray);
 	background-color:var(--light);
 	padding:1rem;
 	cursor:pointer;
 	position:relative;
 }
 #drop-box.highlight{
-	background-color:#fff;
+	background-color:#f2f2f2;
 }
 
 .exclude-file-item{
@@ -173,17 +173,16 @@
 	<h4 class="text-muted mb-4"><i class="fa fa-list mr-2"></i>File List Generator</h4>
 	<div class="callout callout-primary shadow-sm">
 		<div class="callout-heading"><strong>How it Works?</strong></div>
-		<p class="mb-0">This Tool will give you file name list of all selected files. We are not saving or uploading any files. All process can be done by your browser.<br/><a href="#"><strong>Click here</strong></a> to Watch Video</p>
+		<p class="mb-0">Do you have millions of files in a folder and do you want file list? Here You Go..., This Tool will provide list of thousands files in few seconds<br/><a href="#"><strong>Click here</strong></a> to Watch Video</p>
 	</div>
 	<form class="mb-4">
 		<div class="card card-default shadow-sm">
 			<div class="card-header py-1 pr-2 pl-3 bg-transparent">
-				<strong>Import Files</strong>
+				<i class="fa fa-files-o mr-2"></i>Import files
 				<div class="card-tool">
 					<button type="button" data-toggle="modal" data-target="#file_list" class="btn bg-info text-white"><span data-toggle="tooltip" title="Files Added" class="total_added">0</span></button>
 					<button type="button" data-toggle="modal" data-target="#file_list" class="btn bg-danger text-white"><span data-toggle="tooltip" title="Files Excluded" class="total_excluded">0</span></button>
 					<button type="button" data-toggle="modal" data-target="#options" class="btn"><i data-toggle="tooltip" title="Options" class="fa fa-wrench"></i></button>
-					<button type="button" data-toggle="modal" data-target="#file_list" id="show_list" class="btn"><i data-toggle="tooltip" title="Show File List" class="fa fa-list"></i></button>
 					<button type="button" data-toggle="modal" data-target="#file_list" class="btn"><i data-toggle="tooltip" title="Download File" class="fa fa-download"></i></button>
 				</div>
 			</div>
@@ -195,7 +194,7 @@
 						    <div class="h4"><i class="fa fa-plus-circle mr-2"></i>Select or Drop Files</div>
 						    <small>(Your files are safe in your device. We are not going to upload any files)</small>
 						    <br/>
-						    <small>All Types are File Accepted, File Size Doesn't matter</small>
+						    <small>All file types accepted without any limit</small>
 						</div>
 					</label>
 					<div class="disable-wrapper py-5 text-center">
@@ -209,14 +208,25 @@
 				<div class="progress fade">
 				  <div style="transition:none;" class="progress-bar progress-bar-striped progress-bar-animated w-0" role="progressbar" ></div>
 				</div>
+				<div class="collapse" id="process_complete">
+					<div class="callout callout-success">
+						<strong>Bingo!!</strong><br/>
+						File List is ready and you can download file list just by clicking on <i class="fa fa-download"></i> icon above on right hand side.
+						<br/>
+						You can also add more files and it will be appended into list.
+					</div>
+				</div>
+				<div class="text-center mt-3">
+					<button type="button" id="process_files" class="btn btn-primary py-3 px-4"><i class="fa fa-files-o mr-2"></i>Generate File List</button>
+				</div>
 			</div>
 		</div>
 		
 	</form>
 </div>
 
-<!-- Show File List -->
 
+<!-- Show File List -->
 <div class="modal fade" id="file_list">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
@@ -228,8 +238,8 @@
 				<div class="row">
 					<div class="col-12 col-sm-6">
 						<div class="form-group">
-							<label>Files Added</label>
-							<textarea rows="10" class="form-control form-control-sm" readonly="yes" id="output_added"></textarea>
+							<label><span class="total_added">0</span> Files Added</label>
+							<textarea rows="10" class="form-control form-control-sm bg-white" readonly="yes" id="output_added"></textarea>
 						</div>
 						<div class="text-center">
 							<button type="button" id="download_added" class="btn btn-sm btn-secondary"><i class="fa fa-download mr-2"></i>Download</button>
@@ -237,8 +247,8 @@
 					</div>
 					<div class="col-12 col-sm-6">
 						<div class="form-group">
-							<label>Files Excluded</label>
-							<textarea rows="10" class="form-control form-control-sm" readonly="yes" id="output_excluded"></textarea>
+							<label><span class="total_excluded">0</span> Files Excluded</label>
+							<textarea rows="10" class="form-control form-control-sm bg-white" readonly="yes" id="output_excluded"></textarea>
 						</div>
 						<div class="text-center">
 							<button type="button" id="download_excluded" class="btn btn-sm btn-secondary"><i class="fa fa-download mr-2"></i>Download</button>
@@ -358,6 +368,22 @@ window.addEventListener('load',function(){
 		}
 	});
 
+	$('#process_files').on('click',function(){
+		if(!list || !list.length){
+			return;
+		}
+		excluded 		= [];
+		added 			= [];
+		count 			= 0;
+		start 			= 0;
+		count_added 	= 0;
+		count_excluded 	= 0;
+
+		$('#processing').modal('show');
+		process_files(list,function(e){
+			$('#file_list').modal('show');
+		})
+	});
 
 	$('[data-toggle="add-exclude-file"]').on('click',function(e){
 		e.preventDefault();
@@ -405,10 +431,12 @@ function add_files(files){
 	}
 	process_files(files);
 }
-function process_files(files){
+function process_files(files,callback){
 	$('.progress-bar').css('width','0');
 	$('.progress').addClass('show');
 	$('.drop-box .disable-wrapper').addClass('active');
+	$('#process_complete').collapse('hide');
+	$('#process_files').attr('disabled','yes');
 	var total = 0;
 	start_process('#extract-names',function(process){
 		process.postMessage({'value':files,'exclude':exclude});
@@ -418,7 +446,12 @@ function process_files(files){
 				process = undefined;
 				$('.drop-box .disable-wrapper').removeClass('active');
 				$('.progress').removeClass('show');
-				$('#file_list').modal('show');
+				$('#process_complete').collapse('show');
+				$('#process_files').removeAttr('disabled');
+				if (typeof callback === "function") {
+				    // do something
+					callback(e);
+				}
 				return;				
 			}
 			var width =  (total / files.length) * 100;
