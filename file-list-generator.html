@@ -14,7 +14,7 @@
 			var app = {
 				'scroll_offset'	: 60,
 				'api'			: 'https://weforit.com/api/',
-				'current_url'	: 'http://localhost/test/file-list-generator?skip=1',
+				'current_url'	: 'http://localhost/test/./file-list-generator?skip=1',
 				'data_table'	: {
 						"retrieve"			: true,
 				        "scrollY"			: '300px',
@@ -173,8 +173,18 @@
 	<h4 class="text-muted mb-4"><i class="fa fa-list mr-2"></i>File List Generator</h4>
 	<div class="callout callout-primary shadow-sm">
 		<div class="callout-heading"><strong>How it Works?</strong></div>
-		<p class="mb-0">Do you have thousands of files in a folder and do you want file list? Here You Go..., This Tool will provide list of thousands files in few seconds<br/><a href="#"><strong>Click here</strong></a> to Watch Video</p>
+		<p class="mb-0 small">Do you have thousands of files in a folder and do you want file list? Here You Go..., This Tool will provide list of thousands files in few seconds<br/><a href="javascript:alert('Comming Soon...')"><strong>Click here</strong></a> to Watch Video</p>
 	</div>
+
+	<div class="callout mt-3 callout-danger shadow-sm collapse support_false">
+		<div class="callout-heading"><strong>Oops!!</strong></div>
+		<p class="mb-0 small">You Can't use our tool because of some function doesn't supported by browser, please use a modern browser with latest version. We recommend these browser: Google Chrome 60+, Mozilla Firefox 68+</p>
+		<p class="mb-0 font-weight-bold small">Follow Functions are not Supported by Your Browser:</p>
+		<ul class="my-0 py-0 support-unavailable small">
+
+		</ul>
+	</div>
+
 	<form class="mb-4">
 		<div class="card card-default shadow-sm">
 			<div class="card-header py-1 pr-2 pl-3 bg-transparent">
@@ -211,18 +221,27 @@
 				<div class="collapse" id="process_complete">
 					<div class="callout callout-info">
 						<strong>Bingo!!</strong><br/>
-						File List is ready and you can download file list just by clicking on <i class="fa fa-download"></i> icon above on right hand side.
-						<br/>
-						You can also add more files and it will be appended into list.
+						File List is ready and you can download it. If you wish to add more files then it will be appended into List
 					</div>
+					<button type="button" data-toggle="modal" data-target="#file_list" class="btn btn-sm btn-info"><i class="fa fa-download mr-2"></i>Download List</button>
+					<button type="button" onclick="window.location = window.location.href" class="btn btn-sm btn-info"><i class="fa fa-download mr-2"></i>Generate New List</button>
 				</div>
 				<div class="text-center mt-3">
 					<button type="button" id="process_files" class="btn btn-primary py-3 px-4"><i class="fa fa-files-o mr-2"></i>Generate File List</button>
 				</div>
 			</div>
-		</div>
-		
+		</div>		
 	</form>
+
+
+	<div class="callout callout-info shadow-sm">
+		<div class="callout-heading mb-1"><strong>Supported Internet Browsers</strong></div>
+		<ul class="py-0 my-0 small">
+			<li>Chrome (Latest Version)</li>
+			<li>Mozilla Firefox (Latest Version)</li>
+		</ul>
+	
+	</div>
 </div>
 
 
@@ -280,19 +299,19 @@
 					<div class="card-body bg-light py-1 px-2 overflow-auto" style="height:100px;" id="exclude-file">
 
 					</div>
-					<div class="mt-2">
+					<div class="mt-2 d-none">
 						<div class="form-group">
 							<label><strong>Sort by (Comming Soon)</strong>
 							<div class="custom-control custom-radio">
-								<input disabled="y" type="radio" class="custom-control-input" id="sortby_none" checked="yes" name="sort">
+								<input type="radio" class="custom-control-input" id="sortby_none" value="none" checked="yes" name="sort">
 								<label class="custom-control-label" for="sortby_none" >None</label>
 							</div>
 							<div class="custom-control custom-radio">
-								<input disabled="y" type="radio" class="custom-control-input" id="sortby_asc" name="sort">
+								<input type="radio" class="custom-control-input" id="sortby_asc" value="asc" name="sort">
 								<label class="custom-control-label" for="sortby_asc">Ascending Order (0 - 9, A - Z)</label>
 							</div>
 							<div class="custom-control custom-radio">
-								<input disabled="y" type="radio" class="custom-control-input" id="sortby_desc" name="sort">
+								<input type="radio" class="custom-control-input" id="sortby_desc" value="desc" name="sort">
 								<label class="custom-control-label" for="sortby_desc">Descending (9 - 0, Z - A)</label>
 							</div>
 						</div>
@@ -310,8 +329,8 @@
 	importScripts('https://tool.weforit.com//js/functions.js');
 	var start = 0, files = [], exclude = [];
 	self.onmessage = function(e){
-		files = e.data.value;
-		exclude = e.data.exclude;
+		files 		= e.data.value;
+		exclude 	= e.data.exclude;
 		extract_name(start);
 	}
 	function extract_name(start){
@@ -362,6 +381,13 @@ var count 			= 0,
 	added 			= [];
 
 window.addEventListener('load',function(){
+	//check support
+	var $support = $('.support-unavailable');
+	$support.html('');
+	if(!is_support('worker')){
+		$('.support_false').addClass('show');
+		$support.html('<li>Web Workers</li>');
+	}
 	$('#download_added').click2download('#output_added');
 	$('#download_excluded').click2download('#output_excluded');
 	var dropbox = '#drop-box';
@@ -385,6 +411,7 @@ window.addEventListener('load',function(){
 		if(!list || !list.length){
 			return;
 		}
+		var process_list = list;
 		$('#output_added').val('');
 		$('#output_excluded').val('');
 		excluded 		= [];
@@ -395,7 +422,7 @@ window.addEventListener('load',function(){
 		count_excluded 	= 0;
 
 		$('#processing').modal('show');
-		process_files(list,function(e){
+		process_files(process_list,function(e){
 			$('#file_list').modal('show');
 		})
 	});

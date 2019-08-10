@@ -298,6 +298,13 @@ function random_str(length) {
    }
    return result;
 }
+function is_support(type){
+	switch(type){
+		case 'worker':
+			return !!window.Worker;
+		break;
+	}
+}
 Element.prototype.remove = function() {
     this.parentElement.removeChild(this);
 }
