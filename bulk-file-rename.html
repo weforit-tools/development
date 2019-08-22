@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>WeForIT Tools</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="./css/lib.css">
+		<link rel="stylesheet" href="./css/font-awesome.min.css">
+		<link rel="stylesheet" href="./css/style.css">
+		<link rel="manifest" href="./manifest.json">
+		<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+		<link rel="icon" href="./favicon.ico" type="image/x-icon">
+		<script type="text/javascript">
+			var app = {
+				'scroll_offset'	: 60,
+				'api'			: 'https://weforit.com/api/',
+				'current_url'	: 'http://localhost/test/bulk-file-rename?skip=1',
+				'data_table'	: {
+						"retrieve"			: true,
+				        "scrollY"			: '300px',
+				    	"scrollX"			: true,
+				        "scrollCollapse"	: true,
+						"paging"			: false
+				},
+				'table_export'	: {},
+			}
+		</script>
+	</head>
+	<body>
+		
+		<div id="wrapper">
+			<header id="header">
+				<a class="logo" href="./">
+					<span class="logo-lg">WeForIT Tools</span>
+				</a>
+				<nav class="navbar navbar-expand navbar-dark bg-primary shadow-sm">
+					<a href="/" class="nav-link logo-mobile"><img style="width:1.2rem" src="./images/icons/favicon-32x32.png"/></a>
+					<a href="#" class="sidebar-toggle nav-link" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<i class="fa fa-bars"></i>
+					</a>
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item dropdown">
+							<a class="nav-link" href="#" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell-o"></i></a>
+							<div class="dropdown-menu dropdown-menu-right" style="min-width:20rem">
+								
+								<div class="small">
+									<div class="text-center">0 Notifications</div>
+								</div>
+							</div>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/"><i class="fa fa-home"></i></a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#"><i class="fa fa-info-circle"></i></a>
+						</li>
+					</ul>
+				</nav>
+			</header>
+			<aside id="sidebar" class="main-sidebar">
+				<section>
+					<form class="search">
+						<input type="text" class="form-control form-control-sm" placeholder="Search" />
+						<button class="btn"><i class="fa fa-search"></i></button>
+					</form>
+				</section>
+				<ul class="navbar-nav">					
+				<li class="nav-item"><a href="#daily_tools" class="nav-link collapsed" data-toggle="collapse"><i class="fa fa-clock-o"></i>Daily Tools</a><ul id="daily_tools" class="collapse navbar-nav" data-parent="#sidebar"><li class="nav-item"><a class="nav-link" href="./file-list-generator"><i class="fa fa-list"></i>File List Generator</a></li></ul></li><li class="nav-item"><a href="#text_tools" class="nav-link collapsed" data-toggle="collapse"><i class="fa fa-gears"></i>Text Tools</a><ul id="text_tools" class="collapse navbar-nav" data-parent="#sidebar"><li class="nav-item"><a class="nav-link" href="./reverse-text"><i class="fa fa-refresh"></i>Reverse Text</a></li><li class="nav-item"><a class="nav-link" href="./split-text"><i class="fa fa-code-fork"></i>Split Text</a></li><li class="nav-item"><a class="nav-link" href="./add-prefix-add-suffix"><i class="fa fa-plus-circle"></i>Add Prefix / Suffix</a></li><li class="nav-item"><a class="nav-link" href="./convert-new-lines-into-spaces"><i class="fa fa-unsorted"></i>Convert Line to Space</a></li><li class="nav-item"><a class="nav-link" href="./convert-space-into-new-lines"><i class="fa fa-bars"></i>Convert Space to Line</a></li><li class="nav-item"><a class="nav-link" href="./remove-blank-lines"><i class="fa fa-eraser"></i>Remove Blank Lines</a></li><li class="nav-item"><a class="nav-link" href="./text-case-convert"><i class="fa fa-font"></i>Case Convert</a></li></ul></li><li class="nav-item"><a href="#website_tools" class="nav-link collapsed" data-toggle="collapse"><i class="fa fa-globe"></i>Website Tools</a><ul id="website_tools" class="collapse navbar-nav" data-parent="#sidebar"><li class="nav-item"><a class="nav-link" href="./htaccess-file-caching-generator"><i class="fa fa-bolt"></i>Caching Generator</a></li><li class="nav-item"><a class="nav-link" href="./encode-url-decode-url"><i class="fa fa-link"></i>Encode/Decode URL</a></li><li class="nav-item"><a class="nav-link" href="./ck-html-editor"><i class="fa fa-code"></i>HTML Editor</a></li><li class="nav-item"><a class="nav-link" href="./html-tag-extractor"><i class="fa fa-share"></i>HTML Tag Extractor</a></li><li class="nav-item"><a class="nav-link" href="./xml-sitemap-to-url"><i class="fa fa-file-code-o"></i>XML Sitemap to URL</a></li><li class="nav-item"><a class="nav-link" href="./url-to-xml-sitemap-generator"><i class="fa fa-file-text"></i>URL to XML Sitemap</a></li></ul></li>					<!--
+					<li class="nav-item">
+						<a href="#texttool" class="nav-link collapsed" data-toggle="collapse"><i class="fa fa-gears"></i>Text Tools</a>
+						<ul id="texttool" class="collapse navbar-nav" data-parent="#sidebar">
+							<li class="nav-item">
+								<a class="nav-link" href="./text-case-convert"><i class="fa fa-font"></i>Convert Text Case</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="./reverse-text"><i class="fa fa-refresh"></i>Reverse Text</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="./split-text"><i class="fa fa-code-fork"></i>Split Text</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="./add-prefix-add-suffix"><i class="fa fa-plus-circle"></i>Add Prefix/Suffix</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="./convert-new-line-into-spaces"><i class="fa fa-unsorted"></i>Convert Line to Space</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="./convert-spaces-into-lines"><i class="fa fa-bars"></i>Convert Space to Line</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="./remove-blank-lines"><i class="fa fa-eraser"></i>Remove Blank Lines</a>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-item">
+						<a href="#webtool" class="nav-link collapsed" data-toggle="collapse"><i class="fa fa-globe"></i>Website Tools</a>
+						<ul id="webtool" class="collapse navbar-nav" data-parent="#sidebar">
+							<li class="nav-item">
+								<a class="nav-link" href="./htaccess-file-caching-generator"><i class="fa fa-pie-chart"></i>Page Caching Generator</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="./encode-url-decode-url"><i class="fa fa-link"></i>Encode/Decode URL</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="./ck-html-editor"><i class="fa fa-link"></i>CK HTML Editor</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="./html-tag-extractor"><i class="fa fa-share"></i>HTML Tag Extractor</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="./xml-sitemap-to-url"><i class="fa fa-file-code-o"></i>Sitemap to URL Extractor</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="./url-to-xml-sitemap-generator"><i class="fa fa-file-text"></i>URL to Sitemap Generator</a>
+							</li>
+						</ul>
+					</li>
+					-->
+				</ul>
+			</aside>
+			<div class="content-wrapper">
+<style>
+.structure-group code{
+	cursor:pointer;
+}
+
+</style>
+<nav class="title-bar">
+	<div class="container-fluid bg-white shadow-sm py-2">
+		<h6><i class="fa fa-files-o mr-2"></i>Bulk File Rename</h6>
+	</div>
+</nav>
+<!--
+<section class="intro site-header mb-0 jumbotron rounded-0">
+	<div class="container px-0">
+
+		<div class="row mx-0">
+			<div class="col-lg-7 px-0 px-lg-5">
+				<h2 class="mb-3 text-center text-lg-left">Online Batch File Rename</h2>
+				<h5 class="mb-4 text-center text-lg-left"><em>Rename Thousands of File in few Seconds</em></h5>
+				<p class="lead mt-4 mb-2">
+					<img class="mr-2" src="https://cdn.weforit.com/tool/images/check-white.png" style="width:2rem" />
+					Re-Generate File Name Structure
+				</p>
+				<p class="lead my-2">
+					<img class="mr-2" src="https://cdn.weforit.com/tool/images/check-white.png" style="width:2rem" />
+					Change File Extension
+				</p>
+				<p class="lead my-2">
+					<img class="mr-2" src="https://cdn.weforit.com/tool/images/check-white.png" style="width:2rem" />
+					No File Size Limit
+				</p>
+				<p class="lead my-2">
+					<img class="mr-2" src="https://cdn.weforit.com/tool/images/check-white.png" style="width:2rem" />
+					We don't upload or save any files
+				</p>
+				<p class="lead my-2">
+					<img class="mr-2" src="https://cdn.weforit.com/tool/images/check-white.png" style="width:2rem" />
+					Download Renamed File into ZIP Archive
+				</p>
+				<p class="lead mt-2 mb-4">
+					<img class="mr-2" src="https://cdn.weforit.com/tool/images/check-white.png" style="width:2rem" />
+					Safe, Secure, Simple &amp; Fast
+				</p>
+			</div>
+			<div class="col-lg-5 px-0 text-center">
+				<img class="shadow" src="https://cdn.weforit.com/tool/images/google-page-speed.png"/>
+			</div>
+		</div>
+
+
+	</div>
+</section>
+-->
+<div class="container-fluid py-3">
+	<!--
+	<div class="callout callout-primary shadow-sm">
+		<div class="callout-heading"><strong>How it Works?</strong></div>
+		<p class="mb-0 small">
+			<i class="fa fa-angle-right font-weight-bold mr-1"></i>Rename thousands of files in few seconds<br/>
+			<i class="fa fa-angle-right font-weight-bold mr-1"></i>We neither rename Original Files nor upload your files<br/>
+			<i class="fa fa-angle-right font-weight-bold mr-1"></i>It is a Small Program that rename files using your device CPU.<br/>
+			<i class="fa fa-angle-right font-weight-bold mr-1"></i>Customize File Structure by clicking on <i class="fa font-weight-bold fa-wrench"></i> button<br/>
+			<i class="fa fa-angle-right font-weight-bold mr-1"></i>Download All Files in ZIP Archive<br/>
+			<i class="fa fa-angle-right font-weight-bold mr-1"></i>See <a href="#faq"><b>FAQ</b></a> for more Info<br/>
+		</p>
+	</div>
+	-->
+
+
+	<form class="mb-4">
+		<div class="row">
+			<div class="col-12 col-lg-12 col-xl-12">
+				<div class="card card-default shadow-sm mb-4 pb-4">
+					<div class="card-header pr-2 pl-3 bg-transparent">
+						<h6 class="mb-0">Select or Drop Files</h6>
+						<div class="card-tool py-2">
+							<button type="button" data-toggle="tooltip" title="Total Files" onclick="$('#list').modal('show')" class="btn total_files bg-info text-white">0</button>
+							<button type="button" data-toggle="tooltip" title="Total File Size" onclick="$('#list').modal('show')" class="btn bytes bg-info text-white">0</button>
+							<button type="button" data-toggle="modal" data-target="#options" class="btn"><i data-toggle="tooltip" title="Options" class="fa fa-wrench"></i></button>
+						</div>
+					</div>
+					<div class="card-body">
+						<div class="drop-box">
+							<label class="upload-area w-100" id="drop-box" for="filelist">
+								<div class="py-5 my-2">
+								    <input type="file" class="d-none" id="filelist" multiple="true" onchange="add_files(this.files)">
+								    <div class="h4"><i class="fa fa-plus-circle mr-2"></i>Select or Drop Files</div>
+								    Your files are safe in your device. We are not going to upload any files
+								    <br/>
+								    All file types accepted without any limit
+								</div>
+							</label>
+							<div class="disable-wrapper py-5 text-center">
+								<div class="my-2">
+									<i class="fa fa-3x fa-refresh fa-spin"></i>
+									<h4 class="mt-2">Please Wait, We are Processing Your Files</h4>
+								</div>
+							</div>
+						</div>
+						<strong>Current File Renaming Structure:</strong>
+						<pre class="bg-light p-2 structure_value">{name}-{count}.ext</pre>
+						<div class="progress-message"></div>
+						<div class="progress fade mb-2">
+						  <div style="transition:none;" class="progress-bar progress-bar-striped progress-bar-animated w-0" role="progressbar" ></div>
+						</div>
+						<div class="text-center mb-2">
+							<button type="submit" id="submit" class="btn btn-primary"><i class="fa fa-file-text-o mr-2"></i>Bulk Rename</button>
+							<button type="button" id="download" class="btn btn-primary" style="display:none;"><i class="fa fa-download mr-2"></i>Download All Files (.zip)</button>
+						</div>
+
+						<div class="callout callout-warning" style="display:none" id="zip-warning">
+							You files are renamed successfully. You need to download all files by clicking <strong>Download</strong> button. <br/>
+							<strong>Note:</strong> We'll create a ZIP File when you click on download button. This process can take some time depending on your device speed or performance. Small Files will processed speedly and large files can be take longer time.
+						</div>						
+					</div>
+				</div>	
+			</div>	
+		</div>
+	</form>
+</div>
+
+
+<div class="modal fade" id="options" data-keyboard="false" data-backdrop="static"  tabindex="-1" role="dialog" aria-labelledby="options" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header px-3 py-2">
+				<h6 class="mb-0"><i class="fa fa-wrench mr-2"></i> Options</h6>
+			</div>
+			<div class="modal-body small">
+				<label><strong>Customize File Name Strucure</strong></label>
+				<div class="input-group mb-3 input-group-sm">
+					<input type="text" id="structure" class="form-control" style="font-size: 12px" value="{name}-{count}" aria-label="File Name Structure">
+					<div class="input-group-append">
+						<span class="input-group-text" style="font-size: 12px" >.</span>
+					</div>
+					<div class="input-group-append">
+						<input id="custom_ext" type="text" data-toggle="popover" data-trigger="focus" data-html="true" data-content="<small><i class='fa fa-info-circle mr-2 text-primary'></i>Custom extension can be used to change file extension but it will not change the mime type of file. <strong>Helpful</strong> if extension changed by the virus or malware</small>" data-placement="bottom" data-diplay="static" class="input-group-text form-control form-control-sm extension bg-white" style="font-size: 12px;max-width:40px" value="ext">
+					</div>
+				</div>
+				<div class="structure-group">
+					<code data-structure="{name}" class="bg-light px-1 d-inline-block mb-1 mr-1">{name}</code>
+					<code data-structure="{count}" class="bg-light px-1 d-inline-block mb-1 mr-1">{count}</code>
+					<code data-structure="{count_a}" class="bg-light px-1 d-inline-block mb-1 mr-1">{count_a}</code>
+					<code data-structure="{count_i}" class="bg-light px-1 d-inline-block mb-1 mr-1">{count_i}</code>
+					<code data-structure="{rand_alpha}" class="bg-light px-1 d-inline-block mb-1 mr-1">{rand_alpha}</code>
+					<code data-structure="{rand_num}" class="bg-light px-1 d-inline-block mb-1 mr-1">{rand_num}</code>
+					<code data-structure="{rand_alnum}" class="bg-light px-1 d-inline-block mb-1 mr-1">{rand_alnum}</code>
+				</div>
+
+				<hr/>
+				<div class="row">
+					<div class="col-12 col-sm-6 mb-2">
+						<label>
+							<strong>
+								File Name Case
+								<a href="javascript:void(0)" data-trigger="hover" data-placement="bottom" data-trigger="focus" data-toggle="popover" data-display="static" data-content="Change the Letter Case of Original File Name" title="" class="fa fa-info-circle"></a>
+							</strong>
+						</label>
+						<div class="custom-control custom-radio">
+							<input type="radio" class="custom-control-input" id="fnone" name="fcase" value="0" checked="yes">
+							<label class="custom-control-label" style="padding-top: .15rem;" for="fnone">As Defined</label>
+						</div>
+						<div class="custom-control custom-radio">
+							<input type="radio" class="custom-control-input" id="fuppercase" name="fcase" value="u">
+							<label class="custom-control-label" style="padding-top: .15rem;" for="fuppercase">Upper Case</label>
+						</div>
+						<div class="custom-control custom-radio">
+							<input type="radio" class="custom-control-input" id="flowercase" name="fcase" value="l">
+							<label class="custom-control-label" style="padding-top: .15rem;" for="flowercase">Lower Case</label>
+						</div>
+						<div class="custom-control custom-radio">
+							<input type="radio" class="custom-control-input" id="fproper" name="fcase" value="p">
+							<label class="custom-control-label" style="padding-top: .15rem;" for="fproper">Proper Case</label>
+						</div>
+					</div>
+					<div class="col-12 col-sm-6 mb-2">
+						<label>
+							<strong>
+								Parameter Text Case
+								<a href="javascript:void(0)" data-trigger="hover" data-placement="bottom" data-trigger="focus" data-toggle="popover" data-display="static" data-content="Change the Parameter Case used in renaming files that is shown above" title="" class="fa fa-info-circle"></a>
+							</strong>
+						</label>	
+						<div class="custom-control custom-radio">
+							<input type="radio" class="custom-control-input" id="puppercase" name="pcase" value="u">
+							<label class="custom-control-label" style="padding-top: .15rem;" for="puppercase">Upper Case</label>
+						</div>
+						<div class="custom-control custom-radio">
+							<input type="radio" class="custom-control-input" id="plowercase" name="pcase" value="l" checked="yes">
+							<label class="custom-control-label" style="padding-top: .15rem;" for="plowercase">Lower Case</label>
+						</div>
+						<label class="mt-2">
+							<strong>
+								Minimum Random Digit
+								<a href="javascript:void(0)" data-trigger="hover" data-placement="bottom" data-trigger="focus" data-toggle="popover" data-display="static" data-content="Minimum Digits of Random Characters, e.g: 5 = 5 Digits (00000, ABCDE and so on...)" title="" class="fa fa-info-circle"></a>
+							</strong>
+						</label>
+						<div class="form-group mb-0">
+							<input type="number" id="length" class="form-control form-control-sm" placeholder="5" value="5"/>
+						</div>
+					</div>
+				</div>
+				<hr/>
+				<div class="mt-2"><strong class="text-danger">Note:-</strong> Disallowed Characters like <span class="bg-light px-2">/ \ | : * ? " &lt; &gt;</span> will automatic ignored to prevent some OS restrictions</div>
+
+			</div>
+			<div class="modal-footer text-right">
+				<button type="button" class="btn btn-primary btn-sm mr-2" id="save_options"><i class="fa fa-floppy-o mr-2"></i>Save</button>
+				<button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i class="fa fa-times mr-2"></i>Cancel</button>
+			</div>
+		</div>
+	</div>
+</div>	
+
+<div class="modal small fade" id="list" tabindex="-1" role="dialog" aria-labelledby="options" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header px-2 py-2">
+				<h6 class="mb-0"><i class="fa fa-list mr-2"></i>
+					File List
+				</h6>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body bg-light p-0">
+				<textarea class="form-control form-control-sm rounded-0" rows="10" readonly="readonly" style="font-size:.8rem">No Files</textarea>
+			</div>
+			<div class="modal-footer d-block px-2 py-1">
+				<pre class="mb-0"><span class="total_files">0</span> Files Loaded, <span class="bytes">0 Bytes</span></pre>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type='javascript/process' id='rename-files'>
+importScripts('https://tool.weforit.com//js/functions.js');
+var files = [], count = 0, options = '', file_count = 1;	
+self.onmessage = function(e){
+	files = e.data.files;
+	options = e.data.options;
+	process_files();
+}
+function process_files(){
+	if(count >= files.length){
+		postMessage('done');
+		return;
+	}
+	if(!files[count]  || !files[count].name){
+		count++;
+		process_files();
+		return;
+	}
+	var type,message;
+	var file = files[count];
+	var new_name = rename(file,options);
+	if(new_name){
+		type = 'success';
+		message = {'file':file,'new_name':new_name};
+		file_count++;
+	}else{
+		type = 'error';
+		message = file.name;
+	}
+	setTimeout(function(){
+		post_message(type,message);
+		count++;
+		process_files();
+	},0)
+}	
+function rename(file,options){
+	if(!file || !file.name){
+		return;
+	}
+	var filename = (file.name).replace(/[\/\\|:*?"<>]/g,'');
+	var name = get_filename(filename);
+	var ext = options.ext?options.ext:get_filetype(filename);
+	var count_a = num_to_alpha(options.file_count);
+	var count_i = romanize(options.file_count);
+	var rand_alpha = '';
+	var rand_alnum = '';
+	switch(options.pcase){
+		case 'l':
+			count_a = count_a.toLowerCase();
+			count_i = count_i.toLowerCase();
+		break;
+		case 'u':
+			count_a = count_a.toUpperCase();
+			count_i = count_i.toUpperCase();
+		break;
+	}
+	switch(options.fcase){
+		case 'l':
+			name = name.toLowerCase();
+			name = name.toLowerCase();
+		break;
+		case 'u':
+			name = name.toUpperCase();
+			name = name.toUpperCase();
+		break;
+		case 'p':
+			name = name.toCapitalizeCase();
+			name = name.toCapitalizeCase();
+		break;
+
+	}
+
+	var structure = (options.structure).
+					replace(/{name}/g,name).
+					replace(/{count}/g,file_count).
+					replace(/{count_a}/g,count_a).
+					replace(/{count_i}/g,count_i).
+					replace(/{rand_alpha}/g,options.rand_alpha).
+					replace(/{rand_num}/g,options.rand_num).
+					replace(/{rand_alnum}/g,options.rand_alnum)
+					+(ext != null?'.'+ext:'');
+	return (structure).replace(/[&\/\\|:*?"<>]/g,'');
+
+}
+
+</script>
+<script type='javascript/process' id='import-files'>
+importScripts('https://tool.weforit.com//js/functions.js');
+var count = 0, files = [];
+self.onmessage = function(e){
+	files = e.data;
+	process_file();
+}
+function process_file(){
+	if(count >= files.length){
+		postMessage('done');
+		return;
+	}
+	if(!files[count] || !files[count].name){
+		count++;
+		process_file();
+		return;
+	}
+	setTimeout(function(){
+		postMessage(files[count]);
+		count++;
+		process_file();
+	},0);
+}
+</script>
+<script>
+
+var files 		= [];
+var name 		= '{name}-{count}';
+var file_case 	= '0';
+var parm_case 	= 'l';
+var custom_ext	= '';
+var file_count 	= 0;
+var bytes		= 0;
+let zip;
+window.addEventListener('load',function(){
+
+	$('#download_added').click2download('#output_added');
+	$('#download_excluded').click2download('#output_excluded');
+	var dropbox = '#drop-box';
+	var structure = '#name-structure';
+	$(dropbox).on('dragenter dragover drop dragleave',function(e){
+		e.preventDefault();
+		e.stopPropagation();
+	});
+	$(dropbox).on('dragenter dragover',function(e){
+		$(this).addClass('highlight');
+	});
+	$(dropbox).on('drop dragleave',function(e){
+		$(this).removeClass('highlight');
+	});
+	$(dropbox).on('drop',function(e){
+		if(e.originalEvent && e.originalEvent.dataTransfer && e.originalEvent.dataTransfer.files){
+			add_files(e.originalEvent.dataTransfer.files);
+		}
+	});
+	$('[data-structure]').on('click',function(e){
+		e.preventDefault();
+		var structure = $(this).attr('data-structure');
+		var $current = $('#structure');
+		var caret = $('#structure')[0];
+		var current = caret.value;
+		caret.focus();
+		var current_structure = ($current.val()).splice(caret.selectionStart,0,structure);
+		$('#structure').val(current_structure);
+		$('.structure_value').text(current_structure+(custom_ext?'.'+custom_ext:'.ext'));
+
+		caret.blur();
+		caret.focus();
+	});
+	$('#save_options').on('click',function(e){
+		e.preventDefault();
+		$(this).attr('disabled','disabled');
+		name 		= $('#structure').val();
+		file_case 	= $('input[name="fcase"]:checked').val();
+		parm_case 	= $('input[name="pcase"]:checked').val();
+		custom_ext 	= $('#custom_ext').val() != 'ext'?$('#custom_ext').val():'';
+		$('#custom_ext').val(custom_ext?custom_ext:'ext');
+		$('.structure_value').text(name+(custom_ext?'.'+custom_ext:'.ext'));
+		$('#options').modal('hide');
+
+	});
+
+
+	$("#options").on('show.bs.modal', function () {
+		$('#structure').val(name);
+		$('#save_options').removeAttr('disabled');
+		$('input:radio[name=fcase][value="'+file_case+'"]').click();
+		$('input:radio[name=pcase][value="'+parm_case+'"]').click();
+		$('#custom_ext').val(custom_ext?custom_ext:'ext');
+	});
+
+
+	$('#submit').on('click',function(e){
+		e.preventDefault();
+		if(!files || !files.length){
+			return;
+		}
+		start_process('#rename-files',function(process){
+			zip = new JSZip();
+			var current = 1;
+			$('#output').html('');
+			$('.progress').addClass('show');
+			var options = {
+				'count':file_count,
+				'count_a':'',
+				'count_i':'',
+				'rand_alpha':'',
+				'rand_num':'',
+				'rand_alphanum':'',
+				'structure':name,
+				'ext':custom_ext?custom_ext.replace('ext',''):''
+			};
+			process.postMessage({'files':files,'options':options});
+			process.onmessage = function(e){
+				if(e.data == 'done'){
+					process.terminate();
+					process = undefined;
+					show_progress('Just a sec...',current,files.length);
+					$('#submit').delay(500).fadeOut(function(){
+						hide_progress();
+						$('#zip-warning').fadeIn();
+						$('#download').fadeIn();
+					});
+					/*
+					zip.generateAsync({type: "blob"})
+				    .then(function (content) {
+				        // see FileSaver.js
+				        saveAs(content, "bulk_file_rename_(tool.weforit.com)_	"+timestamp()+".zip");
+				    });
+					*/
+					return;
+				}
+				if(e.data.type == 'success'){
+					zip.file(e.data.message.new_name,e.data.message.file,{binary:true});
+				}else{
+					
+				}
+				show_progress('Renaming Files....',current,files.length);
+				current++;
+				/*
+				var html = '<tr>';
+				if(e.data.type == 'success'){
+					console.log(e.data.message.file);
+					html += '<td>'+e.data.message.file.name+'</td><td>'+e.data.message.new_name+'</td>';
+					zip.file(e.data.message.new_name,e.data.message.file);
+				}else{
+					html += '<td>'+e.data.message+'</td><td>-</td>';
+				}
+				html += '</tr>'
+				$('#output').append(html);
+				*/
+			}
+		})
+	});
+	$('#download').on('click',function(e){
+		var val = $(this).html();
+		$('#download').attr('disabled','disabled').html('Please Wait...');
+	    $('.progress').addClass('show');
+	    $('.progress-message').html('<strong>Zipping... </strong>');
+		zip.generateAsync({type: "blob"},function updateCallback(metadata){
+	        $('.progress-bar').css('width',metadata.percent.toFixed(2)+'%');
+	        $('.progress-message').html('<strong>Zipping... </strong>' + (metadata.currentFile?metadata.currentFile:''));
+	        $('#download').html('Zipping Files...')
+		}).then(function (content) {
+	        // see FileSaver.js
+	        saveAs(content, "bulk_file_rename_(tool.weforit.com)_	"+timestamp()+".zip");
+	        $('.progress').removeClass('show');
+	        $('.progress-message').html('<div class="callout callout-primary">Download has been transfered into your browser and will be started soon...</div>')
+	        $('#download').html(val).removeAttr('disabled');
+	    });
+	})
+	//console.log(rename({name:'testing.jpg'},{'count':1,'structure':'{name}-{count}'}));
+	load_js('./js/jszip.min.js');
+	load_js('https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js');
+});
+function add_files(f){
+	if(!f || !f.length){
+		return;
+	}
+	start_process('#import-files',function(process){
+		$('.drop-box .disable-wrapper').addClass('active');
+		process.postMessage(f);
+		process.onmessage = function(e){
+			if(e.data == 'done'){
+				process.terminate();
+				process = undefined;
+				$('.drop-box .disable-wrapper').removeClass('active');
+				return;
+			}
+			if(file_count == 0){
+				$('#list .modal-body textarea').html('');
+			}
+			file_count++;
+			files.push(e.data);
+			bytes = (bytes+e.data.size);
+			$('.total_files').html(file_count);
+			$('.bytes').html(get_filesize(bytes));
+			if(bytes > 1073741824){
+				$('.bytes').addClass('bg-danger text-white');
+			}
+			$('#list .modal-body textarea').append(e.data.name+' ('+get_filesize(e.data.size)+')'+'\r\n');
+		}
+	});
+	/*
+	for(i=0;i<f.length;i++){
+		files.push(f[i]);
+	}
+	*/
+}
+function show_progress(message,current_number,maximum_numbers,output_message,output_bar){
+	if(!output_message){
+		output_message = '.progress-message';
+	}
+	if(!output_bar){
+		output_bar = '.progress-bar';
+	}
+	$(output_message).html(message);
+	var width = (current_number / maximum_numbers) * 100;
+	$(output_bar).css('width',width+'%');
+}
+function hide_progress(wrapper,output_message,output_bar){
+	if(!wrapper){
+		wrapper = '.progress';
+	}
+	if(!output_message){
+		output_message = '.progress-message';
+	}
+	if(!output_bar){
+		output_bar = '.progress-bar';
+	}
+	$(output_message).html('');
+	$(wrapper).removeClass('show');
+	$(output_bar).css('width','0%');
+}
+</script>
+
+			</div>
+			<div class="footer shadow-sm border-top small">
+				<div class="container-fluid">
+					<strong>Copyright &copy; 2019</strong>
+				</div>
+			</div>
+		</div>
+		<script src="./js/jquery-3.3.1.min.js"></script>
+		<script src="./js/popper.min.js"></script>
+		<script src="./js/bootstrap.min.js"></script>
+		<script src="./js/global.js"></script>
+		<script src="./js/functions.js"></script>
+		<script type="text/javascript">
+			$('.sidebar-toggle').on('click',function(e){
+				e.preventDefault();
+				$('.main-sidebar').css('opacity',1)
+				$('body').toggleClass('sidebar-close');
+			});
+		</script>
+	</body>
+</html>

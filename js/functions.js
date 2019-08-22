@@ -1,4 +1,11 @@
-
+/* * * * * * * * * * * * * * * * * * *
+ * @post_message can be used only
+ * inside a Worker
+ * * * * * * * * * * * * * * * * * *
+*/
+function post_message(type,message){
+  postMessage({'type':type,'message':message});
+} 
 function param(name) {
   return (location.search.split(name + '=')[1] || '').split('&')[0];
 }
@@ -7,6 +14,9 @@ function get_filetype(name){
     name = (name.match(/[^\\\/]\.([^.\\\/]+)$/) || [null]).pop();
     return name;
   }
+}
+function get_filename(filename){
+  return filename.split('.').slice(0, -1).join('.');
 }
 function get_filesize(bytes) {
     var i = Math.floor(Math.log(bytes) / Math.log(1024)),
@@ -22,6 +32,12 @@ function is_url(str) {
     '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
     '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
   return !!pattern.test(str);
+}
+function timestamp(microseconds){
+  if(microseconds === true){
+    return Math.floor(Date.now())
+  }
+  return Math.floor(Date.now() / 1000);
 }
 function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
@@ -134,3 +150,50 @@ String.prototype.decodeHTML = function () {
                .replace(/&lt;/g, '<')
                .replace(/&amp;/g, '&');
 };
+function num_to_alpha(num){
+  var s = '', t;
+
+  while (num > 0) {
+    t = (num - 1) % 26;
+    s = String.fromCharCode(65 + t) + s;
+    num = (num - t)/26 | 0;
+  }
+  return s || undefined;
+}
+/* * * * * * * * * * * * * * * * * * * * * * * * *
+ * @romanize function
+ * https://stackoverflow.com/a/9083076
+ * * * * * * * * * * * * * * * * * * * * * * * * *
+*/
+function romanize(num) {
+  var lookup = {M:1000,CM:900,D:500,CD:400,C:100,XC:90,L:50,XL:40,X:10,IX:9,V:5,IV:4,I:1},
+      roman = '',
+      i;
+  for ( i in lookup ) {
+    while ( num >= lookup[i] ) {
+      roman += i;
+      num -= lookup[i];
+    }
+  }
+  return roman;
+}
+/* * * * * * * * * * * * * * * * * * * * * * * * *
+ * @get_filesize function
+ * https://stackoverflow.com/a/14919494
+ * * * * * * * * * * * * * * * * * * * * * * * * *
+*/
+function get_filesize(bytes, si) {
+    var thresh = si ? 1000 : 1024;
+    if(Math.abs(bytes) < thresh) {
+        return bytes + ' B';
+    }
+    var units = si
+        ? ['kB','MB','GB','TB','PB','EB','ZB','YB']
+        : ['KiB','MiB','GiB','TiB','PiB','EiB','ZiB','YiB'];
+    var u = -1;
+    do {
+        bytes /= thresh;
+        ++u;
+    } while(Math.abs(bytes) >= thresh && u < units.length - 1);
+    return bytes.toFixed(1)+' '+units[u];
+}

@@ -144,6 +144,7 @@ function load_js(url){
 }
 
 $('[data-toggle="tooltip"]').tooltip();
+$('[data-toggle="popover"]').popover(); 
 /*
 setInterval(function(){
 	if(adblock() == true && app.current_url.indexOf('/something-wrong') == '-1'){
@@ -305,6 +306,10 @@ function is_support(type){
 		break;
 	}
 }
+
+String.prototype.splice = function(start, delCount, newSubStr) {
+    return this.slice(0, start) + newSubStr + this.slice(start + Math.abs(delCount));
+};
 Element.prototype.remove = function() {
     this.parentElement.removeChild(this);
 }
