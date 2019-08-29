@@ -446,6 +446,8 @@ img{
 	right:1rem;
 	top:2px;
 }
+
+
 .card-tool .btn{
 	padding:0 .25rem;
 	cursor:pointer;
@@ -492,3 +494,35 @@ img{
 	font-size:110%;
 }
 
+
+
+.section-faq .card{
+	border:0!important;
+}
+.section-faq .card-header{
+	position:relative;
+	color:inherit;
+	border-left:1px solid var(--primary);
+	border-radius: 0;
+	font-weight:500;
+}
+
+.section-faq .card-header:after,
+.section-faq .card-header.collapsed:after{
+	content:'\002B';
+	float:right;
+	font-weight: bold;
+	font-size:1rem;
+	line-height:1;
+	color:var(--primary);
+	transform:rotate(0deg);
+}
+.section-faq .card-header:after{
+	content:'\2212';
+	transform:rotate(0deg);
+}
+.section-faq .card-body{
+	padding-top:.5rem;
+	padding-top:.5rem;
+	border-radius: 0;
+}

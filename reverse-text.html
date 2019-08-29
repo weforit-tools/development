@@ -14,7 +14,7 @@
 			var app = {
 				'scroll_offset'	: 60,
 				'api'			: 'https://weforit.com/api/',
-				'current_url'	: 'http://localhost/test/./reverse-text?skip=1',
+				'current_url'	: 'http://localhost/test/reverse-text?skip=1',
 				'data_table'	: {
 						"retrieve"			: true,
 				        "scrollY"			: '300px',
@@ -119,47 +119,113 @@
 				</ul>
 			</aside>
 			<div class="content-wrapper">
-<section class="bg-white py-4">
-	<div class="container">
-		<h1 class="text-center h4 mb-3">Reverse Text</h1>
-		<form class="weforit-tool">
-			<div class="row">
-				<div class="col-12 col-md-12 col-lg-6">
-					<div class="control-box">
-						<div class="form-group mb-2">
-							<textarea id="input" class="form-control" style="white-space:pre;height: 164px;" placeholder="Please Start typing, Paste or load from Local File"></textarea>
-						</div>
-						<div class="d-flex align-items-center">
-							<label type="button" class="btn btn-light btn-sm mr-2 mb-0">
-								<i class="fa fa-plus"></i>Load File
-								<input type="file" id="loadFile" name="loadfile" class="d-none"/>
-							</label>
-							<label type="button" class="btn btn-light btn-sm mr-2 mb-0">
-								<i class="fa fa-times"></i>Clear
-								<button type="reset" class="d-none"></button>
-							</label>
-						</div>
+
+
+<nav class="title-bar">
+	<div class="container-fluid bg-white shadow-sm py-2">
+		<h6><i class="fa fa-refresh mr-2"></i>Reverse Text</h6>
+	</div>
+</nav>
+<div class="container-fluid">
+	<div class="my-4 callout callout-primary small">
+		<div class="callout-heading"><strong>How it Works?</strong></div>
+		Reverse Text is a simple program to reverse text online. It is also known as Mirror Text. Reverse Text is based on JavaScript and doesn't require any  server side request.<br/>
+		<em>Example:- </em>
+		<strong>Tools</strong> will be converted to <strong>slooT</strong>
+	</div>
+
+
+	<form class="row">
+		<div class="col-lg-6">
+			<div class="card border-0 shadow-sm mb-4">
+				<div class="card-header  bg-white ">
+					<h6 class="mb-0">Input</h6>
+					<div class="card-tool">
+						<button type="button" id="clear" data-toggle="tooltip" title="Clear Input Output" class="btn btn-sm py-2"><i class="fa fa-eraser"></i></button>
+						<button type="reset" id="reset" data-toggle="tooltip" title="Reset All" class="btn btn-sm py-2"><i class="fa fa-refresh"></i></button>
+						<label for="loadFile" data-toggle="tooltip" title="Load Text File" class="mb-0 btn py-2"><i class="fa fa-upload"></i></label>
+						<input type="file" id="loadFile" name="loadfile" class="d-none"/>
 					</div>
 				</div>
-				<div class="col-12 col-md-12 col-lg-6">
-					<div class="control-box">
-						<div class="form-group mb-2">
-							<textarea readonly="readonly" id="output" style="white-space:pre;height: 164px;" class="bg-white form-control" placeholder="Output"></textarea>
-						</div>
-						<div class="d-flex align-items-center mt-2 mb-1">
-							<button type="button" id="copy_text" class="btn btn-light btn-sm mr-2"><i class="fa fa-clipboard"></i>Copy Text</button>
-							<button type="button" id="save_file" class="btn btn-light btn-sm mr-2"><i class="fa fa-floppy-o"></i>Save</button>
+				<textarea rows="12" id="input" placeholder="Start Typing or Load File" class="py-2 card-body border-0 form-control form-control-sm rounded-0">WeForIT Tools</textarea>
+			</div>
+		</div>
+		<div class="col-lg-6">
+			<div class="card border-0 shadow-sm mb-4">
+				<div class="card-header  bg-white ">
+					<h6 class="mb-0">Output</h6>
+					<div class="card-tool">
+						<button type="button" id="copy_text" data-toggle="tooltip" title="Copy to Clipboard" class="btn btn-sm py-2"><i class="fa fa-clipboard"></i></button>
+						<button type="button" id="save_file" data-toggle="tooltip" title="Download File" class="btn btn-sm py-2"><i class="fa fa-download"></i></button>
+					</div>
+				</div>
+				<textarea rows="12" id="output" placeholder="Output Will display here" class="py-2 bg-white card-body border-0 form-control form-control-sm rounded-0" readonly="readonly">slooT TIroFeW</textarea>
+			</div>
+		</div>
+	</form>
+	<!-- Content -->
+	<div class="accordian section-faq small" id="faq">
+		<div class="row">
+			<div class="col-md-6 col-xl-4">
+				<div class="card mb-2 shadow-sm card-default">
+					<a class="card-header bg-white" data-toggle="collapse">
+						<i class="fa fa-info-circle mr-2 text-primary"></i>What is Reverse Text
+					</a>
+					<div class="collapse show" id="faq1">
+						<div class="card-body text-justify text-muted">
+							Reverse Text Generator is a online Tool that will reverse user input word, lines, sentences or any type of text. Let's Say you have a word named "Google" then it will convert this word into "elgooG". Programmatically, Reverse Text follow LIFO Approach to make output.
 						</div>
 					</div>
 				</div>
 			</div>
-		</form>
-		<div class="bg-white py-3 px-2 my-4">
-			<p class="text-center text-uppercase"><strong>How it Works?</strong></p>
-			
+			<div class="col-md-6 col-xl-4">
+				<div class="card mb-2 shadow-sm card-default">
+					<a class="card-header bg-white" data-toggle="collapse">
+						<i class="fa fa-gears mr-2 text-primary"></i>How it Works?
+					</a>
+					<div class="collapse show" id="faq2">
+						<div class="card-body text-justify text-muted">
+							Reverse Text uses simple alogrithms to convert normal text into reverse text. It is based on Pure JavaScript and Some jQuery Libraries. It doesn't upload or save any type of data into server. Speed or Performance depends on browser and device CPU.
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 col-xl-4">
+				<div class="card mb-2 shadow-sm card-default">
+					<a class="card-header bg-white" data-toggle="collapse">
+						<i class="fa fa-shield mr-2 text-primary"></i>Is It Safe?
+					</a>
+					<div class="collapse show" id="faq3">
+						<div class="card-body text-justify text-muted">
+							Reverse Text is 100% Safe and Secure becuase of it has Client Side Processor Called JavaScript Processor. We doesn't store any type of data into browser's cookies and doesn't upload data into server but it require JavaScript Enabled into browser.
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 col-xl-12 mt-3">
+				<div class="card mb-2 shadow-sm card-default">
+					<a class="card-header bg-white" data-toggle="collapse">
+						<i class="fa fa-lock mr-2 text-primary"></i>Privacy Policy
+					</a>
+					<div class="collapse show" id="privacy">
+						<div class="card-body text-justify text-muted">
+							<p>Reverse Text Online doesn't send, upload or save any type of users data. You can refer our <a href="./privacy-policy.html" target="_blank">Privacy Policy</a> for more information.</p>
+							<p>* Tools provided as-is, without warranty of any kind and used at your own risk</p>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-</section>
+
+	<!-- /Content -->
+
+
+	<p class="small my-3"></p>
+</div>
+
+
+
 <script>
 window.addEventListener('load',function(){
 	$('#loadFile').click2loadFile('#input',callback_reverse_text);
@@ -167,7 +233,10 @@ window.addEventListener('load',function(){
 	$('#copy_text').click2copy('#output');
 
 	$('#input').on('keyup',callback_reverse_text);
-
+	$('#clear').on('click',function(){
+		$('#input').val('');
+		$('#output').val('');
+	})
 	function callback_reverse_text(){
 		var input = $('#input').val();
 		$('#output').val(input.reverseText());
@@ -191,6 +260,7 @@ window.addEventListener('load',function(){
 		<script type="text/javascript">
 			$('.sidebar-toggle').on('click',function(e){
 				e.preventDefault();
+				$('.main-sidebar').css('opacity',1)
 				$('body').toggleClass('sidebar-close');
 			});
 		</script>

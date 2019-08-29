@@ -14,7 +14,7 @@
 			var app = {
 				'scroll_offset'	: 60,
 				'api'			: 'https://weforit.com/api/',
-				'current_url'	: 'http://localhost/test/split-text?skip=1',
+				'current_url'	: 'http://localhost/test/faq-page-json-ld-schema-generator?skip=1',
 				'data_table'	: {
 						"retrieve"			: true,
 				        "scrollY"			: '300px',
@@ -119,83 +119,200 @@
 				</ul>
 			</aside>
 			<div class="content-wrapper">
+<style>
 
-<section class="bg-white py-4">
-	<div class="container">
-		<h1 class="text-center h4 mb-3">Split Text</h1>
-		<form class="weforit-tool">
-			<div class="row">
-				<div class="col-12 col-md-12 col-lg-6">
-					<div class="control-box">
-						<div class="form-group mb-2">
-							<textarea id="input" class="form-control" placeholder="Input Text"></textarea>
-						</div>
-						<div class="d-flex align-items-center">
-							<label type="button" class="btn btn-light btn-sm mr-2">
-								<i class="fa fa-plus"></i>Load File
-								<input type="file" id="loadFile" name="loadfile" class="d-none"/>
-							</label>
-						</div>
-						<div class="d-block my-2 d-md-flex ">
-							<div class="mb-2 w-50 px-2">
-								<div class="form-check small mb-1">
-								  <label class="form-check-label">
-								    <input type="radio" class="form-check-input" value="0" checked="checked" name="regex">Input Seperator
-								  </label>
-								</div>
-								<input type="text" id="input_sep" class="form-control" value=" " placeholder="Enter Input Seperator">
-								<div class="form-check small mb-1 mt-2">
-								  <label class="form-check-label">
-								    <input type="radio" disabled="disabled" class="form-check-input" value="1" name="regex">Input RegEx (<small>Coming Soon</small>)
-								  </label>
-								</div>							
-								<input type="text" id="input_sep_regex" disabled="disabled" class="form-control" value="\s+" placeholder="Enter RegEx">
-							</div>
-							<div class="mb-2 w-50 px-2">
-								<small>Output Seperator:</small>
-								<input type="text" id="output_sep" class="form-control"  value="\n" placeholder="Enter Output Seperator">
-							</div>
-							
-						</div>
+textarea.form-control{
+	height:40px;
+}
+
+.card-tool .btn-move{
+	cursor: move;
+}
+.option-bar{
+	position:fixed;
+	top:0;
+	left:0;
+	z-index:1;
+	margin-left: 230px;
+	transition:.3s;
+	width:100%;
+}
+.option-bar.bar-show{
+    top:50px;
+}
+
+@media screen and (max-width:768px){
+	.option-bar{
+		margin-left:0;
+	}
+
+}
+</style>
+<div class="py-2 px-3 option-bar bg-white shadow-sm">
+	<button type="button" class="add-question btn btn-primary px-2 btn-sm"><i class="fa fa-plus mr-2"></i>Add New</button>
+	<button type="button" class="delete_all btn btn-primary px-2 btn-sm"><i class="fa fa-eye mr-2"></i>Preview</button>
+	<button type="button" class="delete_all btn btn-primary px-2 btn-sm"><i class="fa fa-cogs mr-2"></i>Test Code</button>
+	<button type="button" class="copy_text btn btn-dark px-2 btn-sm"><i class="fa fa-code mr-2"></i>Copy Code</button>
+	<button type="button" class="delete_all btn btn-danger px-2 btn-sm"><i class="fa fa-trash mr-2"></i>Empty</button>
+</div>
+<nav class="title-bar mb-4">
+	<div class="container-fluid bg-white shadow-sm py-2">
+		<h6 class="mb-0"><i class="fa fa-code mr-2"></i>FAQPage JSON-LD Schema Generator</h6>
+	</div>
+</nav>
+<div class="container-fluid">
+	<div class="action-btn bg-light">
+		<button type="button" class="add-question btn btn-primary px-4 btn-sm"><i class="fa fa-plus mr-3"></i>Add New Question</button>
+	</div>
+	<form class="row mt-3">
+		<div class="col-12 col-md-7 col-xl-7">
+			<div id="faq-page">
+
+			</div>
+		</div>
+		<div class="col-12 col-md-5 col-xl-5">
+			<div class="card border-0 small shadow-sm mb-4" id="card-output">
+				<div class="card-header border-0 bg-white py-2 px-3">
+					<strong>JSON-LD FAQ Schema</strong>
+					<div class="card-tool">
+						<button type="button" id="copy_text" class="btn btn-sm py-2"><i class="fa fa-clipboard"></i></button>
+						<button type="button" class="copy_text btn btn-sm py-2"><i class="fa fa-download"></i></button>
 					</div>
 				</div>
-				<div class="col-12 col-md-12 col-lg-6">
-					<div class="control-box">
-						<div class="form-group mb-2">
-							<textarea id="output" style="height: 225px;" class="form-control" placeholder="Output Text"></textarea>
-						</div>
-						<div class="d-flex align-items-center">
-							<button type="button" class="btn btn-light btn-sm mr-2"><i class="fa fa-clipboard"></i>Copy Text</button>
-							<button type="button" class="btn btn-light btn-sm mr-2"><i class="fa fa-floppy-o"></i>Save File</button>
-						</div>
-					</div>
+				<div class="card-body p-0">
+					<textarea id="output" style="height:335px;white-space: pre" class="border-0 bg-white form-control form-control-sm px-3" placeholder="Output" readonly="true"></textarea>
 				</div>
 			</div>
-		</form>
-	</div>
-</section>
-<script>
-window.addEventListener('load',function(){
-	$('#loadFile').on('change',function(){
-		load_file('#loadFile','#input',split_text);
+		</div>
+	</form>
+</div>
 
-	})
-	$('#input, #input_sep, #output_sep').on('keyup',function(){
-		split_text();
+
+<script type="text/template" id="html_template">
+	<!-- Question Start -->
+	<div class="card border-0 small shadow-sm mb-2">
+		<div class="card-header d-flex border-0 bg-white p-0">
+			<input type="text" class="font-weight-bold question border-0 rounded-0 form-control form-control-sm py-3 px-3">
+			<div class="card-tool bg-white position-relative d-flex h-100">
+				<button type="button" title="Collapse" data-toggle="collapse" class="btn-collapse btn btn-sm"><strong>_</strong></button>
+				<button type="button" title="Free Move (Up & Down)" data-toggle="tooltip" class="btn-move btn btn-sm"><i class="fa fa-arrows"></i></button>
+				<button type="button" title="Delete" data-toggle="tooltip" class="btn btn-sm delete-ques"><i class="fa fa-trash text-danger"></i></button>
+			</div>
+		</div>
+		<div class="collapse show">
+			<div class="card-body p-0">
+				<textarea class="border-0 answer form-control form-control-sm px-3" placeholder="Answer #{num}"></textarea>
+			</div>
+		</div>
+	</div>
+	<!-- /Question End -->
+</script>
+
+<script>
+var count = 1;
+window.addEventListener('load',function(){
+	$('#save_file').click2download('#output');
+	$('.copy_text').click2copy('#output');
+	//$('#input').on('keyup',callback_reverse_text);
+	$('.delete_all').on('click',function(){
+		$('#faq-page').html('');
+		generate_schema();
+		count = 1;
 	});
-	function split_text(){
-		$('#output').val(function(){
-			var input_sep = $('#input_sep').val();
-			var output_sep = $('#output_sep').val();
-			var output_sep = new RegExp(escapeRegExp(output_sep));
-			var text = $('#input').val().split(input_sep)
-			text = text.join(output_sep);
-			
-			//var text = $('#input').val().split(input_sep).join('\r\n');
-			return text;
-		});		
+	$('.add-question').on('click',function(){
+		add_question();
+		generate_schema();
+	});
+	$(document).on('click','.delete-ques',function(){
+		var id = $(this).attr('data-delete');
+		var is_exists = $('#ques-'+id).html();
+		
+		if(id > 0 || is_exists || is_exists.length > 0){
+			$('#ques-'+id).fadeOut('slow',function(){
+				$('#ques-'+id).remove();
+				re_order();
+				sort_card();
+				generate_schema();
+			});
+		}
+	});
+
+	$('#faq-page').on('keyup paste',function(){
+		generate_schema();
+	})
+	
+	add_question(5);
+	generate_schema();
+	$(window).scroll(function(){
+		var top = $(this).scrollTop();
+		if(top > 100){
+			$('.option-bar').addClass('bar-show');
+		}else{
+			$('.option-bar').removeClass('bar-show')
+		}
+	})
+});
+function add_question(num=1){
+	for(i=1;i<=num;i++){
+		var $html_template = $($('#html_template').html());
+		$html_template.attr('id','ques-'+count);
+		$('.form-control.question',$html_template).attr({
+			'placeholder':'Question #'+count
+		});
+		$('.form-control.answer',$html_template).attr('placeholder','Answer #'+count);
+		$('button.delete-ques',$html_template).attr('data-delete',count);
+		$('.btn-collapse',$html_template).attr('data-target','#answ-'+count);
+		$('.collapse',$html_template).attr('id','answ-'+count);
+		count++;
+		$('#faq-page').append($html_template);
 	}
-})
+	sort_card();
+}
+function re_order(){
+	$('#faq-page .card').each(function(i,v){
+		$('.form-control.question',v).attr('placeholder','Question #'+(i+1));
+		$('.form-control.answer',v).attr('placeholder','Answer #'+(i+1));
+	})	
+}
+function generate_schema(){
+	var output = []
+	output.push('<script type="application/ld+json">');
+	var json = {
+		"@context": "https://schema.org",
+		"@type": "FAQPage",
+		"mainEntity" : compile_question()
+	}
+	output.push(JSON.stringify(json,null, 4));
+	output.push('<\/script>');
+	$('#output').val(output.join('\r\n'))	
+}
+function compile_question(){
+	var main_entity = [];
+	$('#faq-page .card').each(function(i,v){
+		var ques = $('.form-control.question',v).val();
+		var answ = $('.form-control.answer',v).val();
+		main_entity.push({
+			"@type":"Question",
+			"name":ques,
+			"acceptedAnswer":{
+				"@type":"Answer",
+				"text":answ
+			}
+		})
+	});
+	return main_entity;
+}
+function sort_card(){
+	$("#faq-page" ).sortable({
+		handle:'.btn-move',
+		cancel: '',
+		axis: 'y',
+		update:function(event, ui){
+			re_order();
+			generate_schema();
+		}
+	});
+}
 </script>
 
 			</div>
@@ -206,10 +323,12 @@ window.addEventListener('load',function(){
 			</div>
 		</div>
 		<script src="./js/jquery-3.3.1.min.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 		<script src="./js/popper.min.js"></script>
 		<script src="./js/bootstrap.min.js"></script>
 		<script src="./js/global.js"></script>
 		<script src="./js/functions.js"></script>
+
 		<script type="text/javascript">
 			$('.sidebar-toggle').on('click',function(e){
 				e.preventDefault();

@@ -14,7 +14,7 @@
 			var app = {
 				'scroll_offset'	: 60,
 				'api'			: 'https://weforit.com/api/',
-				'current_url'	: 'http://localhost/test/htaccess-file-caching-generator?skip=1',
+				'current_url'	: 'http://localhost/test/./htaccess-file-caching-generator?skip=1',
 				'data_table'	: {
 						"retrieve"			: true,
 				        "scrollY"			: '300px',
@@ -257,37 +257,7 @@
 		<p class="lead text-center">Caching is the Most Important Part of Page Speed. The reason is Browser Store the Website File into storage and when a user visit this site again then browser restore website from local storage rather than connecting to server again and again. It save the time that is take by response of the server</p>
 	</div>
 </section>
-<style>
-	.section-faq .card{
-		border:0!important;
-	}
-	.section-faq .card-header{
-		position:relative;
-		color:inherit;
-		border-left:1px solid var(--primary);
-		border-radius: 0;
-	}
 
-	.section-faq .card-header:after,
-	.section-faq .card-header.collapsed:after{
-		content:'\002B';
-		float:right;
-		font-weight: bold;
-		font-size:1rem;
-		line-height:1;
-		color:var(--primary);
-		transform:rotate(0deg);
-	}
-	.section-faq .card-header:after{
-		content:'\2212';
-		transform:rotate(0deg);
-	}
-	.section-faq .card-body{
-		padding-top:.5rem;
-		padding-top:.5rem;
-		border-radius: 0;
-	}
-</style>
 <section class="bg-white py-5 section-faq">
 	<div class="container">
 		<h4>FAQs - htaccess File Caching Generator</h4>
@@ -1194,6 +1164,7 @@ window.addEventListener('load',function(){
 		<script type="text/javascript">
 			$('.sidebar-toggle').on('click',function(e){
 				e.preventDefault();
+				$('.main-sidebar').css('opacity',1)
 				$('body').toggleClass('sidebar-close');
 			});
 		</script>
