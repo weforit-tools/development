@@ -208,7 +208,7 @@ function download(input,filename){
 		// Firefox requires the link to be added to the DOM
 		// before it can be clicked.
 		downloadLink.href = window.URL.createObjectURL(blob);
-		downloadLink.onclick = destroyClickedElement;
+		//downloadLink.onclick = destroyClickedElement;
 		downloadLink.style.display = "none";
 		document.body.appendChild(downloadLink);
 	}
