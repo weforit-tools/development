@@ -149,8 +149,9 @@ textarea.form-control{
 }
 </style>
 <div class="py-2 px-3 option-bar bg-white shadow-sm">
-	<button type="button" class="add-question btn btn-primary px-2 btn-sm"><i class="fa fa-plus mr-2"></i>Add New</button>
-	<button type="button" class="export btn btn-primary px-2 btn-sm"><i class="fa fa-plus mr-2"></i>Export</button>
+	<button type="button" class="add-question btn btn-primary px-2 btn-sm"><i class="fa fa-plus mr-2"></i>Add Question</button>
+	<button type="button" data-toggle="modal" data-target="#import-modal" class="btn btn-primary px-2 btn-sm"><i class="fa fa-folder-open-o mr-2"></i>Import</button>
+	<button type="button" class="export btn btn-primary px-2 btn-sm"><i class="fa fa-external-link mr-2"></i>Export</button>
 	<button type="button" class="test_code btn btn-primary px-2 btn-sm"><i class="fa fa-cogs mr-2"></i>Test Code</button>
 	<button type="button" class="copy_text btn btn-dark px-2 btn-sm"><i class="fa fa-code mr-2"></i>Copy Code</button>
 	<button type="button" class="delete_all btn btn-danger px-2 btn-sm"><i class="fa fa-trash mr-2"></i>Empty</button>
@@ -168,8 +169,12 @@ textarea.form-control{
 		<p></p>
 	</div>
 	<div class="action-btn bg-light">
-		<button type="button" class="add-question btn btn-primary px-2 btn-sm"><i class="fa fa-plus mr-3"></i>Add New Question</button>
-		<button type="button" data-toggle="modal" data-target="#import-modal" class="btn btn-primary px-2 btn-sm"><i class="fa fa-plus mr-3"></i>Import Questions</button>
+		<button type="button" class="add-question btn btn-primary px-2 btn-sm"><i class="fa fa-plus mr-2"></i>Add Question</button>
+	<button type="button" data-toggle="modal" data-target="#import-modal" class="btn btn-primary px-2 btn-sm"><i class="fa fa-folder-open-o mr-2"></i>Import</button>
+		<button type="button" class="export btn btn-primary px-2 btn-sm"><i class="fa fa-external-link mr-2"></i>Export</button>
+		<button type="button" class="test_code btn btn-primary px-2 btn-sm"><i class="fa fa-cogs mr-2"></i>Test Code</button>
+		<button type="button" class="copy_text btn btn-dark px-2 btn-sm"><i class="fa fa-code mr-2"></i>Copy Code</button>
+		<button type="button" class="delete_all btn btn-danger px-2 btn-sm"><i class="fa fa-trash mr-2"></i>Empty</button>
 	</div>
 	<form class="row mt-3">
 		<div class="col-12 col-md-7 col-xl-7">
@@ -213,9 +218,6 @@ textarea.form-control{
 <div class="modal fade" id="import-modal">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<div class="modal-header py-2">
-				Import FAQ Questions
-			</div>
 			<div class="modal-body">
 				<p class="small">This Options Will help you to continue your work where you left it</p>
 				<div class="custom-file">
@@ -352,7 +354,7 @@ window.addEventListener('load',function(){
 	generate_schema();
 	$(window).scroll(function(){
 		var top = $(this).scrollTop();
-		if(top > 100){
+		if(top > 150){
 			$('.option-bar').addClass('bar-show');
 		}else{
 			$('.option-bar').removeClass('bar-show')
