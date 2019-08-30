@@ -150,8 +150,7 @@ textarea.form-control{
 </style>
 <div class="py-2 px-3 option-bar bg-white shadow-sm">
 	<button type="button" class="add-question btn btn-primary px-2 btn-sm"><i class="fa fa-plus mr-2"></i>Add New</button>
-	<button type="button" class="delete_all btn btn-primary px-2 btn-sm"><i class="fa fa-eye mr-2"></i>Preview</button>
-	<button type="button" class="delete_all btn btn-primary px-2 btn-sm"><i class="fa fa-cogs mr-2"></i>Test Code</button>
+	<button type="button" class="test_code btn btn-primary px-2 btn-sm"><i class="fa fa-cogs mr-2"></i>Test Code</button>
 	<button type="button" class="copy_text btn btn-dark px-2 btn-sm"><i class="fa fa-code mr-2"></i>Copy Code</button>
 	<button type="button" class="delete_all btn btn-danger px-2 btn-sm"><i class="fa fa-trash mr-2"></i>Empty</button>
 </div>
@@ -161,17 +160,27 @@ textarea.form-control{
 	</div>
 </nav>
 <div class="container-fluid">
+	<div class="callout callout-primary small">
+		<div class="callout-heading">
+			<strong>How it Works?</strong>
+		</div>
+		<p></p>
+	</div>
 	<div class="action-btn bg-light">
 		<button type="button" class="add-question btn btn-primary px-4 btn-sm"><i class="fa fa-plus mr-3"></i>Add New Question</button>
 	</div>
 	<form class="row mt-3">
 		<div class="col-12 col-md-7 col-xl-7">
 			<div id="faq-page">
-
+				<div class="text-center">
+					<div class="text-center spinner-border text-primary" role="status">
+					  <span class="sr-only">Loading...</span>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="col-12 col-md-5 col-xl-5">
-			<div class="card border-0 small shadow-sm mb-4" id="card-output">
+			<div class="card border-0 small shadow-sm mb-2" id="card-output">
 				<div class="card-header border-0 bg-white py-2 px-3">
 					<strong>JSON-LD FAQ Schema</strong>
 					<div class="card-tool">
@@ -180,8 +189,21 @@ textarea.form-control{
 					</div>
 				</div>
 				<div class="card-body p-0">
-					<textarea id="output" style="height:335px;white-space: pre" class="border-0 bg-white form-control form-control-sm px-3" placeholder="Output" readonly="true"></textarea>
+					<textarea id="output" style="height:270px;" class="border-0 bg-white form-control form-control-sm px-3" placeholder="Output" readonly="true"></textarea>
 				</div>
+			</div>
+			<div class="custom-control custom-checkbox">
+				<input type="checkbox" class="custom-control-input" id="remove-empty">
+				<label class="custom-control-label" for="remove-empty">Remove Empty Questions</label>
+			</div>
+			<div class="custom-control custom-checkbox">
+				<input type="checkbox" class="custom-control-input" id="minify">
+				<label class="custom-control-label" for="minify">Minify Code</label>
+			</div>
+			<div class="text-center">
+				<button type="button" data-toggle="tooltip" title="Test Code" class="test_code btn btn-primary px-2 btn-sm mb-1"><i class="fa fa-cogs"></i></button>
+				<button type="button" data-toggle="tooltip" title="Copy Code" class="copy_text btn btn-dark px-2 btn-sm mb-1"><i class="fa fa-clipboard"></i></button>
+				<button type="button" data-toggle="tooltip" title="Empty or Delete All Questions" class="delete_all btn btn-danger px-2 btn-sm mb-1"><i class="fa fa-trash"></i></button>
 			</div>
 		</div>
 	</form>
@@ -211,29 +233,36 @@ textarea.form-control{
 <script>
 var count = 1;
 window.addEventListener('load',function(){
+	$('#faq-page').html('');
 	$('#save_file').click2download('#output');
 	$('.copy_text').click2copy('#output');
 	//$('#input').on('keyup',callback_reverse_text);
 	$('.delete_all').on('click',function(){
-		$('#faq-page').html('');
-		generate_schema();
-		count = 1;
+		var response = confirm('Do You want to Delete All Questions?');
+		if(response == true){
+			$('#faq-page').html('');
+			generate_schema();
+			count = 1;
+		}
 	});
 	$('.add-question').on('click',function(){
 		add_question();
 		generate_schema();
 	});
 	$(document).on('click','.delete-ques',function(){
-		var id = $(this).attr('data-delete');
-		var is_exists = $('#ques-'+id).html();
-		
-		if(id > 0 || is_exists || is_exists.length > 0){
-			$('#ques-'+id).fadeOut('slow',function(){
-				$('#ques-'+id).remove();
-				re_order();
-				sort_card();
-				generate_schema();
-			});
+		var response = confirm('Do You want to Delete Question, It can\'t be Recover?');
+		if(response == true){
+			var id = $(this).attr('data-delete');
+			var is_exists = $('#ques-'+id).html();
+			
+			if(id > 0 || is_exists || is_exists.length > 0){
+				$('#ques-'+id).fadeOut('slow',function(){
+					$('#ques-'+id).remove();
+					re_order();
+					sort_card();
+					generate_schema();
+				});
+			}
 		}
 	});
 
@@ -250,7 +279,15 @@ window.addEventListener('load',function(){
 		}else{
 			$('.option-bar').removeClass('bar-show')
 		}
-	})
+	});
+	$('#remove-empty').change(function(){generate_schema()});
+	$('#minify').change(function(){generate_schema()});
+	$('.test_code').on('click',function(){
+		var $form = $('<form class="d-none" target="_blank" action="https://search.google.com/structured-data/testing-tool"><textarea id="output_code_test" name="code"></textarea></form>');
+		$('body').append($form);
+		$('textarea#output_code_test',$form).val($('#output').val());
+		$form.trigger('submit');
+	});
 });
 function add_question(num=1){
 	for(i=1;i<=num;i++){
@@ -275,22 +312,32 @@ function re_order(){
 	})	
 }
 function generate_schema(){
-	var output = []
+	var minify = $('#minify').is(":checked");
+	var output = [];
 	output.push('<script type="application/ld+json">');
 	var json = {
 		"@context": "https://schema.org",
 		"@type": "FAQPage",
 		"mainEntity" : compile_question()
 	}
-	output.push(JSON.stringify(json,null, 4));
+	if(minify == true){
+		json = JSON.stringify(json);
+	}else{
+		json = JSON.stringify(json,null, 4);
+	}
+	output.push(json);
 	output.push('<\/script>');
 	$('#output').val(output.join('\r\n'))	
 }
 function compile_question(){
 	var main_entity = [];
+	var remove_empty = $('#remove-empty').is(":checked");
 	$('#faq-page .card').each(function(i,v){
 		var ques = $('.form-control.question',v).val();
 		var answ = $('.form-control.answer',v).val();
+		if(!ques && !answ && remove_empty == true){
+			return true;
+		}
 		main_entity.push({
 			"@type":"Question",
 			"name":ques,
