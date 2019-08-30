@@ -150,6 +150,7 @@ textarea.form-control{
 </style>
 <div class="py-2 px-3 option-bar bg-white shadow-sm">
 	<button type="button" class="add-question btn btn-primary px-2 btn-sm"><i class="fa fa-plus mr-2"></i>Add New</button>
+	<button type="button" class="export btn btn-primary px-2 btn-sm"><i class="fa fa-plus mr-2"></i>Export</button>
 	<button type="button" class="test_code btn btn-primary px-2 btn-sm"><i class="fa fa-cogs mr-2"></i>Test Code</button>
 	<button type="button" class="copy_text btn btn-dark px-2 btn-sm"><i class="fa fa-code mr-2"></i>Copy Code</button>
 	<button type="button" class="delete_all btn btn-danger px-2 btn-sm"><i class="fa fa-trash mr-2"></i>Empty</button>
@@ -167,7 +168,8 @@ textarea.form-control{
 		<p></p>
 	</div>
 	<div class="action-btn bg-light">
-		<button type="button" class="add-question btn btn-primary px-4 btn-sm"><i class="fa fa-plus mr-3"></i>Add New Question</button>
+		<button type="button" class="add-question btn btn-primary px-2 btn-sm"><i class="fa fa-plus mr-3"></i>Add New Question</button>
+		<button type="button" data-toggle="modal" data-target="#import-modal" class="btn btn-primary px-2 btn-sm"><i class="fa fa-plus mr-3"></i>Import Questions</button>
 	</div>
 	<form class="row mt-3">
 		<div class="col-12 col-md-7 col-xl-7">
@@ -208,7 +210,83 @@ textarea.form-control{
 		</div>
 	</form>
 </div>
+<div class="modal fade" id="import-modal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header py-2">
+				Import FAQ Questions
+			</div>
+			<div class="modal-body">
+				<p class="small">This Options Will help you to continue your work where you left it</p>
+				<div class="custom-file">
+				  <input type="file" class="custom-file-input" id="json-file">
+				  <label class="custom-file-label" for="json-file">Choose file</label>
+				</div>
+				<div class="mt-2 text-center">
+					<button type="button" class="btn btn-primary px-3 btn-import">Import</button>
+				</div>
+				<strong>Example:</strong>
+				<div class="small">Code must be in valid JSON format without script tags</div>
+				<pre class="bg-light p-2" style="font-size:10px;height:200px">{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "What is Schema FAQ Page",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A FAQPage is a WebPage presenting one or more \"Frequently asked questions\""
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How to Add Schema FAQ Page into Website",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Pretty Simple, Use Markup or JSON-LD for Schema FAQPage"
+            }
+        }
+    ]
+}</pre>
+			</div>
+		</div>
+	</div>
+</div>
 
+<script type="javascript/process" id="readfile">
+	var mainEntity = [], question = 0;
+	self.onmessage = function(e){
+		var file = e.data;
+		var reader = new FileReader();
+		reader.onload = function(e){
+			var json = e.target.result;
+			try{
+				json = JSON.parse(json);
+			}catch(e){
+				postMessage('error');
+				return;
+			}
+			if(!json['@context'] || json['@type'] != 'FAQPage' || !json.mainEntity.length){
+				postMessage('error');
+				return;
+			}
+			mainEntity = json.mainEntity;
+			setTimeout(function(){process_question()},0);
+		}
+		reader.readAsText(file);
+
+	}
+	function process_question(){
+		if(question >= mainEntity.length){
+			postMessage('done');
+			return;
+		}
+		postMessage(mainEntity[question]);
+		question++
+		setTimeout(function(){process_question()},0);
+	}
+</script>
 
 <script type="text/template" id="html_template">
 	<!-- Question Start -->
@@ -287,16 +365,29 @@ window.addEventListener('load',function(){
 		$('body').append($form);
 		$('textarea#output_code_test',$form).val($('#output').val());
 		$form.trigger('submit');
+		$form.remove();
 	});
+	$('.export').on('click',function(){
+		export_json();
+	});
+	$('#json-file').on('change',function(){
+        $(this).next('.custom-file-label').html($(this).prop('files')[0].name);
+	})
+	$('.btn-import').on('click',function(){
+		import_json();		
+	})
 });
-function add_question(num=1){
+function add_question(num,ques,answ){
+	if(!num){
+		num = 1;
+	}
 	for(i=1;i<=num;i++){
 		var $html_template = $($('#html_template').html());
 		$html_template.attr('id','ques-'+count);
 		$('.form-control.question',$html_template).attr({
 			'placeholder':'Question #'+count
-		});
-		$('.form-control.answer',$html_template).attr('placeholder','Answer #'+count);
+		}).val(ques?ques:'');
+		$('.form-control.answer',$html_template).attr('placeholder','Answer #'+count).val(answ?answ:'');
 		$('button.delete-ques',$html_template).attr('data-delete',count);
 		$('.btn-collapse',$html_template).attr('data-target','#answ-'+count);
 		$('.collapse',$html_template).attr('id','answ-'+count);
@@ -357,6 +448,47 @@ function sort_card(){
 		update:function(event, ui){
 			re_order();
 			generate_schema();
+		}
+	});
+}
+function export_json(){
+	var json = $('#output').val();
+	json = json.replace('<script type="application/ld+json">','').replace('<\/script>','');
+	json = JSON.parse(json);
+	json = JSON.stringify(json);
+	save_file(json,'FAQPage-JSON-Schema-'+timestamp(true)+'.json');
+}
+function import_json(){
+	var file = $('#json-file').prop('files');
+	if(!file || !file[0].name){
+		return;
+	}
+	var num = 0;
+	start_process('#readfile',function(process){
+		var btn_val = $('#import-modal .btn-import').html();
+		$('#import-modal .btn-import').html('<i class="fa fa-spinner fa-spin"></i>').attr('disabled','disabled');
+		process.postMessage(file[0]);
+		process.onmessage = function(e){
+			if(e.data == 'done'){
+				process.terminate();
+				process = undefined;
+				re_order();
+				generate_schema();
+				$('#json-file').val('');
+				$('#import-modal').modal('hide');
+				snackbar(num + ' Question Imported!');
+				$('#import-modal .btn-import').html(btn_val).removeAttr('disabled');
+				return;
+			}
+			if(e.data == 'error'){
+				snackbar('Invalid File..!!');
+				process.terminate();
+				process = undefined;
+				$('#import-modal .btn-import').html(btn_val).removeAttr('disabled');
+				return;
+			}
+			num++;
+			add_question(1,e.data['name']?e.data['name']:'',e.data.acceptedAnswer.text?e.data.acceptedAnswer.text:'');
 		}
 	});
 }
