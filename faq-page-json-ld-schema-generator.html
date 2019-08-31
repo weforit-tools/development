@@ -220,16 +220,18 @@ textarea.form-control{
 		<div class="modal-content">
 			<div class="modal-body">
 				<p class="small">This Options Will help you to continue your work where you left it</p>
-				<div class="custom-file">
-				  <input type="file" class="custom-file-input" id="json-file">
-				  <label class="custom-file-label" for="json-file">Choose file</label>
-				</div>
-				<div class="mt-2 text-center">
-					<button type="button" class="btn btn-primary px-3 btn-import">Import</button>
-				</div>
-				<strong>Example:</strong>
-				<div class="small">Code must be in valid JSON format without script tags</div>
-				<pre class="bg-light p-2" style="font-size:10px;height:200px">{
+				<ul class="nav nav-tabs" id="input-method" role="tablist">
+					<li class="nav-item">
+						<a class="nav-link active" id="direct-input-tab" data-toggle="tab" href="#direct-input" role="tab" aria-controls="direct-input" aria-selected="true">Direct Input</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="upload-file-tab" data-toggle="tab" href="#upload-file" role="tab" aria-controls="upload-file" aria-selected="true">Upload File</a>
+					</li>
+				</ul>
+				<div class="tab-content small p-3 border-left border-right border-bottom" id="input-method-content">
+					<div class="tab-pane small fade show active" id="direct-input" role="tabpanel" aria-labelledby="direct-input-tab">
+							<label>Code must be in valid JSON format without script tags</label>
+							<textarea id="direct-input-textarea" class="form-control form-control-sm" style="height:200px;font-size:.7rem" placeholder='{
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
@@ -250,7 +252,19 @@ textarea.form-control{
             }
         }
     ]
-}</pre>
+}'></textarea>
+					</div>
+					<div class="tab-pane fade" id="upload-file" role="tabpanel" aria-labelledby="upload-file-tab">
+						<div class="custom-file">
+						  <input type="file" class="custom-file-input" id="json-file">
+						  <label class="custom-file-label" for="json-file">Choose file</label>
+						</div>
+					</div>
+				</div>
+				<div class="mt-2 text-center">
+					<button type="button" class="btn btn-primary px-3 btn-import">Import</button>
+					<button type="button" data-dismiss="modal" class="btn btn-danger px-3">Cancel</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -259,10 +273,28 @@ textarea.form-control{
 <script type="javascript/process" id="readfile">
 	var mainEntity = [], question = 0;
 	self.onmessage = function(e){
-		var file = e.data;
-		var reader = new FileReader();
-		reader.onload = function(e){
-			var json = e.target.result;
+		var type = e.data.type;
+		if(type == 'file'){
+			var file = e.data.response;
+			var reader = new FileReader();
+			reader.onload = function(e){
+				var json = e.target.result;
+				try{
+					json = JSON.parse(json);
+				}catch(e){
+					postMessage('error');
+					return;
+				}
+				if(!json['@context'] || json['@type'] != 'FAQPage' || !json.mainEntity.length){
+					postMessage('error');
+					return;
+				}
+				mainEntity = json.mainEntity;
+				setTimeout(function(){process_question()},0);
+			}
+			reader.readAsText(file);
+		}else{
+			var json = e.data.response;
 			try{
 				json = JSON.parse(json);
 			}catch(e){
@@ -276,8 +308,6 @@ textarea.form-control{
 			mainEntity = json.mainEntity;
 			setTimeout(function(){process_question()},0);
 		}
-		reader.readAsText(file);
-
 	}
 	function process_question(){
 		if(question >= mainEntity.length){
@@ -461,15 +491,35 @@ function export_json(){
 	save_file(json,'FAQPage-JSON-Schema-'+timestamp(true)+'.json');
 }
 function import_json(){
+	var input = $('#direct-input-textarea').val();
 	var file = $('#json-file').prop('files');
-	if(!file || !file[0].name){
+	var type;
+	if($("ul#input-method a.active")){
+		if($("ul#input-method a.active").attr('id') == 'direct-input-tab'){
+			type = 'direct'
+			if(!input){
+				return;
+			}
+		}
+		if($("ul#input-method a.active").attr('id') == 'upload-file-tab'){
+			type = 'file';
+			if(!file.length){
+				return;
+			}
+		}
+	}
+	if(!type){
 		return;
 	}
+
 	var num = 0;
 	start_process('#readfile',function(process){
 		var btn_val = $('#import-modal .btn-import').html();
 		$('#import-modal .btn-import').html('<i class="fa fa-spinner fa-spin"></i>').attr('disabled','disabled');
-		process.postMessage(file[0]);
+		process.postMessage({
+			'type':type,
+			'response':type=='file'?file[0]:input
+		});
 		process.onmessage = function(e){
 			if(e.data == 'done'){
 				process.terminate();
@@ -483,7 +533,7 @@ function import_json(){
 				return;
 			}
 			if(e.data == 'error'){
-				snackbar('Invalid File..!!');
+				snackbar('<i class="fa fa-times mr-2"></i>Invalid JSON');
 				process.terminate();
 				process = undefined;
 				$('#import-modal .btn-import').html(btn_val).removeAttr('disabled');
