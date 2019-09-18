@@ -26,7 +26,24 @@
 			}
 		</script>
 	</head>
-	<body>
+	<body id="body">
+		<script type="javascript/process" id="setTimeout">self.onmessage = function(e){var time = e.data;setTimeout(function(){postMessage('1');},time);}</script>
+		<script type="javascript/process" id="setInterval">self.onmessage = function(e){var time = e.data;setInterval(function(){postMessage('1');},time);}</script>
+		<noscript>
+			<div class="modal-backdrop show"></div>
+			<div class="modal fade show d-block" >
+				<div class="modal-dialog">
+					<div class="modal-content border-0">
+						<div class="modal-header bg-danger text-white">
+							<h6 class="mb-0 d-flex align-items-center"><i class="fa fa-2x fa-times-circle-o mr-2"></i>JavaScript Disabled</h6>
+						</div>
+						<div class="modal-body text-center">
+							 All Controls and Functions has been disabled. This App require JavaScript must be enabled into your browser.
+						</div>
+					</div>
+				</div>
+			</div>
+		</noscript>
 		
 		<div id="wrapper">
 			<header id="header">
@@ -119,7 +136,15 @@
 				</ul>
 			</aside>
 			<div class="content-wrapper">
-<style>
+				<div class="callout collapse mb-0 callout-danger" id="navigator-offline">
+					<strong><i class="fa fa-spin fa-spinner"></i> Connection Lost:</strong> App is in Offline Mode, Some Functionality has been disabled. Waiting for Connections is Online...
+				</div>
+				<div class="callout collapse mb-0 callout-warning" id="longtime">
+					<strong><i class="fa fa-user"></i> Hey!!</strong>
+					<br/>
+					You didn't refresh this Page since last 30 Minutes. We are updating this Tool regularly so you'll miss the new functions and features. It is request to you, Please refresh the page.
+					<br/>Thank You for using our Tools!!
+				</div><style>
 
 textarea.form-control{
 	height:40px;
@@ -187,39 +212,46 @@ textarea.form-control{
 			</div>
 		</div>
 		<div class="col-12 col-md-5 col-xl-5">
-			<div class="card border-0 small shadow-sm mb-2" id="card-output">
-				<div class="card-header border-0 bg-white py-2 px-3">
-					<strong>JSON-LD FAQ Schema</strong>
-					<div class="card-tool">
-						<button type="button" class="copy_text btn btn-sm py-2"><i class="fa fa-clipboard"></i></button>
-						<button type="button" id="save_file" class=" btn btn-sm py-2"><i class="fa fa-download"></i></button>
+			<div class="sticky-top" style="top:105px">
+				<div class="card border-0 small shadow-sm mb-2 sticky-top"  id="card-output">
+					<div class="card-header border-0 bg-white py-2 px-3">
+						<strong>JSON-LD FAQ Schema</strong>
+						<div class="card-tool">
+							<button type="button" class="copy_text btn btn-sm py-2"><i class="fa fa-clipboard"></i></button>
+							<button type="button" id="save_file" class=" btn btn-sm py-2"><i class="fa fa-download"></i></button>
+						</div>
+					</div>
+					<div class="card-body p-0">
+						<textarea id="output" style="height:200px;" class="border-0 bg-white form-control form-control-sm px-3" placeholder="Output" readonly="true"></textarea>
+						<div class="row px-2 py-2 border-top">
+							<div class="col-6">
+								<div class="custom-control custom-checkbox">
+									<input type="checkbox" class="custom-control-input" id="remove-empty">
+									<label style="padding-top:2px" class="custom-control-label" for="remove-empty">Remove Empty Questions</label>
+								</div>
+							</div>
+							<div class="col-6">
+								<div class="custom-control custom-checkbox">
+									<input type="checkbox" class="custom-control-input" id="minify">
+									<label style="padding-top:2px" class="custom-control-label" for="minify">Minify Code</label>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
-				<div class="card-body p-0">
-					<textarea id="output" style="height:270px;" class="border-0 bg-white form-control form-control-sm px-3" placeholder="Output" readonly="true"></textarea>
+				<div class="text-center">
+					<button type="button" data-toggle="tooltip" title="Test Code" class="test_code btn btn-primary px-2 btn-sm mb-1"><i class="fa fa-cogs"></i></button>
+					<button type="button" data-toggle="tooltip" title="Copy Code" class="copy_text btn btn-dark px-2 btn-sm mb-1"><i class="fa fa-clipboard"></i></button>
+					<button type="button" data-toggle="tooltip" title="Empty or Delete All Questions" class="delete_all btn btn-danger px-2 btn-sm mb-1"><i class="fa fa-trash"></i></button>
 				</div>
-			</div>
-			<div class="custom-control custom-checkbox">
-				<input type="checkbox" class="custom-control-input" id="remove-empty">
-				<label class="custom-control-label" for="remove-empty">Remove Empty Questions</label>
-			</div>
-			<div class="custom-control custom-checkbox">
-				<input type="checkbox" class="custom-control-input" id="minify">
-				<label class="custom-control-label" for="minify">Minify Code</label>
-			</div>
-			<div class="text-center">
-				<button type="button" data-toggle="tooltip" title="Test Code" class="test_code btn btn-primary px-2 btn-sm mb-1"><i class="fa fa-cogs"></i></button>
-				<button type="button" data-toggle="tooltip" title="Copy Code" class="copy_text btn btn-dark px-2 btn-sm mb-1"><i class="fa fa-clipboard"></i></button>
-				<button type="button" data-toggle="tooltip" title="Empty or Delete All Questions" class="delete_all btn btn-danger px-2 btn-sm mb-1"><i class="fa fa-trash"></i></button>
 			</div>
 		</div>
 	</form>
 </div>
-<div class="modal fade" id="import-modal">
+<div class="modal fade" id="import-modal" data-keyboard="false" data-backdrop="static"  tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-body">
-				<p class="small">This Options Will help you to continue your work where you left it</p>
 				<ul class="nav nav-tabs" id="input-method" role="tablist">
 					<li class="nav-item">
 						<a class="nav-link active" id="direct-input-tab" data-toggle="tab" href="#direct-input" role="tab" aria-controls="direct-input" aria-selected="true">Direct Input</a>
@@ -380,7 +412,7 @@ window.addEventListener('load',function(){
 		generate_schema();
 	})
 	
-	add_question(5);
+	add_question(4);
 	generate_schema();
 	$(window).scroll(function(){
 		var top = $(this).scrollTop();
@@ -554,7 +586,7 @@ function import_json(){
 			</div>
 		</div>
 		<script src="./js/jquery-3.3.1.min.js"></script>
-		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<script src="./js/jquery-ui.js"></script>
 		<script src="./js/popper.min.js"></script>
 		<script src="./js/bootstrap.min.js"></script>
 		<script src="./js/global.js"></script>
@@ -565,6 +597,35 @@ function import_json(){
 				e.preventDefault();
 				$('.main-sidebar').css('opacity',1)
 				$('body').toggleClass('sidebar-close');
+			});
+		</script>
+		<script type="text/javascript">
+			start_process('#setTimeout',function(p){
+				p.postMessage(1800000);
+				p.onmessage = function(r){
+					$('#longtime').collapse('show');
+					scrollto('body');
+				}
+			});
+			start_process('#setInterval',function(p){
+				p.postMessage(5000);
+				p.onmessage = function(r){
+					$.ajax({
+						url:'https://tool.weforit.com/',
+						type:'HEAD',
+				        success: function(xhr) {
+							if($('#navigator-offline').is(":visible") == true){
+								$('#navigator-offline').collapse('hide');
+							}
+				        },
+				        error: function(){
+							if($('#navigator-offline').is(":visible") !== true){
+								$('#navigator-offline').collapse('show');
+								scrollto('body',1)
+							}
+				        }
+					});
+				}
 			});
 		</script>
 	</body>

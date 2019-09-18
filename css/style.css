@@ -8,8 +8,8 @@ body{
 }
 #wrapper{
 	height: 100%;
-	position: relative;
-	overflow-x:hidden;
+	/*position: relative;
+	overflow-x:hidden;*/
 }
 .wrapper:before, .wrapper:after {
     content: " ";
@@ -203,6 +203,10 @@ body{
 }
 
 @media screen and (max-width:768px){
+	#header{
+		position: relative;
+		overflow-x:hidden;
+	}
 	#header .logo{
 		display:none;
 	}
@@ -496,9 +500,11 @@ img{
 
 
 
+.accordion .card,
 .section-faq .card{
 	border:0!important;
 }
+.accordion .card-header,
 .section-faq .card-header{
 	position:relative;
 	color:inherit;
@@ -507,6 +513,8 @@ img{
 	font-weight:500;
 }
 
+.accordion .card-header:after,
+.accordion .card-header.collapsed:after,
 .section-faq .card-header:after,
 .section-faq .card-header.collapsed:after{
 	content:'\002B';
@@ -517,10 +525,12 @@ img{
 	color:var(--primary);
 	transform:rotate(0deg);
 }
+.accordion .card-header:after,
 .section-faq .card-header:after{
 	content:'\2212';
 	transform:rotate(0deg);
 }
+.accordion .card-body,
 .section-faq .card-body{
 	padding-top:.5rem;
 	padding-top:.5rem;

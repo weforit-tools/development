@@ -313,6 +313,37 @@ String.prototype.splice = function(start, delCount, newSubStr) {
 Element.prototype.remove = function() {
     this.parentElement.removeChild(this);
 }
+/*
+setInterval(function(){
+	$.ajax({
+		url:'https://tool.weforit.com/',
+		type:'HEAD',
+        success: function(xhr) {
+			if($('#navigator-offline').is(":visible") == true){
+				$('#navigator-offline').collapse('hide');
+			}
+        },
+        error: function(){
+			if($('#navigator-offline').is(":visible") !== true){
+				$('#navigator-offline').collapse('show');
+				scrollto('body',1)
+			}
+        }
+	});
+},5000);
 
+setTimeout(function(){
+	$('#longtime').collapse('show');
+	scrollto('body');
+},1800000);//600000);
+*/	
 if(!$(".modal").parent().is('body'))
     $(".modal").appendTo("body");
+
+$('.custom-file input').change(function (e) {
+    var files = [];
+    for (var i = 0; i < $(this)[0].files.length; i++) {
+        files.push($(this)[0].files[i].name);
+    }
+    $(this).next('.custom-file-label').html(files.join(', '));
+});

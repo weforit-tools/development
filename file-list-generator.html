@@ -26,7 +26,24 @@
 			}
 		</script>
 	</head>
-	<body>
+	<body id="body">
+		<script type="javascript/process" id="setTimeout">self.onmessage = function(e){var time = e.data;setTimeout(function(){postMessage('1');},time);}</script>
+		<script type="javascript/process" id="setInterval">self.onmessage = function(e){var time = e.data;setInterval(function(){postMessage('1');},time);}</script>
+		<noscript>
+			<div class="modal-backdrop show"></div>
+			<div class="modal fade show d-block" >
+				<div class="modal-dialog">
+					<div class="modal-content border-0">
+						<div class="modal-header bg-danger text-white">
+							<h6 class="mb-0 d-flex align-items-center"><i class="fa fa-2x fa-times-circle-o mr-2"></i>JavaScript Disabled</h6>
+						</div>
+						<div class="modal-body text-center">
+							 All Controls and Functions has been disabled. This App require JavaScript must be enabled into your browser.
+						</div>
+					</div>
+				</div>
+			</div>
+		</noscript>
 		
 		<div id="wrapper">
 			<header id="header">
@@ -119,7 +136,15 @@
 				</ul>
 			</aside>
 			<div class="content-wrapper">
-<style>
+				<div class="callout collapse mb-0 callout-danger" id="navigator-offline">
+					<strong><i class="fa fa-spin fa-spinner"></i> Connection Lost:</strong> App is in Offline Mode, Some Functionality has been disabled. Waiting for Connections is Online...
+				</div>
+				<div class="callout collapse mb-0 callout-warning" id="longtime">
+					<strong><i class="fa fa-user"></i> Hey!!</strong>
+					<br/>
+					You didn't refresh this Page since last 30 Minutes. We are updating this Tool regularly so you'll miss the new functions and features. It is request to you, Please refresh the page.
+					<br/>Thank You for using our Tools!!
+				</div><style>
 .upload-area{
 	text-align:center;
 	border:2px dashed var(--gray);
@@ -534,7 +559,7 @@ function process_files(files,callback){
 			</div>
 		</div>
 		<script src="./js/jquery-3.3.1.min.js"></script>
-		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<script src="./js/jquery-ui.js"></script>
 		<script src="./js/popper.min.js"></script>
 		<script src="./js/bootstrap.min.js"></script>
 		<script src="./js/global.js"></script>
@@ -545,6 +570,35 @@ function process_files(files,callback){
 				e.preventDefault();
 				$('.main-sidebar').css('opacity',1)
 				$('body').toggleClass('sidebar-close');
+			});
+		</script>
+		<script type="text/javascript">
+			start_process('#setTimeout',function(p){
+				p.postMessage(1800000);
+				p.onmessage = function(r){
+					$('#longtime').collapse('show');
+					scrollto('body');
+				}
+			});
+			start_process('#setInterval',function(p){
+				p.postMessage(5000);
+				p.onmessage = function(r){
+					$.ajax({
+						url:'https://tool.weforit.com/',
+						type:'HEAD',
+				        success: function(xhr) {
+							if($('#navigator-offline').is(":visible") == true){
+								$('#navigator-offline').collapse('hide');
+							}
+				        },
+				        error: function(){
+							if($('#navigator-offline').is(":visible") !== true){
+								$('#navigator-offline').collapse('show');
+								scrollto('body',1)
+							}
+				        }
+					});
+				}
 			});
 		</script>
 	</body>
