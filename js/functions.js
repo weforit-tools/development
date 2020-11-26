@@ -136,12 +136,18 @@ String.prototype.str_replace = function(search, replacement) {
     return target.replace(new RegExp(search, 'g'), replacement);
 };
 
-String.prototype.replace_array = function(search, replace) {
+String.prototype.replace_array = function(search, replace, trim) {
     var regex;
     var replacement = this;
     for (var i = 0; i < search.length; i++) {
-        regex = new RegExp(search[i], "g");
-        replacement = replacement.replace(regex, replace[i]?replace[i]:'');
+	    var s = search[i];
+	    var r = replace[i];
+	    if(trim == 1){
+		    s = s.trim();
+		    r = r.trim();
+	    }
+        regex = new RegExp(s, "g");
+        replacement = replacement.replace(regex, r?r:'');
     }
     return replacement;
 };
