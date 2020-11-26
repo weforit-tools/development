@@ -136,6 +136,15 @@ String.prototype.str_replace = function(search, replacement) {
     return target.replace(new RegExp(search, 'g'), replacement);
 };
 
+String.prototype.replace_array = function(search, replace) {
+    var regex;
+    var replacement = this;
+    for (var i = 0; i < search.length; i++) {
+        regex = new RegExp(search[i], "g");
+        replacement = replacement.replace(regex, replace[i]?replace[i]:'');
+    }
+    return replacement;
+};
 String.prototype.encodeHTML = function () {
 	return this.replace(/&/g, '&amp;')
 	           .replace(/</g, '&lt;')
